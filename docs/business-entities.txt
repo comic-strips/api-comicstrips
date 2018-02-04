@@ -122,6 +122,8 @@ Event
 ---
 #Description: 
 id PK string
+accountManagerId FK - AccountManager.id
+talent array Fk -< Talent.id
 date date/time
 LOCATION
 locationName string
@@ -133,8 +135,6 @@ notes varchar
 startTime string
 endTime string
 admissionPrice NULL string
-accountManagerId FK - AccountManager.id
-talent array Fk -< Talent.id
 
 AccountManager
 ---
