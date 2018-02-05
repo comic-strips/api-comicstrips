@@ -3,10 +3,10 @@ function bookingModule($imports) {
 	const {app, utils} = $imports;
 	const eventEmitter = utils.eventEmitter;
 	
-	app.post("/api/v1/booking", (request, response)=> {
+	app.post("/api/v1/booking/create", (request, response)=> {
 		eventEmitter.emit("db:createBooking", request.body)
-		.then((incomingData)=> {
-			console.log("Afterwards.", incomingData);
+		.then(bookingId=> {
+			response.json({bookingId});
 		}).catch(onError);
 	});
 
