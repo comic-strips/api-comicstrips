@@ -9,6 +9,7 @@
 # saved in this folder as business-entities.* and checked into version control.
 # Any updates to any of the business entities below should be checked into 
 # version control.
+#
 # Modify the code to update the DB schema diagram.
 # To reset the sample schema, replace everything with
 # two dots ('..' - without quotes).
