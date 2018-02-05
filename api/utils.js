@@ -44,7 +44,6 @@ function snapshotToArray(snapshot) {
 
 function onSubtreeIdListUpdate(ref, id, snapshot) {
 	const currentSnapshot = snapshot.val();
-	console.log(snapshot);
 	if (!currentSnapshot) {
 		ref.set([id]);
 	} else {

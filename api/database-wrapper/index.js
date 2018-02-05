@@ -24,11 +24,20 @@ function databaseWrapper($imports) {
 		}).catch(onError);
 	};
 
+	function appendBookingIdToCustomer({booking, bookingId}) {
+	/* MAKE DRY: SAME AS appendBookingIdToAccountManager*/
+		const customerRef = db.ref(`${subTree}/customers/${booking.bookingData.customerId}/bookings`);
+		return customerRef.once("value")
+		.then(onSubtreeIdListUpdate.bind(null, customerRef, bookingId));
+	}
+
 	function appendBookingIdToAccountManager({booking, bookingId}) {
+	/* MAKE DRY: SAME AS appendBookingIdToCustomer */
 		const accountManagerRef = db.ref(`${subTree}/accountManagers/${booking.bookingData.accountManagerId}/bookingsPending`);
 
 		return accountManagerRef.once("value")
-		.then(onSubtreeIdListUpdate.bind(null, accountManagerRef, bookingId));
+		.then(onSubtreeIdListUpdate.bind(null, accountManagerRef, bookingId))
+		.then(()=> { return {booking, bookingId}});
 	};
 
 	function onError(error) {
@@ -44,6 +53,7 @@ function databaseWrapper($imports) {
 		return onPushBookingData(booking) 
 		.then(appendRecipientIdToBooking.bind(null, booking))
 		.then(appendBookingIdToAccountManager)
+		.then(appendBookingIdToCustomer)
 		.catch(onError);
 	});
 
