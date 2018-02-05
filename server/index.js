@@ -1,12 +1,12 @@
 const http = require("http");
 const dotenv = require("dotenv").config();
 const express = require("express");
-const events = require("events");
-const serviceAccountKey = require("./service-account-key.json")
+const serviceAccountKey = require("../service-account-key.json")
 const app = express();
 const server = http.createServer(app);
-const baseConfig = require("./server/config");
+const baseConfig = require("./config");
 const admin = require("firebase-admin");
+const mainAPI = require("../api");
 
 baseConfig.setLogAndExceptionConfig(app);
 admin.initializeApp({
@@ -16,6 +16,7 @@ admin.initializeApp({
 
 const db = admin.database();
 const auth = admin.auth();
+const $exports = {db, auth, app};
 
 app.get("/api/v1/test", (request, response)=> {
 	response.json({"msg": "System operating within normal parameters."});
@@ -28,12 +29,12 @@ app.get("/api/v1/dbtest", (request, response)=> {
 	.catch(onError);
 })
 
+mainAPI($exports).start();
+
 function onError(error) {
 	console.error(error);
 	return error;
 }
-
-
 
 server.listen(process.env.PORT || 8080);
 console.log("Express server listening on port %d in %s mode",
