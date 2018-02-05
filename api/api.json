@@ -1,1 +1,1 @@
-{"modules": ["booking", "database-wrapper"]}
+{"modules": ["booking", "database-wrapper", "accounts"]}

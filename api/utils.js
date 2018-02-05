@@ -30,4 +30,29 @@ eventEmitter.on = function (name, fn) {
 	_on.call(this, name, onSelfAddressedEnvelope);
 };
 
-module.exports = {eventEmitter};
+function snapshotToArray(snapshot) {
+	const $$snapshot = snapshot.val();
+	const resArray = [];
+	
+	for (let key in $$snapshot) {
+		$$snapshot[key]["id"] = key;
+		resArray.push($$snapshot[key])
+	}
+
+	return resArray.reverse();
+}
+
+function onSubtreeIdListUpdate(ref, id, snapshot) {
+	const currentSnapshot = snapshot.val();
+	console.log(snapshot);
+	if (!currentSnapshot) {
+		ref.set([id]);
+	} else {
+		const idList = new Set([].concat(currentSnapshot));
+		idList.add(id);
+		ref.set(Array.from(idList));
+	}
+	return id;
+}
+
+module.exports = {eventEmitter, snapshotToArray, onSubtreeIdListUpdate};

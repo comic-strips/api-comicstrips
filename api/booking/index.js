@@ -4,13 +4,17 @@ function bookingModule($imports) {
 	const eventEmitter = utils.eventEmitter;
 	
 	app.post("/api/v1/booking/create", (request, response)=> {
-		eventEmitter.emit("db:createBooking", request.body)
-		.then(data=> {
-			if (!data.code) {
-				response.json({bookingId: data});
-			}
-			response.status(500).json(data);
-		}).catch(onError);
+		eventEmitter.emit("accounts:requestAcctManager", request.body)
+		.then((booking)=> {
+			eventEmitter.emit("db:createBooking", booking)
+			.then((data)=> {
+				if (!data.code) {
+					response.json({bookingId: data});
+					return;
+				}
+				response.status(500).json(data);
+			}).catch(onError);
+		}).catch(onError)
 	});
 
 	function onError(error) {

@@ -145,7 +145,8 @@ firstName string
 lastName string
 phoneNumber string
 email string
-bookings array FK -< Booking.id
+bookingsConfirmed array FK -< Booking.id
+bookingsPending array FK -< Booking.id
 profileImageURL string
 rating int
 notes varchar
