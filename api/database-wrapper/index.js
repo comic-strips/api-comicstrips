@@ -17,19 +17,27 @@ function databaseWrapper($imports) {
 		const bookingId = id;
 		return db.ref(`${subTree}/recipients`).push(booking.recipientData)
 		.then((ref)=> {
-			return db.ref(`${subTree}/bookings/${bookingId}`).update({recipientId: ref.key});
+			return db.ref(`${subTree}/bookings/${bookingId}`)
+			.update({recipientId: ref.key})
+			.then(()=> bookingId);
 		}).catch(onError);
 	};
 
 	function onError(error) {
 		console.error(error);
-		return error;
-	}
+		return {
+			code: "booking/error", 
+			msg: error.message, 
+			stack: error.stack.split("\n")
+		};
+	};
 
 	eventEmitter.on("db:createBooking", (booking)=> {
 		return onPushBookingData(booking) 
-		.then(appendRecipientIdToBooking.bind(null, booking));
+		.then(appendRecipientIdToBooking.bind(null, booking))
+		.catch(onError);
 	});
+
 }
 
 module.exports = databaseWrapper;

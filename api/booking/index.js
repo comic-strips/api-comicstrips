@@ -5,14 +5,21 @@ function bookingModule($imports) {
 	
 	app.post("/api/v1/booking/create", (request, response)=> {
 		eventEmitter.emit("db:createBooking", request.body)
-		.then(bookingId=> {
-			response.json({bookingId});
+		.then(data=> {
+			if (!data.code) {
+				response.json({bookingId: data});
+			}
+			response.status(500).json(data);
 		}).catch(onError);
 	});
 
 	function onError(error) {
 		console.error(error);
-		return error;
+		return {
+			code: "booking/error", 
+			msg: error.message, 
+			stack: error.stack.split("\n")
+		};
 	}
 }
 
