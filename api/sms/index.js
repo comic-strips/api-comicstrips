@@ -1,6 +1,7 @@
 function SMSModule($imports) {
 	const twilio = require("twilio");
-	const config = require("./sms.json");
+	const mockData = require("./mock/index.json");
+	const config = require("./message-templates.json");
 	const accountSID = process.env.TWILIO_SID;
 	const authToken = process.env.TWILIO_AUTH_TOKEN;
 	const twilioNumber = process.env.TWILIO_NUMBER;
@@ -10,7 +11,19 @@ function SMSModule($imports) {
 	const ejs = require("ejs");
 
 	app.post("/api/v1/booking-offer", (request, response)=> {
-		console.log(request.body);
+		/*check to see if booking offer is already accepted.*/
+		if (!request.body.Body.includes("ACCEPT")) {
+			response.json({
+				code: "sms/offer-declined",
+				message: "The booking offer was declined."
+			});
+			return;
+		}	
+
+		parseOfferResponse({
+			messsageBody: request.body.Body,
+			from: request.body.From
+		}).then((data)=> response.json({bookingId: data}));
 	});
 
 	function buildSMSTemplate(template, data) {
@@ -18,7 +31,6 @@ function SMSModule($imports) {
 	}
 
 	function onSendNotifications({booking, bookingId, contactList}) {
-		console.log({booking, bookingId, contactList});
 		contactList.forEach((contact)=> {
 			client.messages.create({
 				body: buildSMSTemplate(config.bookingOfferOutgoingMsg, {
@@ -29,10 +41,20 @@ function SMSModule($imports) {
 				to: contact.phoneNumber,  
 				from: twilioNumber
 			})
-			.then((message)=> console.log(message.sid))
+			.then(/*(message)=> console.log(message.sid)*/)
 			.catch(onError);
 		});
 	};
+
+	function parseOfferResponse({messsageBody, from}) {
+		const [, bookingRefNumber] = messsageBody.split(" ");
+		const talentPhoneNumber = from;
+
+		return eventEmitter.emit("db:finalizeBooking", {
+			bookingRefNumber: parseInt(bookingRefNumber),
+			talentPhoneNumber
+		});
+	}
 
 	function onError(error) {
 		console.error(error);

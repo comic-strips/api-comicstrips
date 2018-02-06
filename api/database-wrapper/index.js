@@ -1,5 +1,6 @@
 function databaseWrapper($imports) {
-	const {utils, db} = $imports;
+	const {utils, db, auth} = $imports;
+	const snapshotToArray = utils.snapshotToArray;
 	const eventEmitter = utils.eventEmitter;
 	const onSubtreeIdListUpdate = utils.onSubtreeIdListUpdate;
 	const subTree = process.env.NODE_ENV;
@@ -7,7 +8,7 @@ function databaseWrapper($imports) {
 
 	function onPushBookingData(booking, ref) {
 		booking.bookingData.bookingCreationDate = new Date().getTime();
-		booking.bookingData.bookingShortId =  Math.floor(Math.random() * 90000) + 10000;
+		booking.bookingData.bookingRefNumber =  Math.floor(Math.random() * 90000) + 10000;
 		return db.ref(`${subTree}/bookings`).push(booking.bookingData)
 		.then((ref)=> {
 			booking.recipientData.bookings.push(ref.key);
@@ -51,12 +52,48 @@ function databaseWrapper($imports) {
 		};
 	};
 
+	function onFindUser(talentPhone, user) {
+		return user.phoneNumber === talentPhone;
+	}
+
+	function findingPendingBooking(data, booking){
+		return booking.bookingRefNumber === data.bookingRefNumber && booking.status === "PENDING";
+	}
+
 	eventEmitter.on("db:createBooking", (booking)=> {
 		return onPushBookingData(booking) 
 		.then(appendRecipientIdToBooking.bind(null, booking))
 		.then(appendBookingIdToAccountManager)
 		.then(appendBookingIdToCustomer)
 		.catch(onError);
+	});
+
+	eventEmitter.on("db:finalizeBooking", (data)=> {
+		return auth.listUsers().then((list)=> {
+			const talentId = list.users.find(onFindUser.bind(null, data.talentPhoneNumber)).toJSON().uid;
+			const bookingsRef = db.ref(`${subTree}/bookings`);
+
+			return bookingsRef.orderByChild("bookingRefNumber")
+			.once("value")
+			.then((snapshot)=> {
+				return snapshotToArray(snapshot)
+				.find(findingPendingBooking.bind(null, data))
+				.id;
+			})
+			.then((bookingId)=> {
+				bookingsRef.child(`${bookingId}`).update({
+					status: "CONFIRMED",
+					talentId
+				});
+				const talentRef = db.ref(`${subTree}/talent`)
+				.child(`${talentId}/bookings`)
+
+				return talentRef.once("value")
+				.then(onSubtreeIdListUpdate.bind(null, talentRef, bookingId))
+				.then(()=> bookingId);
+			})
+			.catch((error)=> console.log(error))
+		});
 	});
 
 }

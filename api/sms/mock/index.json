@@ -1,0 +1,66 @@
+{"__comments": "Mock data objects for module development.",
+  "bookingOfferResponse": {
+    "ToCountry": "US",
+    "ToState": "NY",
+    "SmsMessageSid": "SM42a9fef8a28588e84c27cc684f86422d",
+    "NumMedia": "0",
+    "ToCity": "",
+    "FromZip": "10167",
+    "SmsSid": "SM42a9fef8a28588e84c27cc684f86422d",
+    "FromState": "NY",
+    "SmsStatus": "received",
+    "FromCity": "NEW YORK",
+    "Body": "ACCEPT 60174",
+    "FromCountry": "US",
+    "To": "+16467912832",
+    "ToZip": "",
+    "NumSegments": "1",
+    "MessageSid": "SM42a9fef8a28588e84c27cc684f86422d",
+    "AccountSid": "ACf03236fd2f067ce02629f39282deecf8",
+    "From": "+12129207825",
+    "ApiVersion": "2010-04-01"
+  },
+    "booking": { 
+      "bookingData": { 
+        "recipientId": "NOT/ISSUED",
+        "customerId": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+        "talentId": "NOT/ISSUED",
+        "accountManagerId": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+        "transactionId": null,
+        "bookingCreationDate": 1517919868428,
+        "bookingShortId": 60174,
+        "status": "PENDING",
+        "paymentStatus": "HELD",
+        "customizations": "Make it extra special.",
+        "products": ["Array"],
+        "time": "15:00",
+        "date": 123456780000,
+        "location": "[Object]",
+        "notes": "To be or not be. That is the question." 
+      },
+    "recipientData": { 
+      "customerId": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+      "firstName": "Jackie",
+      "lastName": "Robinson",
+      "email": "jackie@dodgers.la",
+      "phoneNumber": "1-800-SAFE-AUTO",
+      "bookings": ["Array"] 
+    } 
+  },
+  "bookingId": "-L4f3knWqhwZ5HL6xfVs",
+  "contactList": [{ 
+    "uid": "xaBUn5pe82TbXuBt3oxDDEHxK0O2",
+    "email": "testtalent@comicstrips.nyc",
+    "emailVerified": true,
+    "displayName": "Jasper Jax",
+    "photoURL": "http://www.example.com/12345678/photo.png",
+    "phoneNumber": "+12129207825",
+    "disabled": false,
+    "metadata": "[Object]",
+    "passwordHash": "UkVEQUNURUQ=",
+    "passwordSalt": "undefined",
+    "customClaims": "undefined",
+    "tokensValidAfterTime": "Mon, 05 Feb 2018 19:29:27 GMT",
+    "providerData": ["Array"] 
+  }]
+}
