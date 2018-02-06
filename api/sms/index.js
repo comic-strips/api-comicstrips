@@ -30,8 +30,8 @@ function SMSModule($imports) {
 		return ejs.render(template, {data});
 	}
 
-	function onSendNotifications({booking, bookingId, contactList}) {
-		contactList.forEach((contact)=> {
+	function sendBookingOffers({booking, bookingId, contactList}) {
+		/*contactList.forEach((contact)=> {
 			client.messages.create({
 				body: buildSMSTemplate(config.bookingOfferOutgoingMsg, {
 					booking,
@@ -41,16 +41,16 @@ function SMSModule($imports) {
 				to: contact.phoneNumber,  
 				from: twilioNumber
 			})
-			.then(/*(message)=> console.log(message.sid)*/)
+			.then(/*(message)=> console.log(message.sid))
 			.catch(onError);
-		});
+		});*/
 	};
 
 	function parseOfferResponse({messsageBody, from}) {
 		const [, bookingRefNumber] = messsageBody.split(" ");
 		const talentPhoneNumber = from;
 
-		return eventEmitter.emit("db:finalizeBooking", {
+		return eventEmitter.emit("db/booking:finalizeBooking", {
 			bookingRefNumber: parseInt(bookingRefNumber),
 			talentPhoneNumber
 		});
@@ -65,7 +65,7 @@ function SMSModule($imports) {
 		};
 	};
 
-	eventEmitter.on("sms:sendNotifications", onSendNotifications);
+	eventEmitter.on("sms:onBookingCreated", sendBookingOffers);
 }
 
 module.exports = SMSModule;

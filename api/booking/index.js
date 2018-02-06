@@ -17,15 +17,14 @@ function bookingModule($imports) {
 				}
 				response.status(500).json(data);
 			})
-			/*.then(onBookingCreated)
-			.catch(onError);*/
+			.then(onBookingCreated)
+			.catch(onError);
 		}).catch(onError);
 	});
 
 	function onBookingCreated({bookingId, booking}) {
-		eventEmitter.emit("mailer:bookingCreated", bookingId);
-		eventEmitter.emit("talent:publishBookingOffer", {bookingId, booking});
-		eventEmitter.emit("db:requestBookingTalent", bookingId);
+		eventEmitter.emit("db/mailer:bookingCreated", bookingId);
+		eventEmitter.emit("db/talent:bookingCreated", {bookingId, booking});
 		return Promise.resolve();
 	};
 

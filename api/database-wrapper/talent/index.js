@@ -1,5 +1,4 @@
-function talentModule($imports) {
-	const dbAccountModule = require("./account")($imports);
+function dbTalentModule($imports) {
 	const {app, auth, db, utils} = $imports;
 	const eventEmitter = utils.eventEmitter;
 	const subTree = process.env.NODE_ENV;
@@ -18,13 +17,13 @@ function talentModule($imports) {
 		return Promise.all(contactList).catch(onError);	
 	};
 
-	function onPublishBookingOffer({bookingId, booking}) {
+	function onBookingCreated({bookingId, booking}) {
 		db.ref(`${subTree}/talent`).once("value")
 		.then((snapshot)=> snapshotToArray(snapshot))
 		.then(getAvailableTalent)
 		.then(buildContactList)
 		.then((contactList)=> {
-			eventEmitter.emit("sms:sendNotifications", {
+			eventEmitter.emit("sms:onBookingCreated", {
 				bookingId, 
 				booking,
 				contactList
@@ -41,6 +40,7 @@ function talentModule($imports) {
 		};
 	};
 
-	eventEmitter.on("talent:publishBookingOffer", onPublishBookingOffer);
-	//eventEmitter.on("db:sms/talent:publishBookingOffer, onPublishBookingOffer));
-}
+	eventEmitter.on("db/talent:bookingCreated", onBookingCreated);
+};
+
+module.exports = dbTalentModule;
