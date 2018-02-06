@@ -1,1 +1,9 @@
-{"modules": ["booking", "database-wrapper", "accounts"]}
+{ "__comments": "Configuration options for the top-level API module.",
+	"modules": [
+	"booking", 
+	"database-wrapper", 
+	"accounts", 
+	"talent", 
+	"mailer",
+	"sms"
+]}

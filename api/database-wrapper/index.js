@@ -6,9 +6,10 @@ function databaseWrapper($imports) {
 
 
 	function onPushBookingData(booking, ref) {
+		booking.bookingData.bookingCreationDate = new Date().getTime();
+		booking.bookingData.bookingShortId =  Math.floor(Math.random() * 90000) + 10000;
 		return db.ref(`${subTree}/bookings`).push(booking.bookingData)
 		.then((ref)=> {
-			booking.bookingCreationDate = new Date().getTime();
 			booking.recipientData.bookings.push(ref.key);
 			return ref.key;
 		}).catch(onError);
@@ -28,7 +29,8 @@ function databaseWrapper($imports) {
 	/* MAKE DRY: SAME AS appendBookingIdToAccountManager*/
 		const customerRef = db.ref(`${subTree}/customers/${booking.bookingData.customerId}/bookings`);
 		return customerRef.once("value")
-		.then(onSubtreeIdListUpdate.bind(null, customerRef, bookingId));
+		.then(onSubtreeIdListUpdate.bind(null, customerRef, bookingId))
+		.then(()=> { return {bookingId, booking}});
 	}
 
 	function appendBookingIdToAccountManager({booking, bookingId}) {

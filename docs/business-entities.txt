@@ -24,7 +24,7 @@ recipientId string Fk - Recipient.id
 accountManagerId string Fk -< AccountManager.id
 transactionId string
 bookingCreationDate date/time
-bookingCreationTime date/time
+bookingShortId int
 status string
 paymentStatus string
 products list
