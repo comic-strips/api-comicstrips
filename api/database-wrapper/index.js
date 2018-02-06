@@ -3,6 +3,7 @@ function databaseWrapper($imports) {
 	const snapshotToArray = utils.snapshotToArray;
 	const eventEmitter = utils.eventEmitter;
 	const onSubtreeIdListUpdate = utils.onSubtreeIdListUpdate;
+	const dbAccountModule = require("./account")($imports);
 	const subTree = process.env.NODE_ENV;
 
 
