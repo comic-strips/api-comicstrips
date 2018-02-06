@@ -31,7 +31,7 @@ function SMSModule($imports) {
 	}
 
 	function sendBookingOffers({booking, bookingId, contactList}) {
-		/*contactList.forEach((contact)=> {
+		contactList.forEach((contact)=> {
 			client.messages.create({
 				body: buildSMSTemplate(config.bookingOfferOutgoingMsg, {
 					booking,
@@ -41,9 +41,9 @@ function SMSModule($imports) {
 				to: contact.phoneNumber,  
 				from: twilioNumber
 			})
-			.then(/*(message)=> console.log(message.sid))
+			//.then((message)=> console.log(message.sid))
 			.catch(onError);
-		});*/
+		});
 	};
 
 	function parseOfferResponse({messsageBody, from}) {
