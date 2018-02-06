@@ -6,9 +6,8 @@ function bookingModule($imports) {
 	
 	app.post("/api/v1/bookings/create", (request, response)=> {
 		eventEmitter.emit("db/account:onBookingInit", request.body)
-		.then((data)=> console.log(data));
-		/*.then((booking)=> {
-			eventEmitter.emit("db:createBooking", booking)
+		.then((booking)=> {
+			eventEmitter.emit("db/booking:createBooking", booking)
 			.then((data)=> {
 				if (!data.code) {
 					response.json({
@@ -18,9 +17,9 @@ function bookingModule($imports) {
 				}
 				response.status(500).json(data);
 			})
-			.then(onBookingCreated)
-			.catch(onError);
-		}).catch(onError);*/
+			/*.then(onBookingCreated)
+			.catch(onError);*/
+		}).catch(onError);
 	});
 
 	function onBookingCreated({bookingId, booking}) {
