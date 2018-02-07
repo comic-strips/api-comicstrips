@@ -7,7 +7,11 @@ function dbAccountModule($imports) {
 	eventEmitter.on("db/account:onBookingInit", requestAcctManager);
 
 	function requestAcctManager(booking) {
+
 		return assignAcctManager().then((acctManagerId)=> {
+			db.ref(`${subTree}/meta/`).update({
+				[acctManagerId]: {entity: "accountManager"}
+			})
 			return db.ref(`${subTree}/accountManagers/${acctManagerId}`)
 			.once("value")
 			.then(onAccountManager.bind(null, booking))
