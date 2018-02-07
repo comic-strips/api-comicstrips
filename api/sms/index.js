@@ -23,7 +23,14 @@ function SMSModule($imports) {
 		parseOfferResponse({
 			messsageBody: request.body.Body,
 			from: request.body.From
-		}).then((data)=> response.json({bookingId: data}));
+		})
+		.then(booking=> { 
+			response.json({bookingId: booking.id});
+			return booking;
+		})
+		.then(booking=> eventEmitter.emit("mailer:bookingConfirmed", 
+			{bookingId: booking.id}))
+		.catch(onError);
 	});
 
 	function buildSMSTemplate(template, data) {
@@ -59,7 +66,7 @@ function SMSModule($imports) {
 	function onError(error) {
 		console.error(error);
 		return {
-			code: "sms/error", 
+			code: "sms:error", 
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};

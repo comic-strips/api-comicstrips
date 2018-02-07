@@ -23,15 +23,16 @@ function bookingModule($imports) {
 	});
 
 	function onBookingCreated({bookingId, booking}) {
-		eventEmitter.emit("db/mailer:bookingCreated", bookingId);
 		eventEmitter.emit("db/talent:bookingCreated", {bookingId, booking});
+		eventEmitter.emit("mailer:bookingCreated", {bookingId, 
+			booking})
 		return Promise.resolve();
 	};
 
 	function onError(error) {
 		console.error(error);
 		return {
-			code: "booking/error", 
+			code: "booking:error", 
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};

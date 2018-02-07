@@ -18,7 +18,7 @@ function dbTalentModule($imports) {
 	};
 
 	function onBookingCreated({bookingId, booking}) {
-		db.ref(`${subTree}/talent`).once("value")
+		return db.ref(`${subTree}/talent`).once("value")
 		.then((snapshot)=> snapshotToArray(snapshot))
 		.then(getAvailableTalent)
 		.then(buildContactList)

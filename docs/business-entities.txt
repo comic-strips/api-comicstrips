@@ -79,6 +79,7 @@ waiverSigned BOOLEAN
 contractSigned BOOLEAN
 availability array
 onCall BOOLEAN
+meta object
 notes varchar
 
 Customer 
@@ -105,6 +106,9 @@ customerAddress string
 products array Fk -< Product.id
 recipients array
 birthDate string
+notes varchar
+meta object
+
 
 Recipient
 ---
@@ -118,6 +122,8 @@ phoneNumber string
 notes
 CUSTOMIZATIONS
 field(s) TBD
+notes varchar
+meta object
 
 Event
 ---
@@ -150,6 +156,8 @@ bookingsPending array FK -< Booking.id
 profileImageURL string
 rating int
 notes varchar
+meta object
+
 
 Survey
 ---

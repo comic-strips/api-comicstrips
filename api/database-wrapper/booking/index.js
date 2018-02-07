@@ -68,6 +68,7 @@ function dbBookingModule($imports) {
 	});
 
 	eventEmitter.on("db/booking:finalizeBooking", (data)=> {
+		/*payment happens during this phase*/
 		return auth.listUsers().then((list)=> {
 			const talentId = list.users.find(onFindUser.bind(null, data.talentPhoneNumber)).toJSON().uid;
 			const bookingsRef = db.ref(`${subTree}/bookings`);
@@ -76,20 +77,20 @@ function dbBookingModule($imports) {
 			.once("value")
 			.then((snapshot)=> {
 				return snapshotToArray(snapshot)
-				.find(findingPendingBooking.bind(null, data))
-				.id;
+				.find(findingPendingBooking.bind(null, data));
 			})
-			.then((bookingId)=> {
-				bookingsRef.child(`${bookingId}`).update({
+			.then((booking)=> {
+				bookingsRef.child(`${booking.id}`).update({
 					status: "CONFIRMED",
+					paymentStatus: "CHARGED",
 					talentId
 				});
 				const talentRef = db.ref(`${subTree}/talent`)
 				.child(`${talentId}/bookings`)
 
 				return talentRef.once("value")
-				.then(onSubtreeIdListUpdate.bind(null, talentRef, bookingId))
-				.then(()=> bookingId);
+				.then(onSubtreeIdListUpdate.bind(null, talentRef, booking.id))
+				.then(()=> {return booking});
 			})
 			.catch((error)=> console.log(error))
 		});

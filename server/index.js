@@ -7,9 +7,9 @@ const server = http.createServer(app);
 const baseConfig = require("./config");
 const admin = require("firebase-admin");
 const mainAPI = require("../api");
-const localtunnel = require("localtunnel")(8080, {subdomain: "apicomicstrips"}, function(err, tunnel) { 
+/*const localtunnel = require("localtunnel")(8080, {subdomain: "apicomicstrips"}, function(err, tunnel) { 
 		err? console.log(error): console.log(`Twilio webhook set on ${tunnel.url}`);
-});
+});*/
 
 baseConfig.setLogAndExceptionConfig(app);
 admin.initializeApp({
