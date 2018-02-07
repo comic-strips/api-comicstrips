@@ -28,7 +28,7 @@ function dbMailerModule($imports) {
 			});
 		});
 		return Promise.all(userMetadata);
-	}
+	};
 
 	function onBookingData(bookingData) {
 		return Object.keys(bookingData)

@@ -1,28 +1,41 @@
 function dispatchModule($imports) {
-	const {mode} = $imports;
+	const {mode, templateModule} = $imports;
 	const apiKey = process.env.MAILGUN_API_KEY;
 	const domain = process.env.MAILGUN_DOMAIN;
 	const mailgun = require("mailgun-js")({apiKey, domain});
 
 	(function validateMode(mode) {
 		if (mode === "development") {
-			console.warn("Dispatch moodule intialized with dev user. Outbound emails directed to ethereal inbox.");
+			console.warn("Dispatch moodule intialized with dev user. Outbound emails directed to Ethereal inbox.");
 		}
 	}(mode))
-	/*const data = {
-		from: "sean.travis.taylor@icloud.com",
-		to: "sean.travis.taylor@gmail.com",
-		subject: "Hello",
-		text: "Testing some Mailgun awesomness!"
-	};*/
-
-	/*mailgun.messages().send(data, function (error, body) {
-		console.log(body);
-	});*/
-
-	function sendBatchEmail(data) {
-		console.log("sendBatchEmail", data);
+	
+	function onSend(error, body) {
+		if (error) {
+			onError(error);
+			return;
+		}
+		//console.log(body);
 	}
+
+	function sendBatchEmail(bookingId, data) {
+		data.forEach((addressee)=> {
+			mailgun.messages()
+			.send(templateModule.configMessage({
+				addressee, 
+				bookingId
+			}), onSend);	
+		});
+	}
+
+	function onError(error) {
+		console.error(error);
+		return {
+			code: "distpatch:error", 
+			msg: error.message, 
+			stack: error.stack.split("\n")
+		};
+	};
 
 	return {sendBatchEmail}
 }
