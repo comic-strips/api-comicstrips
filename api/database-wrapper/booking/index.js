@@ -21,6 +21,10 @@ function dbBookingModule($imports) {
 		.then((ref)=> {
 			return db.ref(`${subTree}/bookings/${bookingId}`)
 			.update({recipientId: ref.key})
+			.then(()=> {
+				return db.ref(`${subTree}/meta`)
+				.update({[ref.key]: {entity: "recipient"}});
+			})
 			.then(()=> { return {booking,bookingId}});
 		}).catch(onError);
 	};
