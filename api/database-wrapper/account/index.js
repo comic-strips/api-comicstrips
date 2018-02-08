@@ -24,7 +24,7 @@ function dbAccountModule($imports) {
 		const accountManagerData = dbsnapshot.val();
 		booking.bookingData.accountManagerId = acctManagerId;
 		return booking;
-	}
+	};
 
 	function assignAcctManager() {
 		return db.ref(`${subTree}/accountManagers`).once("value")

@@ -31,7 +31,11 @@ function dbBookingModule($imports) {
 
 	function appendBookingIdToCustomer({booking, bookingId}) {
 	/* MAKE DRY: SAME AS appendBookingIdToAccountManager*/
-		const customerRef = db.ref(`${subTree}/customers/${booking.bookingData.customerId}/bookings`);
+		const customerId = booking.bookingData.customerId;
+		const customerRef = db.ref(`${subTree}/customers/${customerId}/bookings`);
+		db.ref(`${subTree}/meta`).update({
+			[customerId]: {entity: "customer"}
+		});
 		return customerRef.once("value")
 		.then(onSubtreeIdListUpdate.bind(null, customerRef, bookingId))
 		.then(()=> { return {bookingId, booking}});
