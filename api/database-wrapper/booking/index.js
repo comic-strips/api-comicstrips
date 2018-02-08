@@ -81,6 +81,10 @@ function dbBookingModule($imports) {
 			const talentId = list.users.find(onFindUser.bind(null, data.talentPhoneNumber)).toJSON().uid;
 			const bookingsRef = db.ref(`${subTree}/bookings`);
 
+			db.ref(`${subTree}/meta`).update({
+				[talentId]: {entity: "talent"}
+			});
+
 			return bookingsRef.orderByChild("bookingRefNumber")
 			.once("value")
 			.then((snapshot)=> {
