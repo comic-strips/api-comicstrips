@@ -6,7 +6,7 @@ function dispatchModule($imports) {
 
 	(function validateMode(mode) {
 		if (mode === "development") {
-			console.warn("Dispatch moodule intialized with dev user. Outbound emails directed to Ethereal inbox.");
+			console.warn("ATTN: Dispatch moodule intialized with dev user. Outbound emails directed to Ethereal inbox.");
 		}
 	}(mode))
 	

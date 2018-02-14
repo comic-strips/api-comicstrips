@@ -3,6 +3,7 @@ function dbBookingModule($imports) {
 	const snapshotToArray = utils.snapshotToArray;
 	const eventEmitter = utils.eventEmitter;
 	const onSubtreeIdListUpdate = utils.onSubtreeIdListUpdate;
+	const finalizeModule = require("./finalize")(Object.assign($imports, {utils}));
 	const subTree = process.env.NODE_ENV;
 
 	function onPushBookingData(booking, ref) {
@@ -25,7 +26,7 @@ function dbBookingModule($imports) {
 				return db.ref(`${subTree}/meta`)
 				.update({[ref.key]: {entity: "recipient"}});
 			})
-			.then(()=> { return {booking,bookingId}});
+			.then(()=> { return {booking, bookingId}});
 		}).catch(onError);
 	};
 
@@ -75,38 +76,7 @@ function dbBookingModule($imports) {
 		.catch(onError);
 	});
 
-	eventEmitter.on("db/booking:finalizeBooking", (data)=> {
-		/*payment happens during this phase*/
-		return auth.listUsers().then((list)=> {
-			const talentId = list.users.find(onFindUser.bind(null, data.talentPhoneNumber)).toJSON().uid;
-			const bookingsRef = db.ref(`${subTree}/bookings`);
-
-			db.ref(`${subTree}/meta`).update({
-				[talentId]: {entity: "talent"}
-			});
-
-			return bookingsRef.orderByChild("bookingRefNumber")
-			.once("value")
-			.then((snapshot)=> {
-				return snapshotToArray(snapshot)
-				.find(findingPendingBooking.bind(null, data));
-			})
-			.then((booking)=> {
-				bookingsRef.child(`${booking.id}`).update({
-					status: "CONFIRMED",
-					paymentStatus: "CHARGED",
-					talentId
-				});
-				const talentRef = db.ref(`${subTree}/talent`)
-				.child(`${talentId}/bookings`)
-
-				return talentRef.once("value")
-				.then(onSubtreeIdListUpdate.bind(null, talentRef, booking.id))
-				.then(()=> {return booking});
-			})
-			.catch((error)=> console.log(error))
-		});
-	});
+	eventEmitter.on("db/booking:finalizeBooking", data=> finalizeModule.finalize(data));
 
 }
 
