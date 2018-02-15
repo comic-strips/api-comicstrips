@@ -7,7 +7,10 @@ const server = http.createServer(app);
 const baseConfig = require("./config");
 const admin = require("firebase-admin");
 const mainAPI = require("../api");
-const localtunnelModule = require("./utils/local-tunnel")({subdomain: "apicomicstrips"});
+const localtunnelModule = require("./utils/local-tunnel")({
+	subdomain: "apicomicstrips",
+	environment: process.env.NODE_ENV
+});
 
 //localtunnelModule.listen(8080);
 baseConfig.setLogAndExceptionConfig(app);

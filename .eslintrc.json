@@ -1,0 +1,15 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+  	"no-tabs": ["off"],
+  	"indent": ["off"],
+  	"quotes": ["off"],
+  	"object-curly-spacing": ["off"],
+  	"comma-dangle": ["off"],
+  	"no-use-before-define": ["off"],
+  	"arrow-spacing": ["off"],
+  	"spaced-comment": ["off"],
+  	"new-cap": ["off"],
+  	"global-require": ["off"]
+  }
+}

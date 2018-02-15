@@ -1,5 +1,3 @@
-function talentModule($imports) {
-	
-}
+function talentModule($imports) {}
 
 module.exports = talentModule;

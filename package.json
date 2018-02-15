@@ -6,7 +6,8 @@
   "scripts": {
     "debug": "./node_modules/.bin/nodemon ./server/index.js",
     "start": "node ./server/index.js",
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "lint": "./node_modules/.bin/eslint ./api/**"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,15 @@
   "homepage": "https://github.com/comic-strips/api-comicstrips#readme",
   "devDependencies": {
     "dotenv": "^5.0.0",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "install": "^0.10.4",
     "localtunnel": "^1.8.3",
     "mocha": "^2.5.3",
-    "nodemon": "^1.14.12"
+    "nodemon": "^1.14.12",
+    "npm": "^5.6.0",
+    "prettier": "1.10.2"
   },
   "dependencies": {
     "@altrdpdgm/cors": "^2.0.0",
