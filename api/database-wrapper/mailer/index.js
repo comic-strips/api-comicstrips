@@ -4,6 +4,7 @@ function dbMailerModule($imports) {
 	const subTree = process.env.NODE_ENV;
 
 	eventEmitter.on("db/mailer:onBookingConfirmed", onBookingConfirmed);
+	eventEmitter.on("db/mailer:onBookingCreated", onBookingCreated);
 
 	function onBookingConfirmed(bookingId) {
 		return db.ref(`${subTree}/bookings/${bookingId}`).once("value")
@@ -38,6 +39,11 @@ function dbMailerModule($imports) {
 			return auth.getUser(userId)
 			.then(userRecord=> userRecord.toJSON());
 		});
+	};
+
+	function onBookingCreated(customerId) {
+		return auth.getUser(customerId)
+		.then((userRecord)=> userRecord.toJSON());
 	};
 
 	function onError(error) {

@@ -25,18 +25,20 @@ function bookingModule($imports) {
                                         .then(onBookingCreated)
                                         .catch(onError);
                         })
-                        .catch(onError);
+                        .catch(onError)
         });
 
         function onBookingCreated({ bookingId, booking }) {
                 eventEmitter.emit("db/talent:bookingCreated", {
                         bookingId,
                         booking
-                });
+                }).catch(onError);
+
                 eventEmitter.emit("mailer:bookingCreated", {
                         bookingId,
                         booking
-                });
+                }).catch(onError);
+
                 return Promise.resolve();
         }
 

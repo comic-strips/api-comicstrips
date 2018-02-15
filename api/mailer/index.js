@@ -8,9 +8,11 @@ function mailerModule($imports) {
         function onBookingConfirmed({ bookingId }) {
                 const confirmationEmailConfig = {
                         from: config.senders.bookingConfirmation,
-                        subject: `Booking Request Acknowledged`,
-                        html: `<h1> Received Booking Request ${bookingId}</h1>`
+                        subject: "Booking Confirmed",
+                        html: `<h1> Booking ${bookingId} is Confirmed!</h1>`,
+                        messageType: "bookingConfirmation"
                 };
+
                 eventEmitter
                         .emit("db/mailer:onBookingConfirmed", bookingId)
                         .then(
@@ -22,15 +24,24 @@ function mailerModule($imports) {
                         .catch(onError);
         }
 
-        function onBookingCreated({ bookingId, booking}) {
-                /* configure email here 
-                        dispatchModule.sendEmail.bind({
-                                from: defaultSender,
-                                subject: `Booking Request Acknowledged`
-                                html: `<h1> Received Booking Request ${bookingId}</h1>`
+        function onBookingCreated({ bookingId, booking }) {
+                const bookingCreatedEmailConfig = {
+                        from: config.senders.bookingCreated,
+                        subject: "Booking Request Acknowledged",
+                        html: `<h1> Received Booking Request ${bookingId}</h1>
+                        <p>We're on it!</p>`,
+                        messageType: "bookingCreated"
+                };
+
+                eventEmitter
+                        .emit("db/mailer:onBookingCreated", 
+                                booking.bookingData.customerId)
+                        .then((customer)=> {
+                                dispatchModule.sendEmail(bookingCreatedEmailConfig, 
+                                        [customer.email]
+                                );
                         })
-                */
-                console.log("bookingCreated:", {bookingId, booking})
+                        .catch(onError);
         }
 
         function onError(error) {

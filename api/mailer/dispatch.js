@@ -9,7 +9,7 @@ function dispatchModule($imports) {
                                 "ATTN: Dispatch moodule intialized with dev user. Outbound emails directed to Ethereal inbox."
                         );
                 }
-        })();
+        })(process.env.NODE_ENV);
 
         function onSend(error, body) {
                 if (error) {
@@ -22,7 +22,10 @@ function dispatchModule($imports) {
         function sendEmail(messageConfig, addresseeList) {
                 addresseeList.forEach((addressee)=> {
                         mailgun.messages().send(Object.assign(messageConfig, {
+                                /* addressee.email goes here */
                                 to: process.env.MAILER_TEST_USER
+                                /* TODO: BUILD OUT TEMPLATE MODULE */
+                                //html: getTemplate(addressee.entity, messageConfig.messageType)
                         }),onSend);
                 });
         }

@@ -27,8 +27,8 @@ function dbTalentModule($imports) {
 				bookingId, 
 				booking,
 				contactList
-			});
-		});
+			}).catch(onError);
+		}).catch(onError);
 	};
 
 	function onError(error) {
