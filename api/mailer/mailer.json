@@ -1,0 +1,6 @@
+{ "__comments": "Configuration for the mailer module.",
+	"senders": {
+		"bookingConfirmation": "noreply@comicstrips.nyc",
+		"bookingCreated": "noreply@comicstrips.nyc"
+	}
+}

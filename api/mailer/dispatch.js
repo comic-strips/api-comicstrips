@@ -1,5 +1,4 @@
 function dispatchModule($imports) {
-        const { mode, templateModule } = $imports;
         const apiKey = process.env.MAILGUN_API_KEY;
         const domain = process.env.MAILGUN_DOMAIN;
         const mailgun = require("mailgun-js")({ apiKey, domain });
@@ -10,7 +9,7 @@ function dispatchModule($imports) {
                                 "ATTN: Dispatch moodule intialized with dev user. Outbound emails directed to Ethereal inbox."
                         );
                 }
-        })(mode);
+        })();
 
         function onSend(error, body) {
                 if (error) {
@@ -20,15 +19,11 @@ function dispatchModule($imports) {
                 //console.log(body);
         }
 
-        function sendBatchEmail(bookingId, data) {
-                data.forEach(addressee => {
-                        mailgun.messages().send(
-                                templateModule.configMessage({
-                                        addressee,
-                                        bookingId
-                                }),
-                                onSend
-                        );
+        function sendEmail(messageConfig, addresseeList) {
+                addresseeList.forEach((addressee)=> {
+                        mailgun.messages().send(Object.assign(messageConfig, {
+                                to: process.env.MAILER_TEST_USER
+                        }),onSend);
                 });
         }
 
@@ -41,7 +36,7 @@ function dispatchModule($imports) {
                 };
         }
 
-        return { sendBatchEmail };
+        return { sendEmail };
 }
 
 module.exports = dispatchModule;

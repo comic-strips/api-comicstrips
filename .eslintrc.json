@@ -1,15 +1,15 @@
 {
   "extends": "airbnb-base",
   "rules": {
-  	"no-tabs": ["off"],
-  	"indent": ["off"],
-  	"quotes": ["off"],
-  	"object-curly-spacing": ["off"],
-  	"comma-dangle": ["off"],
-  	"no-use-before-define": ["off"],
   	"arrow-spacing": ["off"],
-  	"spaced-comment": ["off"],
+  	"comma-dangle": ["off"],
+  	"global-require": ["off"],
+  	"indent": ["off"],
   	"new-cap": ["off"],
-  	"global-require": ["off"]
+  	"no-tabs": ["off"],
+  	"no-use-before-define": ["off"],
+  	"object-curly-spacing": ["off"],
+  	"quotes": ["off"],
+  	"spaced-comment": ["off"]	
   }
 }

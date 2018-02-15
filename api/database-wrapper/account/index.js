@@ -41,6 +41,9 @@ function dbAccountModule($imports) {
 	};
 
 	function randomlySelectAcctManager(accountManagersList) {
+		if (accountManagersList.length === 0) {
+			throw "accountManagersList is empty."
+		}
 		return accountManagersList[0].id;
 	}
 

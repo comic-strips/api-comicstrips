@@ -6,9 +6,6 @@ function templateModule($imports) {
 		text: "Testing some Mailgun awesomness!"
 	};*/
 
-        const templateMap = {
-                defaultTemplate: "<h1>This thing is happening!</h1>"
-        };
 
         function getTemplate(templateName = defaultTemplate) {
                 return (
