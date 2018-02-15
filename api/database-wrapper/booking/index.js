@@ -77,7 +77,6 @@ function dbBookingModule($imports) {
 	});
 
 	eventEmitter.on("db/booking:finalizeBooking", data=> finalizeModule.finalize(data));
-
 }
 
 module.exports = dbBookingModule;
