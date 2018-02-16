@@ -13,8 +13,8 @@ function mailerModule($imports) {
                         messageType: "bookingConfirmation"
                 };
 
-                eventEmitter
-                        .emit("db/mailer:onBookingConfirmed", bookingId)
+               return eventEmitter
+                        .emit("db/mailer:bookingConfirmed", bookingId)
                         .then(
                                 dispatchModule.sendEmail.bind(
                                         null,

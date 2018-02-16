@@ -3,7 +3,7 @@ function dbMailerModule($imports) {
 	const eventEmitter = utils.eventEmitter;
 	const subTree = process.env.NODE_ENV;
 
-	eventEmitter.on("db/mailer:onBookingConfirmed", onBookingConfirmed);
+	eventEmitter.on("db/mailer:bookingConfirmed", onBookingConfirmed);
 	eventEmitter.on("db/mailer:onBookingCreated", onBookingCreated);
 
 	function onBookingConfirmed(bookingId) {

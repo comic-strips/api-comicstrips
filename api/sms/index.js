@@ -28,34 +28,34 @@ function SMSModule($imports) {
                         return booking;
                 })
                 .then((booking)=> {
-                        eventEmitter.emit("mailer:bookingConfirmed", {
+                       return eventEmitter.emit("mailer:bookingConfirmed", {
                                 bookingId: booking.id
                         });
                 })
                 .catch(onError);
         });
 
-        function buildSMSTemplate(template, data) {
+        function buildSMSMessage(template, data) {
                 return ejs.render(template, { data });
-        }
+        };
+
+        function onContact(messageBody, contact) {
+                client.messages.create(Object.assign({}, {
+                        body: messageBody,
+                        to: contact.phoneNumber,
+                        from: twilioNumber
+                })).catch(onError);
+        };
 
         function onContactListCreated({ booking, bookingId, contactList }) {
-                contactList.forEach((contact)=> {
-                        client.messages
-                                .create({
-                                        body: buildSMSTemplate(
-                                                config.bookingOfferOutgoingMsg,
-                                                {
-                                                        booking,
-                                                        bookingId,
-                                                        contact
-                                                }
-                                        ),
-                                        to: contact.phoneNumber,
-                                        from: twilioNumber
-                                }
-                        ).catch(onError);
+                const {bookingOfferOutgoingMsg} = config;
+                const messageBody = buildSMSMessage(bookingOfferOutgoingMsg, {
+                        booking,
+                        bookingId,
+                        contact
                 });
+
+                contactList.forEach(onContact.bind(null, messsageBody));
                 return { booking, bookingId };
         }
 

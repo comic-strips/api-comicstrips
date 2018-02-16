@@ -2,7 +2,7 @@ function bookingModule($imports) {
         const { app, utils } = $imports;
         const eventEmitter = utils.eventEmitter;
 
-        app.post("/api/v1/bookings/create", (request, response) => {
+        app.post("/api/v1/bookings/create", (request, response)=> {
                 eventEmitter
                         .emit("db/account:requestAcctManager", request.body)
                         .then(onAccountManagerAssigned)
