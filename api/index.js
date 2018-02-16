@@ -1,5 +1,5 @@
 
-function $backendModule($imports) {
+function backendModule($imports) {
 	const config = require("./api.json");
 	const utils = require("./utils")
 	const {modules} = config;
@@ -15,4 +15,4 @@ function $backendModule($imports) {
 	return {start}
 }
 
-module.exports = $backendModule;
+module.exports = backendModule;

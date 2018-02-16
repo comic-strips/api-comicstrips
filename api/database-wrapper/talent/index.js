@@ -23,7 +23,7 @@ function dbTalentModule($imports) {
 		.then(getAvailableTalent)
 		.then(buildContactList)
 		.then((contactList)=> {
-			eventEmitter.emit("sms:onBookingCreated", {
+			return eventEmitter.emit("sms:contactListCreated", {
 				bookingId, 
 				booking,
 				contactList

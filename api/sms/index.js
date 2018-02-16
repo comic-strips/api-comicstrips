@@ -39,7 +39,7 @@ function SMSModule($imports) {
                 return ejs.render(template, { data });
         }
 
-        function sendBookingOffers({ booking, bookingId, contactList }) {
+        function onContactListCreated({ booking, bookingId, contactList }) {
                 contactList.forEach((contact)=> {
                         client.messages
                                 .create({
@@ -53,9 +53,10 @@ function SMSModule($imports) {
                                         ),
                                         to: contact.phoneNumber,
                                         from: twilioNumber
-                                })
-                                .catch(onError);
+                                }
+                        ).catch(onError);
                 });
+                return { booking, bookingId };
         }
 
         function parseOfferResponse({ messsageBody, from }) {
@@ -77,7 +78,7 @@ function SMSModule($imports) {
                 };
         }
 
-        eventEmitter.on("sms:onBookingCreated", sendBookingOffers);
+        eventEmitter.on("sms:contactListCreated", onContactListCreated);
 }
 
 module.exports = SMSModule;

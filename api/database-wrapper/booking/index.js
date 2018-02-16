@@ -6,7 +6,7 @@ function dbBookingModule($imports) {
 	const finalizeModule = require("./finalize")(Object.assign($imports, {utils}));
 	const subTree = process.env.NODE_ENV;
 
-	function onPushBookingData(booking, ref) {
+	function pushBookingData(booking) {
 		booking.bookingData.bookingCreationDate = new Date().getTime();
 		booking.bookingData.bookingRefNumber =  Math.floor(Math.random() * 90000) + 10000;
 		return db.ref(`${subTree}/bookings`).push(booking.bookingData)
@@ -69,7 +69,7 @@ function dbBookingModule($imports) {
 	}
 
 	eventEmitter.on("db/booking:createBooking", (booking)=> {
-		return onPushBookingData(booking) 
+		return pushBookingData(booking) 
 		.then(appendRecipientIdToBooking.bind(null, booking))
 		.then(appendBookingIdToAccountManager)
 		.then(appendBookingIdToCustomer)

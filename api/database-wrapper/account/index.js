@@ -4,10 +4,9 @@ function dbAccountModule($imports) {
 	const snapshotToArray = utils.snapshotToArray;
 	const subTree = process.env.NODE_ENV;
 
-	eventEmitter.on("db/account:onBookingInit", requestAcctManager);
+	eventEmitter.on("db/account:requestAcctManager", requestAcctManager);
 
 	function requestAcctManager(booking) {
-
 		return assignAcctManager().then((acctManagerId)=> {
 			db.ref(`${subTree}/meta/`).update({
 				[acctManagerId]: {entity: "accountManager"}
@@ -21,7 +20,7 @@ function dbAccountModule($imports) {
 
 	function onAccountManager(booking, dbsnapshot) {
 		const acctManagerId = dbsnapshot.key;
-		const accountManagerData = dbsnapshot.val();
+		//const accountManagerData = dbsnapshot.val();
 		booking.bookingData.accountManagerId = acctManagerId;
 		return booking;
 	};
@@ -41,6 +40,7 @@ function dbAccountModule($imports) {
 	};
 
 	function randomlySelectAcctManager(accountManagersList) {
+		/*logic to randomly select from available account managers here.*/
 		if (accountManagersList.length === 0) {
 			throw "accountManagersList is empty."
 		}

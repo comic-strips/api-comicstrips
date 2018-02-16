@@ -32,14 +32,14 @@ app.get("/api/v1/dbtest", (request, response)=> {
 	.then((snapshot)=> snapshot.val())
 	.then(data => response.json(data))
 	.catch(onError);
-})
+});
 
 mainAPI($exports).start();
 
 function onError(error) {
 	console.error(error);
 	return error;
-}
+};
 
 server.listen(process.env.PORT || 8080);
 console.log("Express server listening on port %d in %s mode",

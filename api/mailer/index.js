@@ -24,7 +24,8 @@ function mailerModule($imports) {
                         .catch(onError);
         }
 
-        function onBookingCreated({ bookingId, booking }) {
+        function onBookingCreated(bookingData) {
+                const { bookingId, booking } = bookingData
                 const bookingCreatedEmailConfig = {
                         from: config.senders.bookingCreated,
                         subject: "Booking Request Acknowledged",
@@ -33,13 +34,14 @@ function mailerModule($imports) {
                         messageType: "bookingCreated"
                 };
 
-                eventEmitter
+                return eventEmitter
                         .emit("db/mailer:onBookingCreated", 
                                 booking.bookingData.customerId)
                         .then((customer)=> {
                                 dispatchModule.sendEmail(bookingCreatedEmailConfig, 
                                         [customer.email]
                                 );
+                                return bookingData;
                         })
                         .catch(onError);
         }
