@@ -2,5 +2,31 @@
 	"senders": {
 		"bookingConfirmation": "noreply@comicstrips.nyc",
 		"bookingCreated": "noreply@comicstrips.nyc"
+	},
+	"templates": {
+		"bookingCreated": {
+			"customer": {
+				"template": "./templates/bookingCreated/customer.json",
+				"sender": "noreply@comicstrips.nyc",
+				"subject": "Booking Request Received."
+			}
+		},
+		"bookingConfirmed": {
+			"accountManager": {
+				"template": "./templates/bookingCreated/account-manager.json",
+				"sender": "bookings@comicstrips.nyc",
+				"subject": "New Booking Confirmed"
+			},
+			"customer": {
+				"template": "./templates/bookingCreated/customer.json",
+				"sender": "bookings@comicstrips.nyc",
+				"subject": "Booking Confirmed. Everything's All Set!"
+			},
+			"talent": { 
+				"template": "./templates/bookingCreated/talent.json",
+				"sender": "bookings@comicstrips.nyc",
+				"subject": "Booking Confirmed. Event Details Enclosed."
+			}
+		}
 	}
 }

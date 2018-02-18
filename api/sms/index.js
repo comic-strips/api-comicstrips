@@ -28,9 +28,7 @@ function SMSModule($imports) {
                         return booking;
                 })
                 .then((booking)=> {
-                       return eventEmitter.emit("mailer:bookingConfirmed", {
-                                bookingId: booking.id
-                        });
+                       return eventEmitter.emit("mailer:bookingConfirmed",booking);
                 })
                 .catch(onError);
         });

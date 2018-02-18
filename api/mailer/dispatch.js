@@ -1,4 +1,7 @@
 function dispatchModule($imports) {
+        const templateModule = $imports.templateModule();
+        const config = require("./mailer.json");
+        const templateMap = config.templates;
         const apiKey = process.env.MAILGUN_API_KEY;
         const domain = process.env.MAILGUN_DOMAIN;
         const mailgun = require("mailgun-js")({ apiKey, domain });
@@ -19,14 +22,18 @@ function dispatchModule($imports) {
                 //console.log(body);
         }
 
-        function sendEmail(messageConfig, addresseeList) {
+        function sendEmail(type, data, addresseeList) {
                 addresseeList.forEach((addressee)=> {
-                        mailgun.messages().send(Object.assign(messageConfig, {
-                                /* addressee.email goes here */
-                                to: process.env.MAILER_TEST_USER
-                                /* TODO: BUILD OUT TEMPLATE MODULE */
-                                //html: getTemplate(addressee.entity, messageConfig.messageType)
-                        }),onSend);
+                        mailgun.messages().send({
+                                subject: templateMap[type][addressee.entity].subject,
+                                from: templateMap[type][addressee.entity].sender,
+                                to: process.env.MAILER_TEST_USER,
+                                html: templateModule.getTemplate({
+                                        entity: addressee.entity,
+                                        type, 
+                                        data
+                                })
+                        }, onSend);
                 });
         }
 
