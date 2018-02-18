@@ -43,7 +43,16 @@ function dbMailerModule($imports) {
 
 	function onBookingCreated(customerId) {
 		return auth.getUser(customerId)
-		.then((userRecord)=> userRecord.toJSON());
+		.then((userRecord)=> userRecord.toJSON())
+		.then((userRecord)=> {
+			return db.ref(`${subTree}/meta/${customerId}/entity`)
+			.once("value")
+			.then((snapshot)=> {
+				return Object.assign(userRecord, {
+					entity: snapshot.val()
+				});
+			});
+		});
 	};
 
 	function onError(error) {

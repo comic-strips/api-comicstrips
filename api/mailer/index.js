@@ -24,8 +24,8 @@ function mailerModule($imports) {
                         .then((customer)=> {
                                 dispatchModule.sendEmail(
                                         "bookingCreated",
-                                        bookingData,
-                                        [customer.email]
+                                        booking,
+                                        [customer]
                                 );
                                 return bookingData;
                         })

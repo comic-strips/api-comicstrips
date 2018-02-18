@@ -31,7 +31,7 @@ function bookingModule($imports) {
                                 .emit("mailer:bookingCreated", booking)
                                 .catch(onError);
                })
-               .then((booking)=> console.log(booking))
+               .then((booking)=> booking)
         }
 
         function onError(error) {

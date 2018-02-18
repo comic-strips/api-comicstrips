@@ -37,25 +37,22 @@ function SMSModule($imports) {
                 return ejs.render(template, { data });
         };
 
-        function onContact(messageBody, contact) {
+        function onContact(bookingId, booking, contact) {
                 client.messages.create(Object.assign({}, {
-                        body: messageBody,
+                        body: buildSMSMessage(config.bookingOfferOutgoingMsg, {
+                                booking,
+                                bookingId,
+                                contact
+                        }),
                         to: contact.phoneNumber,
                         from: twilioNumber
                 })).catch(onError);
         };
 
         function onContactListCreated({ booking, bookingId, contactList }) {
-                const {bookingOfferOutgoingMsg} = config;
-                const messageBody = buildSMSMessage(bookingOfferOutgoingMsg, {
-                        booking,
-                        bookingId,
-                        contact
-                });
-
-                contactList.forEach(onContact.bind(null, messsageBody));
+                contactList.forEach(onContact.bind(null, bookingId, booking));
                 return { booking, bookingId };
-        }
+        };
 
         function parseOfferResponse({ messsageBody, from }) {
                 const [, bookingRefNumber] = messsageBody.split(" ");
@@ -65,7 +62,7 @@ function SMSModule($imports) {
                         bookingRefNumber: parseInt(bookingRefNumber, 0),
                         talentPhoneNumber
                 });
-        }
+        };
 
         function onError(error) {
                 console.error(error);
@@ -74,7 +71,7 @@ function SMSModule($imports) {
                         msg: error.message,
                         stack: error.stack.split("\n")
                 };
-        }
+        };
 
         eventEmitter.on("sms:contactListCreated", onContactListCreated);
 }

@@ -1,0 +1,3 @@
+{	"__comments": "Email template for customer notification on a booking confimation.",
+	"body": "<h1>This is happening, CUSTOMER! <%=booking.id%></h1>"
+}
