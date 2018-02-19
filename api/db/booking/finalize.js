@@ -33,7 +33,7 @@ function dbFinalizeModule($imports) {
 			const talentId = list.users.find(onFindUser.bind(null, data.talentPhoneNumber)).toJSON().uid;
 			const bookingsRef = db.ref(`${subTree}/bookings`);
 
-			db.ref(`${subTree}/meta`).update({
+			db.ref(`${subTree}/meta/talent`).update({
 				[talentId]: {entity: "talent"}
 			});
 
@@ -51,7 +51,7 @@ function dbFinalizeModule($imports) {
 	function onError(error) {
 		console.error(error);
 		return {
-			code: "databaseWrapper/error", 
+			code: "db/error", 
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};

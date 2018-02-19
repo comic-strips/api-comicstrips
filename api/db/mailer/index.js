@@ -19,16 +19,21 @@ function dbMailerModule($imports) {
 	};
 
 	function onUsersList(records) {
-		const userMetadata = records.map((user)=> {
-			return db.ref(`${subTree}/meta/${user.uid}/entity`)
-			.once("value")
-			.then(snapshot=> {  
+		return db.ref(`${subTree}/meta/`).orderByChild("entity")
+		.once("value")
+		.then((snapshot)=> {
+			return Object.values(snapshot.val())
+			.reduce((prevObj, currObj)=> {
+				return Object.assign(prevObj, currObj);
+			}, {}); 
+		})
+		.then((userMetadata)=> {
+			return records.map((user)=> {
 				return Object.assign(user, {
-					entity: snapshot.val()
+					entity: userMetadata[user.uid].entity
 				});
 			});
 		});
-		return Promise.all(userMetadata);
 	};
 
 	function onBookingData(bookingData) {
@@ -45,7 +50,7 @@ function dbMailerModule($imports) {
 		return auth.getUser(customerId)
 		.then((userRecord)=> userRecord.toJSON())
 		.then((userRecord)=> {
-			return db.ref(`${subTree}/meta/${customerId}/entity`)
+			return db.ref(`${subTree}/meta/customers/${customerId}/entity`)
 			.once("value")
 			.then((snapshot)=> {
 				return Object.assign(userRecord, {

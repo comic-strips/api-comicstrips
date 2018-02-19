@@ -8,7 +8,7 @@ function dbAccountModule($imports) {
 
 	function requestAcctManager(booking) {
 		return assignAcctManager().then((acctManagerId)=> {
-			db.ref(`${subTree}/meta/`).update({
+			db.ref(`${subTree}/meta/accountManagers`).update({
 				[acctManagerId]: {entity: "accountManager"}
 			})
 			return db.ref(`${subTree}/accountManagers/${acctManagerId}`)
@@ -49,7 +49,7 @@ function dbAccountModule($imports) {
 	function onError(error) {
 		console.error(error);
 		return {
-			code: "accounts/error", 
+			code: "db/error", 
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};
