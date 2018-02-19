@@ -1,7 +1,7 @@
 { "__comments": "Configuration options for the top-level API module.",
 	"modules": [
 	"booking", 
-	"database-wrapper", 
+	"db", 
 	"accounts", 
 	"talent", 
 	"mailer",

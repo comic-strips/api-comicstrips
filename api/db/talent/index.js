@@ -4,6 +4,8 @@ function dbTalentModule($imports) {
 	const subTree = process.env.NODE_ENV;
 	const snapshotToArray = utils.snapshotToArray;
 
+	eventEmitter.on("db/talent:bookingCreated", onBookingCreated);
+
 	function getAvailableTalent(talentList) {
 	/* SOME LOGIC TO DETERMINE AVAILABILITY; SCHEDULING MODULE LIKELY COMES INTO PLAY HERE.*/
 		return [talentList[0].id];
@@ -17,30 +19,28 @@ function dbTalentModule($imports) {
 		return Promise.all(contactList).catch(onError);	
 	};
 
-	function onBookingCreated({bookingId, booking}) {
+	function onBookingCreated(booking) {
 		return db.ref(`${subTree}/talent`).once("value")
 		.then((snapshot)=> snapshotToArray(snapshot))
 		.then(getAvailableTalent)
 		.then(buildContactList)
 		.then((contactList)=> {
 			return eventEmitter.emit("sms:contactListCreated", {
-				bookingId, 
 				booking,
 				contactList
-			}).catch(onError);
+			})
+			.catch(onError);
 		}).catch(onError);
 	};
 
 	function onError(error) {
 		console.error(error);
 		return {
-			code: "databaseWrapper/error", 
+			code: "db/error", 
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};
 	};
-
-	eventEmitter.on("db/talent:bookingCreated", onBookingCreated);
 };
 
 module.exports = dbTalentModule;

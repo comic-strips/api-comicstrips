@@ -20,8 +20,7 @@ function dbAccountModule($imports) {
 
 	function onAccountManager(booking, dbsnapshot) {
 		const acctManagerId = dbsnapshot.key;
-		//const accountManagerData = dbsnapshot.val();
-		booking.bookingData.accountManagerId = acctManagerId;
+		booking.accountManagerId = acctManagerId;
 		return booking;
 	};
 

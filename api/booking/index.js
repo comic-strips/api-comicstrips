@@ -4,11 +4,11 @@ function bookingModule($imports) {
 
         app.post("/api/v1/bookings/create", (request, response)=> {
                 eventEmitter
-                        .emit("db/account:requestAcctManager", request.body)
-                        .then(onAccountManagerAssigned)
-                        .then(onBookingCreated.bind(null, response))
-                        .then(notifyTalent)
-                        .catch(onError);
+                    .emit("db/account:requestAcctManager", request.body)
+                    .then(onAccountManagerAssigned)
+                    .then(onBookingCreated.bind(null, response))
+                    .then(notifyTalent)
+                    .catch(onError);
         });
 
         function onAccountManagerAssigned(booking) {
@@ -17,7 +17,7 @@ function bookingModule($imports) {
 
         function onBookingCreated(response, data) {
                 if (!data.code) {
-                    response.json({bookingId: data.bookingId});
+                    response.json({bookingId: data.id});
                     return data;
                 }
                 response.status(500).json(data);
@@ -31,7 +31,7 @@ function bookingModule($imports) {
                                 .emit("mailer:bookingCreated", booking)
                                 .catch(onError);
                })
-               .then((booking)=> booking)
+               .then((booking)=> booking);
         }
 
         function onError(error) {

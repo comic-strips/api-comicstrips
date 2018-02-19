@@ -4,6 +4,9 @@ function mailerModule($imports) {
         const templateModule = require("./template");
         const dispatchModule = require("./dispatch")({templateModule});
 
+        eventEmitter.on("mailer:bookingConfirmed", onBookingConfirmed);
+        eventEmitter.on("mailer:bookingCreated", onBookingCreated);
+
         function onBookingConfirmed(booking) {
                 return eventEmitter
                         .emit("db/mailer:bookingConfirmed", booking.id)
@@ -15,19 +18,16 @@ function mailerModule($imports) {
                         .catch(onError);
         };
 
-        function onBookingCreated(bookingData) {
-                const { bookingId, booking } = bookingData
-
+        function onBookingCreated(booking) {
                 return eventEmitter
-                        .emit("db/mailer:onBookingCreated", 
-                                booking.bookingData.customerId)
+                        .emit("db/mailer:onBookingCreated", booking.customerId)
                         .then((customer)=> {
                                 dispatchModule.sendEmail(
                                         "bookingCreated",
                                         booking,
                                         [customer]
                                 );
-                                return bookingData;
+                                return booking;
                         })
                         .catch(onError);
         };
@@ -40,9 +40,6 @@ function mailerModule($imports) {
                         stack: error.stack.split("\n")
                 };
         };
-
-        eventEmitter.on("mailer:bookingConfirmed", onBookingConfirmed);
-        eventEmitter.on("mailer:bookingCreated", onBookingCreated);
 }
 
 module.exports = mailerModule;

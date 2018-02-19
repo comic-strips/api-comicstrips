@@ -9,6 +9,8 @@ function SMSModule($imports) {
         const { eventEmitter } = utils;
         const ejs = require("ejs");
 
+        eventEmitter.on("sms:contactListCreated", onContactListCreated);
+
         app.post("/api/v1/booking-offer", (request, response)=> {
                 /*check to see if booking offer is already accepted.*/
                 if (!request.body.Body.includes("ACCEPT")) {
@@ -37,11 +39,10 @@ function SMSModule($imports) {
                 return ejs.render(template, { data });
         };
 
-        function onContact(bookingId, booking, contact) {
+        function onContact(booking, contact) {
                 client.messages.create(Object.assign({}, {
                         body: buildSMSMessage(config.bookingOfferOutgoingMsg, {
                                 booking,
-                                bookingId,
                                 contact
                         }),
                         to: contact.phoneNumber,
@@ -49,9 +50,9 @@ function SMSModule($imports) {
                 })).catch(onError);
         };
 
-        function onContactListCreated({ booking, bookingId, contactList }) {
-                contactList.forEach(onContact.bind(null, bookingId, booking));
-                return { booking, bookingId };
+        function onContactListCreated({booking, contactList}) {
+                contactList.forEach(onContact.bind(null, booking));
+                return booking;
         };
 
         function parseOfferResponse({ messsageBody, from }) {
@@ -72,8 +73,6 @@ function SMSModule($imports) {
                         stack: error.stack.split("\n")
                 };
         };
-
-        eventEmitter.on("sms:contactListCreated", onContactListCreated);
 }
 
 module.exports = SMSModule;
