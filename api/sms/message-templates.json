@@ -1,3 +1,0 @@
-{ "__comments": "Tempates for outbound sms messages.",
-	"bookingOfferOutgoingMsg": "Hey <%=data.contact.displayName.split(\" \")[0]%>, we a have a gig for you at <%=new Date(data.booking.date).toLocaleTimeString('en-us')%> on <%=new Date(data.booking.date).toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}).slice(0, -6) %>! Reply ACCEPT with the booking id: <%=data.booking.bookingRefNumber%> to book this gig. Checkout http://localhost:5000/api/v1/booking?id=<%=data.booking.id%> for more details."
-}

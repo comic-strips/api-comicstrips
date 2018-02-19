@@ -1,22 +1,20 @@
 {"__comments": "Mock data objects for module development.",
-    "booking": { 
-      "bookingData": { 
-        "recipientId": "NOT/ISSUED",
-        "customerId": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
-        "talentId": "NOT/ISSUED",
-        "accountManagerId": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
-        "transactionId": null,
-        "bookingCreationDate": 1517919868428,
-        "bookingShortId": 60174,
-        "status": "PENDING",
-        "paymentStatus": "HELD",
-        "customizations": "Make it extra special.",
-        "products": ["Array"],
-        "time": "15:00",
-        "date": 123456780000,
-        "location": "[Object]",
-        "notes": "To be or not be. That is the question." 
-      },
+  "booking": { 
+    "recipientId": "NOT/ISSUED",
+    "customerId": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+    "talentId": "NOT/ISSUED",
+    "accountManagerId": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+    "transactionId": null,
+    "bookingCreationDate": 1517919868428,
+    "bookingShortId": 60174,
+    "status": "PENDING",
+    "paymentStatus": "HELD",
+    "customizations": "Make it extra special.",
+    "products": ["Array"],
+    "time": "15:00",
+    "date": 123456780000,
+    "location": "[Object]",
+    "notes": "To be or not be. That is the question.",
     "recipientData": { 
       "customerId": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
       "firstName": "Jackie",
@@ -24,9 +22,9 @@
       "email": "jackie@dodgers.la",
       "phoneNumber": "1-800-SAFE-AUTO",
       "bookings": ["Array"] 
-    } 
+    },
+    "id": "-L4f3knWqhwZ5HL6xfVs",
   },
-  "bookingId": "-L4f3knWqhwZ5HL6xfVs",
   "contactList": [{ 
     "uid": "xaBUn5pe82TbXuBt3oxDDEHxK0O2",
     "email": "testtalent@comicstrips.nyc",
