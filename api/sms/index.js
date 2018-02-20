@@ -8,6 +8,10 @@ function SMSModule($imports) {
 	const { app, utils } = $imports;
 	const { eventEmitter } = utils;
 	const ejs = require("ejs");
+	const $Event = new utils.EventFactory({
+        	type: "sms-event", 
+        	source: "smsModule"
+        });
 
 	eventEmitter.on("sms:contactListCreated", onContactListCreated);
 
@@ -59,10 +63,11 @@ function SMSModule($imports) {
 		const [, bookingRefNumber] = messsageBody.split(" ");
 		const talentPhoneNumber = from;
 
-		return eventEmitter.emit("db/booking:finalizeBooking", {
-			bookingRefNumber: parseInt(bookingRefNumber, 0),
-			talentPhoneNumber
-		});
+		return eventEmitter.emit("db/booking:finalizeBooking", 
+			new $Event({
+				bookingRefNumber: parseInt(bookingRefNumber,0), 
+				talentPhoneNumber
+			}));
 	};
 
 	function onError(error) {

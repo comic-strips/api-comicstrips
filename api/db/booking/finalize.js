@@ -17,20 +17,21 @@ function dbFinalizeModule($imports) {
 		return talentRef.once("value")
 		.then(onSubtreeIdListUpdate.bind(null, talentRef, booking.id))
 		.then(()=> {return booking});
-	}
+	};
 
 	function onFindUser(talentPhone, user) {
 		return user.phoneNumber === talentPhone;
-	}
+	};
 
-	function findPendingBooking(data, booking){
-		return booking.bookingRefNumber === data.bookingRefNumber && booking.status === "PENDING";
-	}
+	function findPendingBooking(eventData, booking) {
+		return booking.bookingRefNumber === eventData.payload.bookingRefNumber && booking.status === "PENDING";
+	};
 
-	function finalize(data) {
+	function finalize(eventData) {
 		/*payment happens during this phase*/
+
 		return auth.listUsers().then((list)=> {
-			const talentId = list.users.find(onFindUser.bind(null, data.talentPhoneNumber)).toJSON().uid;
+			const talentId = list.users.find(onFindUser.bind(null, eventData.payload.talentPhoneNumber)).toJSON().uid;
 			const bookingsRef = db.ref(`${subTree}/bookings`);
 
 			db.ref(`${subTree}/meta/talent`).update({
@@ -41,12 +42,12 @@ function dbFinalizeModule($imports) {
 			.once("value")
 			.then((snapshot)=> {
 				return snapshotToArray(snapshot)
-				.find(findPendingBooking.bind(null, data));
+				.find(findPendingBooking.bind(null, eventData));
 			})
 			.then(updatePaymentStatus.bind(null, talentId, bookingsRef))
 			.catch(onError)
 		});
-	}
+	};
 
 	function onError(error) {
 		console.error(error);
