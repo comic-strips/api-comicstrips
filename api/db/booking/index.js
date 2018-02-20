@@ -8,50 +8,51 @@ function dbBookingModule($imports) {
 
 	eventEmitter.on("db/booking:finalizeBooking", data=> finalizeModule.finalize(data));
 
-	eventEmitter.on("db/booking:createBooking", (booking)=> {
-		return pushBookingData(booking) 
+	eventEmitter.on("db/booking:createBooking", (eventData)=> {
+		return pushBookingData(eventData) 
 		.then(appendRecipientIdToBooking)
 		.then(appendBookingIdToAccountManager)
 		.then(appendBookingIdToCustomer)
 		.catch(onError);
 	});
 
-	function pushBookingData(booking) {
-		booking.bookingCreationDate = new Date().getTime();
-		booking.bookingRefNumber = Math.floor(Math.random() * 90000) + 10000;
-		const {recipientData, ...bookingDetails} = booking;
+	function pushBookingData(evt) {
+		evt.payload.bookingCreationDate = new Date().getTime();
+		evt.payload.bookingRefNumber = Math.floor(Math.random() * 90000) + 10000;
+		const {recipientData, ...bookingDetails} = evt.payload;
 		return db.ref(`${subTree}/bookings`).push(bookingDetails)
 		.then((ref)=> {
-			booking.recipientData.bookings.push(ref.key);
-			return Object.assign(booking, {id: ref.key});
+			evt.payload.recipientData.bookings.push(ref.key);
+			evt.payload.id = ref.key;
+			return evt;
 		}).catch(onError);
 	};
 
-	function appendRecipientIdToBooking(booking) {
-		return db.ref(`${subTree}/recipients`).push(booking.recipientData)
+	function appendRecipientIdToBooking(evt) {
+		return db.ref(`${subTree}/recipients`).push(evt.payload.recipientData)
 		.then((ref)=> {
-			return db.ref(`${subTree}/bookings/${booking.id}`)
+			return db.ref(`${subTree}/bookings/${evt.payload.id}`)
 			.update({recipientId: ref.key})
 			.then(()=> {
 				return db.ref(`${subTree}/meta/recipients`)
 				.update({[ref.key]: {entity: "recipient"}});
 			})
-			.then(()=> booking);
+			.then(()=> evt);
 		}).catch(onError);
 	};
 
-	function appendBookingIdToAccountManager(booking) {
+	function appendBookingIdToAccountManager(evt) {
 	/* MAKE DRY: SAME AS appendBookingIdToCustomer */
-		const accountManagerRef = db.ref(`${subTree}/accountManagers/${booking.accountManagerId}/bookingsPending`);
+		const accountManagerRef = db.ref(`${subTree}/accountManagers/${evt.payload.accountManagerId}/bookingsPending`);
 
 		return accountManagerRef.once("value")
-		.then(onSubtreeIdListUpdate.bind(null, accountManagerRef, booking.id))
-		.then(()=> booking);
+		.then(onSubtreeIdListUpdate.bind(null, accountManagerRef, evt.payload.id))
+		.then(()=> evt);
 	};
 
-	function appendBookingIdToCustomer(booking) {
+	function appendBookingIdToCustomer(evt) {
 	/* MAKE DRY: SAME AS appendBookingIdToAccountManager*/
-		const customerId = booking.customerId;
+		const customerId = evt.payload.customerId;
 		const customerRef = db.ref(`${subTree}/customers/${customerId}/bookings`);
 		db.ref(`${subTree}/meta/customers`).update({
 			[customerId]: {entity: "customer"}
@@ -61,9 +62,9 @@ function dbBookingModule($imports) {
 		.then(onSubtreeIdListUpdate.bind(
 			null, 
 			customerRef, 
-			booking.id
+			evt.payload.id
 		))
-		.then(()=> booking);
+		.then(()=> evt);
 	};
 
 	function onError(error) {
@@ -73,14 +74,6 @@ function dbBookingModule($imports) {
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};
-	};
-
-	function onFindUser(talentPhone, user) {
-		return user.phoneNumber === talentPhone;
-	};
-
-	function findingPendingBooking(data, booking){
-		return booking.bookingRefNumber === data.bookingRefNumber && booking.status === "PENDING";
 	};
 }
 

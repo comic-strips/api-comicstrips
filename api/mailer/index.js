@@ -18,16 +18,16 @@ function mailerModule($imports) {
                         .catch(onError);
         };
 
-        function onBookingCreated(booking) {
+        function onBookingCreated(eventData) {
                 return eventEmitter
-                        .emit("db/mailer:onBookingCreated", booking.customerId)
+                        .emit("db/mailer:onBookingCreated", eventData.payload.customerId)
                         .then((customer)=> {
                                 dispatchModule.sendEmail(
                                         "bookingCreated",
-                                        booking,
+                                        eventData.payload,
                                         [customer]
                                 );
-                                return booking;
+                                return eventData;
                         })
                         .catch(onError);
         };

@@ -6,22 +6,22 @@ function dbAccountModule($imports) {
 
 	eventEmitter.on("db/account:requestAcctManager", requestAcctManager);
 
-	function requestAcctManager(booking) {
+	function requestAcctManager(eventData) {
 		return assignAcctManager().then((acctManagerId)=> {
 			db.ref(`${subTree}/meta/accountManagers`).update({
 				[acctManagerId]: {entity: "accountManager"}
 			})
 			return db.ref(`${subTree}/accountManagers/${acctManagerId}`)
 			.once("value")
-			.then(onAccountManager.bind(null, booking))
+			.then(onAccountManager.bind(null, eventData))
 			.catch(onError);
 		}).catch(onError);
 	};
 
-	function onAccountManager(booking, dbsnapshot) {
+	function onAccountManager(eventData, dbsnapshot) {
 		const acctManagerId = dbsnapshot.key;
-		booking.accountManagerId = acctManagerId;
-		return booking;
+		eventData.payload.accountManagerId = acctManagerId;
+		return eventData;
 	};
 
 	function assignAcctManager() {
@@ -49,7 +49,7 @@ function dbAccountModule($imports) {
 	function onError(error) {
 		console.error(error);
 		return {
-			code: "db/error", 
+			code: "db/account:error", 
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};

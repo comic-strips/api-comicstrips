@@ -50,9 +50,9 @@ function SMSModule($imports) {
 		})).catch(onError);
 	};
 
-	function onContactListCreated({booking, contactList}) {
-		contactList.forEach(onContact.bind(null, booking));
-		return booking;
+	function onContactListCreated({eventData, contactList}) {
+		contactList.forEach(onContact.bind(null, eventData.payload));
+		return eventData;
 	};
 
 	function parseOfferResponse({ messsageBody, from }) {

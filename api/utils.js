@@ -40,7 +40,7 @@ function snapshotToArray(snapshot) {
 	}
 
 	return resArray.reverse();
-}
+};
 
 function onSubtreeIdListUpdate(ref, id, snapshot) {
 	const currentSnapshot = snapshot.val();
@@ -52,6 +52,61 @@ function onSubtreeIdListUpdate(ref, id, snapshot) {
 		ref.set(Array.from(idList));
 	}
 	return id;
-}
+};
 
-module.exports = {eventEmitter, snapshotToArray, onSubtreeIdListUpdate};
+function EventFactory({ type, source }) {
+	return function $Event() {
+		const [annotation, data] = arguments;
+		const date = new Date();
+		const eventDate = date.getTime();
+		const eventDateTime = date.toLocaleDateString("en-us") + " " +
+		 date.toLocaleTimeString("en-us", {
+		 	"timeZone": "America/New_York",
+		 });
+		function getStackTrace() {
+			let stack;
+
+			try {
+				throw new Error("");
+			} catch (error) {
+				stack = error.stack || "";
+			}
+
+			stack = stack.split("\n").map(function(line) {
+				return line.trim();
+			});
+			return stack.splice(stack[0] == "Error" ? 2 : 1);
+		}
+
+		return {
+			header: {
+				id: generateUUID(),
+				source: source || type,
+				type: type,
+				unixTime: eventDate,
+				timestamp: eventDateTime,
+				annotation:
+				typeof annotation === "string" ? annotation : "No event annotation."
+			},
+			payload: arguments.length < 2 ? arguments[0] : data,
+			trace: getStackTrace
+		};
+	};
+};
+
+function generateUUID() {
+	let d = new Date().getTime();
+	let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+	let r = (d + Math.random()*16)%16 | 0;
+	d = Math.floor(d/16);
+	return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+	});
+	return uuid;
+};
+
+module.exports = {
+	eventEmitter, 
+	snapshotToArray, 
+	onSubtreeIdListUpdate, 
+	EventFactory
+};

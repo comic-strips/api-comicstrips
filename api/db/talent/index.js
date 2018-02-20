@@ -19,14 +19,14 @@ function dbTalentModule($imports) {
 		return Promise.all(contactList).catch(onError);	
 	};
 
-	function onBookingCreated(booking) {
+	function onBookingCreated(eventData) {
 		return db.ref(`${subTree}/talent`).once("value")
 		.then((snapshot)=> snapshotToArray(snapshot))
 		.then(getAvailableTalent)
 		.then(buildContactList)
 		.then((contactList)=> {
 			return eventEmitter.emit("sms:contactListCreated", {
-				booking,
+				eventData,
 				contactList
 			})
 			.catch(onError);
@@ -36,7 +36,7 @@ function dbTalentModule($imports) {
 	function onError(error) {
 		console.error(error);
 		return {
-			code: "db/error", 
+			code: "db/talent:error", 
 			msg: error.message, 
 			stack: error.stack.split("\n")
 		};
