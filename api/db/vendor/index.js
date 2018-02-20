@@ -10,30 +10,46 @@ function dbVendorModule($imports) {
 		return eventData.payload;
 	};
 
-	function checkVendorProducts(booking, sku, vendor) {
-		if(vendor.products.includes(sku)) {
-			const vendorBookingsRef = db.ref(`${subTree}/vendors/${vendor.id}/bookings/${booking.id}`);
-			return vendorBookingsRef.once("value")
-			.then(onSubtreeIdListUpdate.bind(
-				null, 
-				vendorBookingsRef, 
-				sku
-			));
+	function checkVendorProducts(SKUMap, sku, vendor) {
+		if (vendor.products.includes(sku)) {
+			SKUMap[vendor.id][sku] ? SKUMap[vendor.id][sku]++ : SKUMap[vendor.id][sku] = 1;
 		}
-		return Promise.resolve()
-	}
+	};
+
+	function pushSKUList(SKUMap, booking, key) {
+		return db.ref(`${subTree}/vendors/${key}/bookings/${booking.id}`)
+		.update(SKUMap[key])
+	};
 
 	function appendProdSkusToBookings(booking) {
+		const productSKUMap = {};
 		return db.ref(`${subTree}/vendors`).once("value")
 		.then((snapshot)=> {
 			const vendorList = snapshotToArray(snapshot);
-			booking.products.map((sku)=> {
-				return Promise.all(vendorList.map(checkVendorProducts.bind(
-					null, 
-					booking,
-					sku
-				))).catch((e)=> console.error(e))
-			});
+			const vendorMap = vendorList
+			.reduce((obj, vendor)=> {
+				obj[vendor.id] = {};	
+				return obj;
+			}, {});
+
+			return booking.products
+			.reduce((SKUMap, currentSKU)=> {
+				vendorList.forEach(checkVendorProducts.bind(null, 
+					SKUMap,
+					currentSKU)
+				);
+				return SKUMap;
+			}, vendorMap);
+		})
+		.then((SKUMap)=> {
+			const allSKUs = Object.keys(SKUMap)
+			.map(pushSKUList.bind(
+				null, 
+				SKUMap,
+				booking)
+			);
+
+			Promise.all(allSKUs).then(()=> booking)
 		});
 	};
 };
