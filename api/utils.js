@@ -42,7 +42,18 @@ function snapshotToArray(snapshot) {
 	return resArray.reverse();
 };
 
+
+function onSubtreeIdListRemove(ref, id, snapshot) {
+/* TODO: MAKE DRY. REFACTOR SUCH THAT ONSUBTREELISTUPDATE CAN ADD OR DELTE FROM A LIST */
+	const currentSnapshot = snapshot.val();
+	const idList = new Set([].concat(currentSnapshot));
+	idList.delete(id);
+	ref.set(Array.from(idList));
+	return id;
+};
+
 function onSubtreeIdListUpdate(ref, id, snapshot) {
+/* TODO: MAKE DRY. REFACTOR SUCH THAT ONSUBTREELISTUPDATE CAN ADD OR DELTE FROM A LIST */
 	const currentSnapshot = snapshot.val();
 	if (!currentSnapshot) {
 		ref.set([id]);
@@ -96,10 +107,10 @@ function EventFactory({ type, source }) {
 
 function generateUUID() {
 	let d = new Date().getTime();
-	let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+	let uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
 	let r = (d + Math.random()*16)%16 | 0;
 	d = Math.floor(d/16);
-	return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+	return (c=="x" ? r : (r&0x3|0x8)).toString(16);
 	});
 	return uuid;
 };
@@ -107,6 +118,7 @@ function generateUUID() {
 module.exports = {
 	eventEmitter, 
 	snapshotToArray, 
-	onSubtreeIdListUpdate, 
+	onSubtreeIdListUpdate,
+	onSubtreeIdListRemove, 
 	EventFactory
 };

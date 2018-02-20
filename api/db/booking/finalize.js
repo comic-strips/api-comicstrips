@@ -1,7 +1,6 @@
 function dbFinalizeModule($imports) {
 	const {db, auth, utils} = $imports;
-	const snapshotToArray = utils.snapshotToArray;
-	const onSubtreeIdListUpdate = utils.onSubtreeIdListUpdate;
+	const {snapshotToArray, onSubtreeIdListUpdate, onSubtreeIdListRemove } = utils;
 	const subTree = process.env.NODE_ENV;
 
 	function updatePaymentStatus(talentId, bookingsRef, booking) {
@@ -36,11 +35,16 @@ function dbFinalizeModule($imports) {
 	};
 
 	function updateAcctManagerBookingsConfirmed(booking) {
-		console.log(booking)
-		const bookingsConfirmedRef = db.ref(`${subTree}/accountManagers/${booking.accountManagerId}/bookingsConfirmed`);
+		const acctManagersRef = db.ref(`${subTree}/accountManagers`);
+		const bookingsConfirmedRef = acctManagersRef.child(`${booking.accountManagerId}/bookingsConfirmed`);
+		const bookingsPendingRef = acctManagersRef.child(`${booking.accountManagerId}/bookingsPending`);
 
 		return bookingsConfirmedRef.once("value")
 		.then(onSubtreeIdListUpdate.bind(null, bookingsConfirmedRef, booking.id))
+		.then(()=> {
+			return bookingsPendingRef.once("value")
+			.then(onSubtreeIdListRemove.bind(null, bookingsPendingRef, booking.id));	
+		})
 		.then(()=> booking);
 	};
 
