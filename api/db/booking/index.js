@@ -3,7 +3,8 @@ function dbBookingModule($imports) {
 	const snapshotToArray = utils.snapshotToArray;
 	const eventEmitter = utils.eventEmitter;
 	const onSubtreeIdListUpdate = utils.onSubtreeIdListUpdate;
-	const finalizeModule = require("./finalize")(Object.assign($imports, {utils}));
+	const finalizeModule = require("./finalize")(Object.assign($imports, {utils
+	}));
 	const subTree = process.env.NODE_ENV;
 
 	eventEmitter.on("db/booking:finalizeBooking", data=> finalizeModule.finalize(data));

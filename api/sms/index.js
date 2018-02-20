@@ -16,7 +16,7 @@ function SMSModule($imports) {
 	eventEmitter.on("sms:contactListCreated", onContactListCreated);
 
 	app.post("/api/v1/booking-offer", (request, response)=> {
-		/*check to see if booking offer is already accepted.*/
+		/* TODO: CHECK TO SEE IF BOOKING OFFER IS ALREADY ACCEPTED.*/
 		if (!request.body.Body.includes("ACCEPT")) {
 			response.json({
 				code: "sms/offer-declined",
@@ -33,9 +33,9 @@ function SMSModule($imports) {
 			response.json({ bookingId: booking.id });
 			return booking;
 		})
-		.then((booking)=> {
+		/*.then((booking)=> {
 		       return eventEmitter.emit("mailer:bookingConfirmed",booking);
-		})
+		})*/
 		.catch(onError);
 	});
 

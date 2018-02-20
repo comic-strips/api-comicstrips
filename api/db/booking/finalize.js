@@ -1,6 +1,10 @@
 function dbFinalizeModule($imports) {
 	const {db, auth, utils} = $imports;
-	const {snapshotToArray, onSubtreeIdListUpdate, onSubtreeIdListRemove } = utils;
+	const {snapshotToArray, onSubtreeIdListUpdate, onSubtreeIdListRemove, EventFactory, eventEmitter } = utils;
+	const $Event = new EventFactory({
+        	type: "finalize-event", 
+        	source: "dbFinalizeModule"
+        })
 	const subTree = process.env.NODE_ENV;
 
 	function updatePaymentStatus(talentId, bookingsRef, booking) {
@@ -67,6 +71,12 @@ function dbFinalizeModule($imports) {
 				.find(findPendingBooking.bind(null, eventData));
 			})
 			.then(updatePaymentStatus.bind(null, talentId, bookingsRef))
+			.then((booking)=> {
+				return eventEmitter.emit(
+					"db/vendor:finalizeVendors", 
+					new $Event(booking)
+				);
+			})
 			.catch(onError)
 		});
 	};
