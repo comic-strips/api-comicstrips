@@ -16,7 +16,15 @@ function dbFinalizeModule($imports) {
 
 		return talentRef.once("value")
 		.then(onSubtreeIdListUpdate.bind(null, talentRef, booking.id))
-		.then(()=> {return booking});
+		.then(()=> {
+			return updateAcctManagerBookingsConfirmed(
+				Object.assign(booking, {
+					status: "CONFIRMED",
+					paymentStatus: "CHARGED",
+					talentId
+				}
+			));
+		});
 	};
 
 	function onFindUser(talentPhone, user) {
@@ -27,6 +35,15 @@ function dbFinalizeModule($imports) {
 		return booking.bookingRefNumber === eventData.payload.bookingRefNumber && booking.status === "PENDING";
 	};
 
+	function updateAcctManagerBookingsConfirmed(booking) {
+		console.log(booking)
+		const bookingsConfirmedRef = db.ref(`${subTree}/accountManagers/${booking.accountManagerId}/bookingsConfirmed`);
+
+		return bookingsConfirmedRef.once("value")
+		.then(onSubtreeIdListUpdate.bind(null, bookingsConfirmedRef, booking.id))
+		.then(()=> booking);
+	};
+
 	function finalize(eventData) {
 		/*payment happens during this phase*/
 
@@ -34,6 +51,7 @@ function dbFinalizeModule($imports) {
 			const talentId = list.users.find(onFindUser.bind(null, eventData.payload.talentPhoneNumber)).toJSON().uid;
 			const bookingsRef = db.ref(`${subTree}/bookings`);
 
+			/* TODO: TALENT CREATION MODULE */
 			db.ref(`${subTree}/meta/talent`).update({
 				[talentId]: {entity: "talent"}
 			});

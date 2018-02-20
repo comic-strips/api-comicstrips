@@ -8,6 +8,7 @@ function dbAccountModule($imports) {
 
 	function requestAcctManager(eventData) {
 		return assignAcctManager().then((acctManagerId)=> {
+			/*TODO: MOVE TO ACCOUNTMANAGER CREATION MODULE WHEN BUILT*/
 			db.ref(`${subTree}/meta/accountManagers`).update({
 				[acctManagerId]: {entity: "accountManager"}
 			})
