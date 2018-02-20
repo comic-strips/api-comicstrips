@@ -93,7 +93,7 @@ address string
 bookings array Fk -< Booking.id
 surveyTaken boolean
 surveyId string
-notes varchar
+billingId string
 PAYMENTINFO 
 cardNumber string
 cardType string
@@ -118,8 +118,7 @@ bookings Fk -< Booking.id
 firstName string
 lastName string
 email string
-phoneNumber string
-notes
+phoneNumber strin
 CUSTOMIZATIONS
 field(s) TBD
 notes varchar
@@ -177,4 +176,14 @@ name string
 type string
 price string
 
-
+Vendor 
+---
+#Description:
+id PK string
+name string
+phone string
+email string
+bookings array FK -< Booking.id
+products array FK -< Product.id
+contactFirstName string
+contactLastName string
