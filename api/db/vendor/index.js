@@ -6,7 +6,11 @@ function dbVendorModule($imports) {
 	eventEmitter.on("db/vendor:finalizeVendors", vendorConfirmationPipeline);
 
 	function vendorConfirmationPipeline(eventData) {
-		appendProdSkusToBookings(eventData.payload);
+		appendProdSkusToBookings(eventData.payload)
+		.then(({SKUMap, booking})=> {
+			db.ref(`${subTree}/bookings/${booking.id}/vendors/`)
+			.set(Object.keys(SKUMap));
+		});
 		return eventData.payload;
 	};
 
@@ -49,7 +53,9 @@ function dbVendorModule($imports) {
 				booking)
 			);
 
-			Promise.all(allSKUs).then(()=> booking)
+			return Promise.all(allSKUs).then(()=> {
+				return { SKUMap, booking }
+			});
 		});
 	};
 };
