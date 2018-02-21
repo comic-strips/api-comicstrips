@@ -3,6 +3,7 @@ function databaseWrapper($imports) {
         const dbBookingModule = require("./booking")($imports);
         const dbTalentModule = require("./talent")($imports);
         const dbVendorModule = require("./vendor")($imports);
+        const dbUserModule = require("./user")($imports);
         const dbMailer = require("./mailer")($imports);
 }
 

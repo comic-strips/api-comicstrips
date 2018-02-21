@@ -7,11 +7,13 @@ function dbVendorModule($imports) {
 
 	function vendorConfirmationPipeline(eventData) {
 		appendProdSkusToBookings(eventData.payload)
-		.then(({SKUMap, booking})=> {
-			db.ref(`${subTree}/bookings/${booking.id}/vendors/`)
-			.set(Object.keys(SKUMap));
-		});
+		.then(appendVendorIdsToBooking);
 		return eventData.payload;
+	};
+
+	function appendVendorIdsToBooking({SKUMap, booking}) {
+		return db.ref(`${subTree}/bookings/${booking.id}/vendors/`)
+		.set(Object.keys(SKUMap));
 	};
 
 	function checkVendorProducts(SKUMap, sku, vendor) {
