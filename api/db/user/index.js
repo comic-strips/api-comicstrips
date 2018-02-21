@@ -12,9 +12,9 @@ function dbUserModule($imports) {
 
 		return auth.updateUser(eventData.payload.user.id, 
 			eventData.payload.user)
-		.then((userRecord)=> userRecord.toJSON().uid)
-		.then((uid)=> metaDataRef.update({entity: eventData.payload.meta.entity});
-		})
+		.then(userRecord=> userRecord.toJSON().uid)
+		.then(uid=> metaDataRef
+			.update({entity: eventData.payload.meta.entity}))
 		.catch(onError);
 	};
 
@@ -33,6 +33,5 @@ function dbUserModule($imports) {
 		};
 	};
 };
-
 
 module.exports = dbUserModule;

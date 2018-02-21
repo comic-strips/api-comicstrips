@@ -2,6 +2,7 @@ function dbMailerModule($imports) {
 	const {app, auth, db, utils} = $imports;
 	const eventEmitter = utils.eventEmitter;
 	const subTree = process.env.NODE_ENV;
+	const allowedKeys = ["customerId", "accountManagerId", "talentId"];
 
 	eventEmitter.on("db/mailer:bookingConfirmed", onBookingConfirmed);
 	eventEmitter.on("db/mailer:onBookingCreated", onBookingCreated);
@@ -38,7 +39,7 @@ function dbMailerModule($imports) {
 
 	function onBookingData(bookingData) {
 		return Object.keys(bookingData)
-		.filter(key=> key.includes("Id") && key !== "recipientId")
+		.filter(key=> allowedKeys.includes(key))
 		.map(key=> bookingData[key])
 		.map(userId=> {
 			return auth.getUser(userId)

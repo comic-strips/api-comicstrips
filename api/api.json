@@ -1,10 +1,11 @@
 { "__comments": "Configuration options for the top-level API module.",
 	"modules": [
+	"accounts",
 	"booking", 
 	"db", 
-	"accounts", 
-	"talent", 
 	"mailer",
+	"queue",
 	"sms",
+	"talent", 
 	"user"
 ]}
