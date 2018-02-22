@@ -117,7 +117,6 @@ function generateUUID() {
 
 
 function flatten(array) {
-	console.log("flatten");
 	return Array.isArray(array) ? [].concat.apply([], array.map(flatten)) : array;
 };
 

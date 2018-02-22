@@ -4,8 +4,10 @@
 	"booking", 
 	"db", 
 	"mailer",
+	"payments",
 	"queue",
 	"sms",
 	"talent", 
-	"user"
+	"user",
+	"vendor"
 ]}

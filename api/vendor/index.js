@@ -2,10 +2,10 @@ function vendorModule($imports) {
         const { app, utils } = $imports;
         const eventEmitter = utils.eventEmitter;
         
-        eventEmitter.on("notifyVendors", onNotifyVendors);
+        eventEmitter.on("vendor:bookingConfirmed", onBookingConfirmed);
 
-        function onNotifyVendors() {
-            
+        function onBookingConfirmed(eventData) {
+            eventEmitter.emit("db/vendor:bookingConfirmed", eventData);
         }
         
         function onError(error) {
@@ -18,4 +18,4 @@ function vendorModule($imports) {
         };
 };
 
-module.exports = jobQueueModule;
+module.exports = vendorModule;

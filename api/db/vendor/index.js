@@ -2,8 +2,12 @@ function dbVendorModule($imports) {
 	const {utils, db} = $imports;
 	const {eventEmitter, snapshotToArray, onSubtreeIdListUpdate} = utils;
 	const subTree = process.env.NODE_ENV;
+	const order = require("./order")($imports);
 
 	eventEmitter.on("db/vendor:finalizeVendors", vendorConfirmationPipeline);
+
+	eventEmitter.on("db/vendor:bookingConfirmed", 
+		order.createFulfillmentRequest);
 
 	function vendorConfirmationPipeline(eventData) {
 		appendProdSkusToBookings(eventData.payload)
