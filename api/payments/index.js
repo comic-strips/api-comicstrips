@@ -1,5 +1,6 @@
 function paymentsModule($imports) {
     const { app, utils } = $imports;
+    const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY_TEST);
     const eventEmitter = utils.eventEmitter;
     
     eventEmitter.on("payments:createOrder", onCreateOrder);

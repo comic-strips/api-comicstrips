@@ -1,14 +1,15 @@
 function orderModule($imports) {
 	const {db, utils} = $imports;
 	const subTree = process.env.NODE_ENV;
-	const {eventEmitter} = utils;
+	const {eventEmitter, flatten} = utils;
         
         function createFulfillmentRequest(eventData) {
         	const vendorSKUList = eventData.payload.vendors
         	.map(getVendorSKUs.bind(null, eventData.payload.id));
 
         	return Promise.all(vendorSKUList)
-        	.then(onVendorSKUList);
+        	.then(createOrderItems)
+        	.then(onVendorSKUList)
         };
 
         function getVendorSKUs(bookingId, vendorId) {
@@ -30,6 +31,21 @@ function orderModule($imports) {
 
         function onVendorSKUList(orderData) {
         	return eventEmitter.emit("payments:createOrder", orderData);
+        };
+
+        function createOrderItems(orderData) {
+        	const items = orderData.map((order)=> {
+			return Object.keys(order.skuList)
+			.map((sku) => {
+				return {
+					type: "sku", 
+					parent: sku, 
+					quantity: order.skuList[sku]
+				};
+			});
+		});
+
+		return Object.assign(orderData, {items: utils.flatten(items)});
         };
 
         return {createFulfillmentRequest}
