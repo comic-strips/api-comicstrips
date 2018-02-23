@@ -4,33 +4,68 @@ function orderModule($imports) {
 	const {eventEmitter, flatten} = utils;
         
         function createFulfillmentRequest(eventData) {
-        	const vendorSKUList = eventData.payload.vendors
-        	.map(getVendorSKUs.bind(null, eventData.payload.id));
+        	const vendorSKUList = eventData.payload.products
+        	.map(getVendorIds.bind(null, eventData.payload));
 
         	return Promise.all(vendorSKUList)
-        	.then(createOrderItems)
-        	.then(onVendorSKUList)
+        	.then((data)=> data)
+        	.then(prepareVendorOrders)
+        	.then((data)=> {
+        		const orders = Object.keys(data).map((key)=> {
+        			return eventEmitter.emit("payments:createOrder", data[key]);
+        		});
+
+        		Promise.all(orders).then(data=> console.log(data));
+        	});
         };
 
-        function getVendorSKUs(bookingId, vendorId) {
-		return db.ref(`${subTree}/vendors/${vendorId}/bookings/${bookingId}`)
+        function getVendorIds(booking, product) {
+		return db.ref(`${subTree}/skus/${product.sku}`)
 		.once("value")
 		.then(snapshot=> snapshot.val())
-		.then((skuList)=> { 
-			return {skuList, vendorId, bookingId}
-		})
-		.then((orderData)=> {
-			return db.ref(`${subTree}/meta/vendors/${vendorId}`)
+		.then(vendorId=> vendorId)
+		.then((sku)=> {
+			return db.ref(`${subTree}/meta/vendors/${sku.vendor}/entity`)
 			.once("value")
 			.then((snapshot)=> snapshot.val())
-			.then((entityData)=> {
-				return Object.assign(orderData, entityData);
+			.then((entity)=> {
+				return Object.assign(sku, {
+					entity, 
+					parent: product.sku,
+					type: "sku"
+				})
+			});
+		})
+		.then((productData)=> {
+			return db.ref(`${subTree}/bookings/${booking.id}/products`).once("value")
+			.then(snapshot=> snapshot.val())
+			.then((productList)=> {
+				const product = productList.find((item)=> {
+					return item.sku === productData.parent;
+				});
+				return Object.assign(productData, product);
 			});
 		});
         };
 
         function onVendorSKUList(orderData) {
         	return eventEmitter.emit("payments:createOrder", orderData);
+        };
+
+        function createProductContainer(productList) {
+		return productList.reduce((container, product)=> {
+			container[product.vendor] = [];
+			return container;
+		}, {});
+	};
+
+        function prepareVendorOrders(productList) {
+        	const container = createProductContainer(productList);
+	        productList.forEach((item)=> {
+	  		let {entity, vendor, attributes, sku, ...stripeItemDetails} = item;
+	 		container[item.vendor].push(stripeItemDetails);
+		});
+		return container;
         };
 
         function createOrderItems(orderData) {

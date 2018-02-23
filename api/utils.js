@@ -8,6 +8,7 @@ const eventEmitter = new events.EventEmitter();
 const _emit = events.EventEmitter.prototype.emit;
 
 eventEmitter.emit = function(name, data) {
+	console.log(name)
 	function mailman(address, envelope) {
 		_emit.call(address, name, envelope);
 	}

@@ -6,8 +6,18 @@ function paymentsModule($imports) {
     eventEmitter.on("payments:createOrder", onCreateOrder);
 
     function onCreateOrder(orderData) {
-        console.log("creating order...", orderData);   
-    }
+        stripe.orders.create({
+            currency: "usd",
+            items: orderData,
+            email: "accounts@comicstrips.nyc"
+        }, (err, order)=> {
+            if (err) {
+                onError(err);
+                return;
+            }
+            console.log(order);
+        });
+    };
     
     function onError(error) {
         console.error(error);
