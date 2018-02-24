@@ -3,47 +3,49 @@ function dbMailerModule($imports) {
 	const eventEmitter = utils.eventEmitter;
 	const subTree = process.env.NODE_ENV;
 	const allowedKeys = ["customerId", "accountManagerId", "talentId"];
+	const entityKeyMap = {
+		customerId: "customers",
+		accountManagerId: "accountManagers",
+		talentId: "talent" 
+	}
 
 	eventEmitter.on("db/mailer:bookingConfirmed", onBookingConfirmed);
 	eventEmitter.on("db/mailer:onBookingCreated", onBookingCreated);
 
 	function onBookingConfirmed(bookingId) {
-		return db.ref(`${subTree}/bookings/${bookingId}`).once("value")
+		return db.ref(`${subTree}/bookings/${bookingId}`)
+		.once("value")
 		.then(snapshot=> snapshot.val())
 		.then(onBookingData)
+		.then(onUserIdList)
 		.then((userList)=> {
 			return Promise.all(userList)
-			.then(onUsersList)
+			.then(userList=> userList)
 			.catch(onError);
 		})
 		.catch(onError);
 	};
 
-	function onUsersList(records) {
-		return db.ref(`${subTree}/meta/`).orderByChild("entity")
-		.once("value")
-		.then((snapshot)=> {
-			return Object.values(snapshot.val())
-			.reduce((prevObj, currObj)=> {
-				return Object.assign(prevObj, currObj);
-			}, {}); 
-		})
-		.then((userMetadata)=> {
-			return records.map((user)=> {
-				return Object.assign(user, {
-					entity: userMetadata[user.uid].entity
-				});
-			});
-		});
-	};
-
 	function onBookingData(bookingData) {
 		return Object.keys(bookingData)
 		.filter(key=> allowedKeys.includes(key))
-		.map(key=> bookingData[key])
-		.map(userId=> {
-			return auth.getUser(userId)
-			.then(userRecord=> userRecord.toJSON());
+		.map(key=> Object.assign({}, {userId: bookingData[key], key}))
+	};
+
+	function onUserIdList(userIdList) {
+		return userIdList.map(onUserId)
+	};
+
+	function onUserId({userId, key}) {
+		const metadataRef = db.ref(`${subTree}/meta/`);
+		return auth.getUser(userId)
+		.then(userRecord=> userRecord.toJSON())
+		.then((userRecord)=> {
+			return metadataRef
+			.child(`${entityKeyMap[key]}/${userRecord.uid}`)
+			.once("value")
+			.then(snapshot=> snapshot.val())
+			.then(entity=> Object.assign(userRecord, entity));
 		});
 	};
 
