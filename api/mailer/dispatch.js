@@ -23,6 +23,7 @@ function dispatchModule($imports) {
         };
 
         function sendEmail(type, data, addresseeList) {
+                console.log({data});
                 addresseeList.forEach((addressee)=> {
                         mailgun.messages().send({
                                 subject: templateMap[type][addressee.entity].subject,
