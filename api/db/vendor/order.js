@@ -20,9 +20,15 @@ function dbOrderModule($imports) {
         };
 
         function onOrderSubmit(apiResponseData) {
+        	const orders = apiResponseData.map((order)=> {
+        		order.items = order.items.filter((item)=> {
+        			return item.amount !== 0;
+        		});
+        		return order;
+        	});
         	eventEmitter.emit("jobqueue:enqueue", [{
 			task: function(done) {
-				eventEmitter.emit("mailer:vendorOrderCreated", apiResponseData);
+				eventEmitter.emit("mailer:vendorOrderCreated", orders);
 				done();
 			},
 			shouldStart: function() {

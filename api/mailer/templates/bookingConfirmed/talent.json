@@ -1,3 +1,0 @@
-{	"__comments": "Email template for talent notification on a booking confimation.",
-	"body": "<h1>This is happening, TALENT! <%=booking.id%></h1>"
-}

@@ -1,3 +1,0 @@
-{	"__comments": "Email template for account manager notification on a booking confirmation.",
-	"body": "<h1>This is happening, ACCOUNT MANAGER! <%=booking.id%></h1>"
-}
