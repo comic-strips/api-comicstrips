@@ -1,4 +1,9 @@
 { "__comments": "Configuration options for the top-level API module.",
+	"vendors": { 
+		"__comments": "Configuration options vendor module.",
+		"pushVendorOrderConfirmationsAt": "0:13",
+		"replyTo": "orders@comicstrips.nyc"
+	},
 	"modules": [
 	"accounts",
 	"booking", 

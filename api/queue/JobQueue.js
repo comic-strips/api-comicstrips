@@ -13,6 +13,7 @@ function JobQueue($imports) {
 		if (!isRunning) {
 			isRunning = true;
 			jobRunner = setInterval(()=> {
+				console.log(`Waiting for (${jobQueue.length}) queued job(s)...`);
 				if (jobQueue.length === 0) {
 					stop();
 					return;
@@ -29,7 +30,7 @@ function JobQueue($imports) {
 	};
 
 	function stop() {
-		console.log(`Queue stopped at ${new Date().toString()}`);
+		console.log(`Queue stopped.`);
 		clearInterval(jobRunner);
 		isRunning = false;
 	};

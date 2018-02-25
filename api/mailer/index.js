@@ -6,6 +6,7 @@ function mailerModule($imports) {
 
         eventEmitter.on("mailer:bookingConfirmed", onBookingConfirmed);
         eventEmitter.on("mailer:bookingCreated", onBookingCreated);
+        eventEmitter.on("mailer:vendorOrderCreated", onVendorOrderCreated);
 
         function onBookingConfirmed(booking) {
                 return eventEmitter
@@ -30,6 +31,10 @@ function mailerModule($imports) {
                                 return eventData;
                         })
                         .catch(onError);
+        };
+
+        function onVendorOrderCreated(data) {
+                console.log(data);
         };
 
         function onError(error) {

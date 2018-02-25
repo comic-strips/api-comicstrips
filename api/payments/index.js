@@ -6,17 +6,24 @@ function paymentsModule($imports) {
     eventEmitter.on("payments:createOrder", onCreateOrder);
 
     function onCreateOrder(orderData) {
+        const {email, vendor, entity, attributes} = orderData[0];
+
         const promise = new Promise((resolve, reject)=> {
             stripe.orders.create({
                 currency: "usd",
-                items: orderData,
-                email: "accounts@comicstrips.nyc"
-            }, onAPIResponse.bind(null, resolve));
-        });
+                items: orderData.map(filterStripeOrderAPIProps),
+                email: email
+            }, onAPIResponse.bind(null, {vendor, entity, attributes}, resolve));
+        })
         return promise;
     };
+
+    function filterStripeOrderAPIProps(order) {
+        let {entity, email, vendor, attributes, sku, ...orderDetails} = order;
+        return orderDetails;
+    };
     
-    function onAPIResponse(resolve, err, order) {
+    function onAPIResponse(metadata, resolve, err, order) {
         if (err) {
             onError(error);
         } else {
@@ -25,6 +32,7 @@ function paymentsModule($imports) {
                 amount: order.amount,
                 created: order.created,
                 items: order.items,
+                metadata
             });
         }
     }; 

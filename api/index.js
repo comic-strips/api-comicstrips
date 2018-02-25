@@ -5,12 +5,12 @@ function backendModule($imports) {
 	const {modules} = config;
 
 	function loadModule(module) {
-		require(`./${module}`)(Object.assign($imports, {utils}));
-	}
+		require(`./${module}`)(Object.assign($imports, {config, utils}));
+	};
 
 	function start() {
 		modules.forEach(loadModule);
-	}
+	};
 
 	return {start}
 }

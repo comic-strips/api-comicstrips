@@ -66,7 +66,7 @@ function SMSModule($imports) {
 		const talentPhoneNumber = from;
 
 		return eventEmitter.emit("db/booking:finalizeBooking", 
-			new $Event({
+			new $Event("Assigns talent to a booking; charges customer.", {
 				bookingRefNumber: parseInt(bookingRefNumber,0), 
 				talentPhoneNumber
 			}));

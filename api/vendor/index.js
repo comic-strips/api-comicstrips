@@ -6,7 +6,7 @@ function vendorModule($imports) {
 
         function onBookingConfirmed(eventData) {
             eventEmitter.emit("db/vendor:bookingConfirmed", eventData);
-        }
+        };
         
         function onError(error) {
             console.error(error);

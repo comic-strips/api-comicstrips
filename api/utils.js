@@ -8,7 +8,7 @@ const eventEmitter = new events.EventEmitter();
 const _emit = events.EventEmitter.prototype.emit;
 
 eventEmitter.emit = function(name, data) {
-	console.log(name)
+	console.log(`Event emitted: ${name} @ ${new Date().toLocaleTimeString("en-us", {"timeZone": "America/New_York"})}`);
 	function mailman(address, envelope) {
 		_emit.call(address, name, envelope);
 	}
@@ -116,6 +116,10 @@ function generateUUID() {
 	return uuid;
 };
 
+function createTimeStamp(timeString) {
+	const notificationTime = `${new Date().toLocaleDateString()} ${timeString}`;
+	return new Date(notificationTime);
+};
 
 function flatten(array) {
 	return Array.isArray(array) ? [].concat.apply([], array.map(flatten)) : array;
@@ -127,5 +131,6 @@ module.exports = {
 	onSubtreeIdListUpdate,
 	onSubtreeIdListRemove, 
 	EventFactory,
-	flatten
+	flatten,
+	createTimeStamp
 };

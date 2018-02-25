@@ -4,9 +4,10 @@ function jobQueueModule($imports) {
         const JobQueue = require("./JobQueue");
         const jq = new JobQueue();
 
-        eventEmitter.on("queue:enqueue", onEnqueue);
+        eventEmitter.on("jobqueue:enqueue", onEnqueue);
 
         function onEnqueue(taskData) {
+            console.log(taskData);
         	jq.push(taskData);
         };
         
