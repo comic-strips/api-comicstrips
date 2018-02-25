@@ -28,6 +28,7 @@ function paymentsModule($imports) {
             onError(error);
         } else {
             resolve({
+                id: order.id,
                 email: order.email,
                 amount: order.amount,
                 created: order.created,

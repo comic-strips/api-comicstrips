@@ -24,7 +24,7 @@ function mailerModule($imports) {
                         .emit("db/mailer:onBookingCreated", eventData.payload.customerId)
                         .then((customer)=> {
                                 dispatchModule.sendEmail(
-                                        "bookingCreated",
+                                        "bookingCreated", 
                                         eventData.payload,
                                         [customer]
                                 );
@@ -33,8 +33,17 @@ function mailerModule($imports) {
                         .catch(onError);
         };
 
-        function onVendorOrderCreated(data) {
-                console.log(data);
+        function onVendorOrderCreated(apiResponseData) {
+                apiResponseData.forEach((response)=> {
+                        dispatchModule.sendEmail(
+                                "vendorOrderCreated", 
+                                response, 
+                                [{
+                                 email: response.email, 
+                                 entity: response.metadata.entity
+                                }]
+                        ) 
+                });
         };
 
         function onError(error) {

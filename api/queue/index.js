@@ -7,7 +7,6 @@ function jobQueueModule($imports) {
         eventEmitter.on("jobqueue:enqueue", onEnqueue);
 
         function onEnqueue(taskData) {
-            console.log(taskData);
         	jq.push(taskData);
         };
         

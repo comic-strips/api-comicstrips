@@ -20,13 +20,14 @@ function dispatchModule($imports) {
                         return;
                 }
                 //console.log(body);
-        }
+        };
 
         function sendEmail(type, data, addresseeList) {
                 addresseeList.forEach((addressee)=> {
                         mailgun.messages().send({
                                 subject: templateMap[type][addressee.entity].subject,
                                 from: templateMap[type][addressee.entity].sender,
+                                //to: addressee.email [IN PRODUCTION]
                                 to: process.env.MAILER_TEST_USER,
                                 html: templateModule.getTemplate({
                                         entity: addressee.entity,
@@ -35,7 +36,7 @@ function dispatchModule($imports) {
                                 })
                         }, onSend);
                 });
-        }
+        };
 
         function onError(error) {
                 console.error(error);
@@ -44,9 +45,9 @@ function dispatchModule($imports) {
                         msg: error.message,
                         stack: error.stack.split("\n")
                 };
-        }
+        };
 
         return { sendEmail };
-}
+};
 
 module.exports = dispatchModule;

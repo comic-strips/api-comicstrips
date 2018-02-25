@@ -4,6 +4,13 @@
 		"bookingCreated": "noreply@comicstrips.nyc"
 	},
 	"templates": {
+		"vendorOrderCreated": {
+			"vendor": {
+				"template": "./templates/vendorOrderCreated/vendor.json",
+				"sender": "vendors@comicstrips.nyc",
+				"subject": "ComicStrips NYC: New Order"
+			}
+		},
 		"bookingCreated": {
 			"customer": {
 				"template": "./templates/bookingCreated/customer.json",
