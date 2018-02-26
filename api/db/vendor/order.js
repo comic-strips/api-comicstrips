@@ -11,21 +11,33 @@ function dbOrderModule($imports) {
         	.then((data)=> data)
         	.then(prepareVendorOrders)
         	.then((data)=> {
+        		//console.log("preparedOrderData:", data);
         		const orders = Object.keys(data).map((key)=> {
         			return eventEmitter.emit("payments:createOrder", data[key]);
         		});
 
-        		Promise.all(orders).then(onOrderSubmit);
+        		Promise.all(orders).then(onOrderSubmit.bind(null, data));
         	});
         };
 
-        function onOrderSubmit(apiResponseData) {
+        function onOrderSubmit(skuRef, apiResponseData) {
+        	apiResponseData.forEach((order)=> {
+        		order.items.forEach((item, idx)=> {
+        			let sku = skuRef[order.metadata.vendor].find((sku)=> item.parent === sku.parent);
+        			if (sku) {
+        				item.attributes = sku.attributes;
+        			}
+        		});
+        	});
+
+
         	const orders = apiResponseData.map((order)=> {
         		order.items = order.items.filter((item)=> {
         			return item.amount !== 0;
         		});
         		return order;
         	});
+
         	eventEmitter.emit("jobqueue:enqueue", [{
 			task: function(done) {
 				eventEmitter.emit("mailer:vendorOrderCreated", orders);
@@ -53,6 +65,13 @@ function dbOrderModule($imports) {
 					type: "sku",
 					vendor: sku.vendor
 				});
+			});
+		})
+		.then((productData)=> {
+			return db.ref(`${subTree}/vendors/${productData.vendor}`).once("value")
+			.then(snapshot=> snapshot.val())
+			.then((vendorData)=> {
+				return Object.assign(productData, {businessName: vendorData.businessName});
 			});
 		})
 		.then((productData)=> {

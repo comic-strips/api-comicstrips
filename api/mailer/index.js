@@ -9,50 +9,50 @@ function mailerModule($imports) {
         eventEmitter.on("mailer:vendorOrderCreated", onVendorOrderCreated);
 
         function onBookingConfirmed(booking) {
-                return eventEmitter
-                        .emit("db/mailer:bookingConfirmed", booking.id)
-                        .then(dispatchModule.sendEmail.bind(
-                                null, 
-                                "bookingConfirmed",
-                                booking)
-                        )
-                        .catch(onError);
+            return eventEmitter
+                    .emit("db/mailer:bookingConfirmed", booking.id)
+                    .then(dispatchModule.sendEmail.bind(
+                            null, 
+                            "bookingConfirmed",
+                            booking)
+                    )
+                    .catch(onError);
         };
 
         function onBookingCreated(eventData) {
-                return eventEmitter
-                        .emit("db/mailer:onBookingCreated", eventData.payload.customerId)
-                        .then((customer)=> {
-                                dispatchModule.sendEmail(
-                                        "bookingCreated", 
-                                        eventData.payload,
-                                        [customer]
-                                );
-                                return eventData;
-                        })
-                        .catch(onError);
+            return eventEmitter
+                    .emit("db/mailer:onBookingCreated", eventData.payload.customerId)
+                    .then((customer)=> {
+                            dispatchModule.sendEmail(
+                                    "bookingCreated", 
+                                    eventData.payload,
+                                    [customer]
+                            );
+                            return eventData;
+                    })
+                    .catch(onError);
         };
 
         function onVendorOrderCreated(apiResponseData) {
-                apiResponseData.forEach((response)=> {
-                        dispatchModule.sendEmail(
-                                "vendorOrderCreated", 
-                                response, 
-                                [{
-                                 email: response.email, 
-                                 entity: response.metadata.entity
-                                }]
-                        ) 
-                });
+            apiResponseData.forEach((response)=> {
+                    dispatchModule.sendEmail(
+                            "vendorOrderCreated", 
+                            response, 
+                            [{
+                             email: response.email, 
+                             entity: response.metadata.entity
+                            }]
+                    ) 
+            });
         };
 
         function onError(error) {
-                console.error(error);
-                return {
-                        code: "mailer:error",
-                        msg: error.message,
-                        stack: error.stack.split("\n")
-                };
+            console.error(error);
+            return {
+                    code: "mailer:error",
+                    msg: error.message,
+                    stack: error.stack.split("\n")
+            };
         };
 }
 

@@ -202,7 +202,7 @@ table[class=hide], img[class=hide], td[class=hide] {
                                             <td align="center">&nbsp;</td>
                                           </tr>
                                           <tr>
-                                            <td height="10" bgcolor="#1f3ca6" class="contents" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px"></td>
+                                            <td height="20" bgcolor="#1f3ca6" class="contents" style="width:100%; border-top-left-radius:10px; border-top-right-radius:10px"></td>
                                           </tr>
                                         </table></td>
                                     </tr>
@@ -286,7 +286,7 @@ table[class=hide], img[class=hide], td[class=hide] {
                 <table class="one-column" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing:0" bgcolor="#FFFFFF">
                   <tr>
                     <td align="left" style="padding:0px 40px 40px 40px"><p style="color:#5b5f65; font-size:28px; text-align:left; font-family: Verdana, Geneva, sans-serif">You got an order!</p>
-                      <p style="color:#5b5f65; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif">Hey ${Vendor}, we've got an upcoming booking that includes some of your products. <br /> 
+                      <p style="color:#5b5f65; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif">Hey <strong><%=data.metadata.businessName%></strong>, we've got an upcoming booking that includes some of your products. <br /> 
                         <br /> Below you'll find a line-item description of all the products we need and the total amount you can expect from us once this order is fulfilled.<br />
                         <br /> The id for this order is: <strong><%=data.id%></strong> <br /></p>
                         <table id="order-details">
@@ -296,15 +296,21 @@ table[class=hide], img[class=hide], td[class=hide] {
                             <th>Quantity</th>
                             <th>Amount</th>
                           </thead>
-                          <tbody>
+                          <tbody style="font-size: 14px;">
                             <% data.items.forEach((item)=> {%>
                             <tr>
                               <td><%=item.parent%></td>
-                              <td><%=item.description%></td>
+                              <td><%=item.description%> <%=item.attributes%></td>
                               <td><%=item.quantity%></td>
                               <td><%=item.amount%></td>
                             </tr>
                             <%})%>
+                            <tr>
+                              <td><strong>Grand Total:</strong></td>
+                              <td></td>
+                              <td></td>
+                              <td><strong><%=data.amount%></strong></td>
+                            </tr>
                           </tbody>
                         </table>
                         <br />
@@ -316,7 +322,7 @@ table[class=hide], img[class=hide], td[class=hide] {
                       This is also <strong>how you get paid.</strong>
                       <br />
                       <br />
-                      For cancelations, adjustments or any other concerns with this order please email vendors@comicstrips.nyc with order id in the subject line.
+                      For cancelations, adjustments or any other concerns with this order please email <a href="mailto: vendors@comicstrips.nyc">vendors@comicstrips.nyc</a> with the order id in the subject line.
                       <br />
                       <br />
                       We can't wait to surprise and delight with your awesome products! Thanks for being a partner.
@@ -391,7 +397,7 @@ table[class=hide], img[class=hide], td[class=hide] {
         <td align="center" bgcolor="#1f3ca6" class="one-column" style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;">&nbsp;</td>
       </tr>
       <tr>
-        <td height="6" bgcolor="#1f3ca6" class="contents1" style="width:100%; border-bottom-left-radius:10px; border-bottom-right-radius:10px"></td>
+        <td height="20" bgcolor="#1f3ca6" class="contents1" style="width:100%; border-bottom-left-radius:10px; border-bottom-right-radius:10px"></td>
       </tr>
       </table></td>
   </tr>

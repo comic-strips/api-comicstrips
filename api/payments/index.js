@@ -6,26 +6,37 @@ function paymentsModule($imports) {
     eventEmitter.on("payments:createOrder", onCreateOrder);
 
     function onCreateOrder(orderData) {
-        const {email, vendor, entity, attributes} = orderData[0];
+        const {email, vendor, entity, businessName, attributes} = orderData[0];
 
         const promise = new Promise((resolve, reject)=> {
             stripe.orders.create({
                 currency: "usd",
                 items: orderData.map(filterStripeOrderAPIProps),
                 email: email
-            }, onAPIResponse.bind(null, {vendor, entity, attributes}, resolve));
+            }, onAPIResponse.bind(null, {
+                vendor, 
+                entity, 
+                businessName,
+                attributes
+            }, resolve));
         })
         return promise;
     };
 
     function filterStripeOrderAPIProps(order) {
-        let {entity, email, vendor, attributes, sku, ...orderDetails} = order;
+        let {
+            entity, 
+            email, 
+            vendor,
+            businessName, 
+            attributes, 
+            sku, ...orderDetails} = order;
         return orderDetails;
     };
     
     function onAPIResponse(metadata, resolve, err, order) {
         if (err) {
-            onError(error);
+            onError(err);
         } else {
             resolve({
                 id: order.id,

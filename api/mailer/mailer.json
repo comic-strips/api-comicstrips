@@ -1,9 +1,4 @@
 { "__comments": "Configuration for the mailer module.",
-	"assets": {
-		"links": {
-			"logotype": "http://bit.ly/2GGNDCG"
-		} 
-	},
 	"senders": {
 		"bookingConfirmation": "noreply@comicstrips.nyc",
 		"bookingCreated": "noreply@comicstrips.nyc"
