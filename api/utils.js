@@ -6,9 +6,13 @@ const events = require("events");
 const selfAddressed = require("self-addressed");
 const eventEmitter = new events.EventEmitter();
 const _emit = events.EventEmitter.prototype.emit;
+const env = process.env.NODE_ENV;
 
 eventEmitter.emit = function(name, data) {
-	console.log(`Event emitted: ${name} @ ${new Date().toLocaleTimeString("en-us", {"timeZone": "America/New_York"})}`);
+	if (env === "development") {
+		console.log(`Event emitted: ${name} @ ${new Date().toLocaleTimeString("en-us", {"timeZone": "America/New_York"})}`);
+	}
+	
 	function mailman(address, envelope) {
 		_emit.call(address, name, envelope);
 	}

@@ -30,7 +30,6 @@ function dbOrderModule($imports) {
         		});
         	});
 
-
         	const orders = apiResponseData.map((order)=> {
         		order.items = order.items.filter((item)=> {
         			return item.amount !== 0;
