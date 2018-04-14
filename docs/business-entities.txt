@@ -1,0 +1,189 @@
+
+# This is a configuration file for the online database schema diagramming tool 
+# https://app.quickdatabasediagrams.com
+# There is isn't a really a need for a paid account with this service.
+# The contents of this file can be copy/pasted into the left-hand schema panel 
+# on the quickdatabasediagrams sample schema creation page to create a 
+# database schema diagram.
+# Any exported documents based on this diagram (e.g. PDFs, SVGs) should be 
+# saved in this folder as business-entities.* and checked into version control.
+# Any updates to any of the business entities below should be checked into 
+# version control.
+#
+# Modify the code to update the DB schema diagram.
+# To reset the sample schema, replace everything with
+# two dots ('..' - without quotes).
+
+Booking
+---
+#Description: 
+id PK string
+talentId string Fk - Talent.id
+customerId string Fk - Customer.id
+recipientId string Fk - Recipient.id
+accountManagerId string Fk -< AccountManager.id
+transactionId string
+bookingCreationDate date/time
+bookingShortId int
+status string
+paymentStatus string
+products list
+LOCATION object
+locationBuildingNo int
+locationCity string
+locationState string
+locationZIP int
+locationStreet string
+locationLatitude int
+locationLongitude int
+locationName string
+locationContactName string
+locationContactPhone string
+talentOnCall array
+notes varchar
+
+Talent
+---
+#Description: 
+id PK string
+firstName string
+lastName string
+email string
+phoneNumber string
+address string
+profileImageURL string
+rating int
+preferredNotificationTypes array
+MEASUREMENTS
+height string
+weight int
+chest string
+head string
+waist string
+inseam string
+shoeSize int
+shoulders string
+neck string
+pantSize string
+shirtSize string
+underwearSize string
+hairColor string
+eyeColor string
+gender string
+bookings array Fk -< Booking.id
+PAYMENTINFO
+method string
+accountNumberName string
+birthDate date/time
+waiverSigned BOOLEAN
+contractSigned BOOLEAN
+availability array
+onCall BOOLEAN
+meta object
+notes varchar
+
+Customer 
+---
+#Description: 
+id PK string
+firstName string
+lastName string
+email string
+address string
+bookings array Fk -< Booking.id
+surveyTaken boolean
+surveyId string
+billingId string
+PAYMENTINFO 
+cardNumber string
+cardType string
+CVV int
+BILLINGADDRESS
+customerCity string
+customerState string
+customerZIP string
+customerAddress string
+products array Fk -< Product.id
+recipients array
+birthDate string
+notes varchar
+meta object
+
+
+Recipient
+---
+#Description: 
+id PK string
+bookings Fk -< Booking.id
+firstName string
+lastName string
+email string
+phoneNumber strin
+CUSTOMIZATIONS
+field(s) TBD
+notes varchar
+meta object
+
+Event
+---
+#Description: 
+id PK string
+accountManagerId FK - AccountManager.id
+talent array Fk -< Talent.id
+date date/time
+LOCATION
+locationName string
+locationAddress string
+locationLatitude string
+locationLongitude string
+type string
+notes varchar
+startTime string
+endTime string
+admissionPrice NULL string
+
+AccountManager
+---
+#Description: 
+id PK string
+firstName string
+lastName string
+phoneNumber string
+email string
+bookingsConfirmed array FK -< Booking.id
+bookingsPending array FK -< Booking.id
+profileImageURL string
+rating int
+notes varchar
+meta object
+
+
+Survey
+---
+#Description: 
+id PK string
+customerId FK - Customer.id
+type string
+questions list
+notes varchar
+
+
+Product
+---
+#Description: 
+id PK string
+name string
+type string
+price string
+
+Vendor 
+---
+#Description:
+id PK string
+name string
+phone string
+email string
+bookings array FK -< Booking.id
+products array FK -< Product.id
+contactFirstName string
+contactLastName string

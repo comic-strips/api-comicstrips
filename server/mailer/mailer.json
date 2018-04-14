@@ -1,0 +1,39 @@
+{ "__comments": "Configuration for the mailer module.",
+  "senders": {
+    "bookingConfirmation": "noreply@comicstrips.nyc",
+    "bookingCreated": "noreply@comicstrips.nyc"
+  },
+  "templates": {
+    "vendorOrderCreated": {
+      "vendor": {
+        "template": "/templates/vendorOrderCreated/vendor.ejs",
+        "sender": "vendors@comicstrips.nyc",
+        "subject": "ComicStrips NYC: New Order"
+      }
+    },
+    "bookingCreated": {
+      "customer": {
+        "template": "/templates/bookingCreated/customer.ejs",
+        "sender": "noreply@comicstrips.nyc",
+        "subject": "Booking Request Received."
+      }
+    },
+    "bookingConfirmed": {
+      "account-manager": {
+        "template": "/templates/bookingConfirmed/account-manager.ejs",
+        "sender": "bookings@comicstrips.nyc",
+        "subject": "New Booking Confirmed"
+      },
+      "customer": {
+        "template": "/templates/bookingConfirmed/customer.ejs",
+        "sender": "bookings@comicstrips.nyc",
+        "subject": "Booking Confirmed. Everything's All Set!"
+      },
+      "talent": { 
+        "template": "/templates/bookingConfirmed/talent.ejs",
+        "sender": "bookings@comicstrips.nyc",
+        "subject": "Booking Confirmed. Event Details Enclosed."
+      }
+    }
+  }
+}

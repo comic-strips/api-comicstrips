@@ -1,0 +1,42 @@
+{
+  "name": "recipients",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "bookings": {
+      "type": [
+        "string"
+      ]
+    },
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": true
+    },
+    "meta": {
+      "type": "object",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

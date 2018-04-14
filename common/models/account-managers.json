@@ -1,0 +1,58 @@
+{
+  "name": "account-managers",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "profileImageURL": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "notes": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "bookings": {
+      "type": "hasMany",
+      "model": "bookings",
+      "foreignKey": "accountManager_id"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": [
+        "read"
+      ]
+    }
+  ],
+  "methods": {}
+}

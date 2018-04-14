@@ -1,0 +1,56 @@
+{
+  "name": "customers",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "booking_id": {
+      "type": "string"
+    },
+    "surveyTaken": {
+      "type": "boolean"
+    },
+    "survey_id": {
+      "type": "string"
+    },
+    "billing_id": {
+      "type": "string"
+    },
+    "birthdate": {
+      "type": "number"
+    },
+    "meta": {
+      "type": "object",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "billingInfo": {
+      "type": "hasOne",
+      "model": "billing",
+      "foreignKey": "customer_id"
+    },
+    "bookings": {
+      "type": "hasMany",
+      "model": "bookings",
+      "foreignKey": "customer_id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

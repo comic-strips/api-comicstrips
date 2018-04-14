@@ -1,0 +1,46 @@
+{
+  "name": "billing",
+  "plural": "billing",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "zip": {
+      "type": "number",
+      "required": true
+    },
+    "state": {
+      "type": "string",
+      "required": true
+    },
+     "aptNo": {
+      "type": "number"
+    },
+    "token": {
+      "type": "string" 
+    },
+  "validations": [],
+  "relations": {
+    "customer": {
+      "type": "hasOne",
+      "model": "customers",
+      "foreignKey": "customer_id"
+    }
+  },
+  "acls": [],
+   "methods": {}
+  }
+}

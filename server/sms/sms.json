@@ -1,0 +1,9 @@
+{ "__comments": "Configuration for the sms module.",
+  "templates": {
+    "bookingCreated": {
+      "talent": {
+        "template": "/templates/bookingCreated/talent.ejs"
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "name": "talent",
+  "plural": "talent",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "zip": {
+      "type": "number",
+      "required": true
+    },
+    "profileImageURL": {
+      "type": "string",
+      "required": true
+    },
+    "rating": {
+      "type": "number",
+      "required": true
+    },
+    "preferredNotificationTypes": {
+      "type": [
+        "string"
+      ]
+    },
+    "measurements": {
+      "type": "object",
+      "required": true
+    },
+    "bookings": {
+      "type": [
+        "string"
+      ]
+    },
+    "payment_id": {
+      "type": "string"
+    },
+    "paymentMethod": {
+      "type": "string",
+      "required": true
+    },
+    "birthdate": {
+      "type": "number",
+      "required": true
+    },
+    "waiverSigned": {
+      "type": "boolean",
+      "required": true
+    },
+    "contractSigned": {
+      "type": "boolean",
+      "required": true
+    },
+    "availability": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    },
+    "onCall": {
+      "type": "boolean"
+    },
+    "meta": {
+      "type": "object",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

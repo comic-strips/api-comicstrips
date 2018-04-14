@@ -1,0 +1,102 @@
+{
+  "name": "bookings",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "talent_id": {
+      "type": "string",
+      "default": "NOT-ASSIGNED"
+    },
+    "customer_id": {
+      "type": "string",
+      "required": true
+    },
+    "recipient_id": {
+      "type": "string",
+      "required": true
+    },
+    "accountManager_id": {
+      "type": "string",
+      "default": "NOT-ASSIGNED"
+    },
+    "offer_id": {
+      "type": "number",
+      "default": 0
+    },
+     "customerEmail": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "required": true
+    },
+    "paymentStatus": {
+      "type": "string",
+      "required": true
+    },
+    "createdDate": {
+      "type": "number",
+      "required": true
+    },
+    "customizations": {
+      "type": "string"
+    },
+    "fulfillmentDate": {
+      "type": "number",
+      "required": true
+    },
+    "location": {
+      "type": "object",
+      "required": true
+    },
+    "products": {
+      "type": [
+        "object"
+      ],
+      "required": true
+    },
+    "vendors": {
+      "type": [
+        "string"
+      ],
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "talent": {
+      "type": "hasOne",
+      "model": "talent",
+      "foreignKey": "talent_id"
+    },
+    "accountManager": {
+      "type": "hasOne",
+      "model": "account-managers",
+      "foreignKey": "accountManager_id"
+    },
+    "customer": {
+      "type": "hasOne",
+      "model": "customers",
+      "foreignKey": "booking_id"
+    }
+  },
+  "acls": [],
+   "methods": {
+    "accept": {
+      "accepts": [{
+        "arg": "data", 
+        "type": "object", 
+        "http":{"source": "body"}
+      }],
+      "http": {
+        "verb": "post", 
+        "path": "/accept", 
+        "target": {"status": 200}
+      },
+      "description": "Replace the 'accepted' attribute on the model instance and persist it into the data source."
+    }
+  }
+}

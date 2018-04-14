@@ -1,0 +1,23 @@
+{"__comments": "Mock booking offer response from Twilio.",
+  "bookingOfferResponse": {
+    "ToCountry": "US",
+    "ToState": "NY",
+    "SmsMessageSid": "e0e33b62-5f9b-4b05-96c1-1581fe5e6de7",
+    "NumMedia": "0",
+    "ToCity": "",
+    "FromZip": "10167",
+    "SmsSid": "3e036da3-9f04-4510-b97e-bd0f3a5eebce",
+    "FromState": "NY",
+    "SmsStatus": "received",
+    "FromCity": "NEW YORK",
+    "Body": "ACCEPT 60174",
+    "FromCountry": "US",
+    "To": "+16467912832",
+    "ToZip": "",
+    "NumSegments": "1",
+    "MessageSid": "a7fab1ca-40ef-40fb-9d66-8696581af048",
+    "AccountSid": "879ce4f7-9a03-40ff-8d0a-29963b23d07e",
+    "From": "+12129207825",
+    "ApiVersion": "2010-04-01"
+  }
+}
