@@ -1,4 +1,4 @@
-# api-comicstrips
+c# api-comicstrips
 
 Principal backend for Comicstrips NYC.
 
@@ -12,12 +12,6 @@ All application modules export a function which wraps that module's business log
 
 The Comicstrips backend runs in a Docker container. The deploy target is Heroku's container infrastructure.
 
-#### Nomenclature
-
-Events names (e.g `eventEmitter.emit("db/booking:createBooking`)) have the following rules:
-* Event names prefixed by the name of the module containing the logic for the event. In the above example we know we can find the code for the `createBooking` event in our `./db/booking/index.js` file.
-* Whatever the follows the colon (the short name for the event if you will) is the actual event that's take place. In the above example that is creating a booking.
-* Events whose logic is not *not* nested inside a folder are indicated with an event name whose first part (*before* the colon) is the name of the containing module and whose second part (*after* the colon) is the name of the event (e.g. `mailer:bookingCreated`.)
 
 ### Development
 
