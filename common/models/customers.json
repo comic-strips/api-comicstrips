@@ -45,8 +45,8 @@
       "model": "billing",
       "foreignKey": "customer_id"
     },
-    "bookings": {
-      "type": "hasMany",
+    "booking": {
+      "type": "hasOne",
       "model": "bookings",
       "foreignKey": "customer_id"
     }

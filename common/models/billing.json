@@ -31,7 +31,8 @@
     },
     "token": {
       "type": "string" 
-    },
+    }
+  },
   "validations": [],
   "relations": {
     "customer": {
@@ -41,6 +42,5 @@
     }
   },
   "acls": [],
-   "methods": {}
-  }
+  "methods": {}
 }

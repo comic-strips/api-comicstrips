@@ -7,7 +7,7 @@ module.exports = function(Bookings) {
   const eventEmitter = Events.eventEmitter;
 
   eventEmitter.on("server:App-Start", (app)=> {
-    const {accountManagers, offers, bookings, talent} = app.models;
+    const {accountManagers, offers, bookings, talent, customers} = app.models;
     /* complete list of application models unavailable until App-Start */
     const acctModule = require("../accounts")(app);
 
@@ -21,7 +21,7 @@ module.exports = function(Bookings) {
       talent.find()
       .then(talentList=> talentList.find((tal)=> tal.phoneNumber === From))
       .then(onTalentList.bind(null, Bookings, offer_id))
-      .then(getBookingCustomer)
+      .then(getBookingCustomer.bind(null, customers))
       .then(getBookingAccountManager.bind(null, accountManagers))
       .then(updateBookingData);
 
@@ -30,8 +30,10 @@ module.exports = function(Bookings) {
   /*===server:App-Start===*/  
   });
 
-  function getBookingCustomer(data) {
-    return promisify(data.booking.customer)().then(customer=> Object.assign(data, {customer}));
+  function getBookingCustomer(customers, data) {
+    return customers.find()
+    .then(customerList=> customerList.find((cust)=> cust.id === data.booking.customer_id))
+    .then((customer)=> Object.assign(data, {customer}));
   }
 
   function getBookingAccountManager(accountManagers, data) {

@@ -1,4 +1,4 @@
-c# api-comicstrips
+# api-comicstrips
 
 Principal backend for Comicstrips NYC.
 
