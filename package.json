@@ -1,41 +1,32 @@
 {
   "name": "api-comicstrips",
-  "version": "1.0.0",
-  "description": "REST API for ComicStrips NYC",
-  "main": "server/server.js",
-  "engines": {
-    "node": ">=4"
+  "version": "2.0.0",
+  "description": "REST API for ComicStrips.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
   },
   "scripts": {
-    "lint": "eslint .",
-    "start": "node .",
-    "posttest": "npm run lint && nsp check"
-  },
-  "dependencies": {
-    "compression": "^1.0.3",
-    "cors": "^2.5.2",
-    "helmet": "^3.10.0",
-    "loopback": "^3.0.0",
-    "loopback-boot": "^2.6.5",
-    "loopback-component-explorer": "^5.0.0",
-    "loopback-connector-firestore": "^1.0.5",
-    "mailgun-js": "^0.16.0",
-    "self-addressed": "0.3.0",
-    "serve-favicon": "^2.0.1",
-    "stripe": "^5.8.0",
-    "strong-error-handler": "^2.0.0",
-    "twilio": "^3.14.0"
-  },
-  "devDependencies": {
-    "dotenv": "^5.0.1",
-    "eslint": "^3.17.1",
-    "eslint-config-loopback": "^8.0.0",
-    "localtunnel": "^1.8.3",
-    "nsp": "^2.1.0"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "git",
+    "url": "git+https://github.com/comic-strips/api-comicstrips.git"
   },
-  "license": "UNLICENSED"
+  "author": "Sean T. Taylor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/comic-strips/api-comicstrips/issues"
+  },
+  "homepage": "https://github.com/comic-strips/api-comicstrips#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mailgun-js": "^0.20.0",
+    "stripe": "^6.3.0",
+    "twilio": "^3.18.0"
+  },
+  "devDependencies": {
+    "dotenv": "^6.0.0",
+    "localtunnel": "^1.9.0"
+  }
 }
