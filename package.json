@@ -20,6 +20,7 @@
     "loopback-component-explorer": "^5.0.0",
     "loopback-connector-firestore": "^1.0.5",
     "mailgun-js": "^0.16.0",
+    "newman": "^3.9.3",
     "self-addressed": "0.3.0",
     "serve-favicon": "^2.0.1",
     "stripe": "^5.8.0",
