@@ -6,5 +6,7 @@ module.exports = {
   bookingsAPI: require("./api-bookings"), 
   accountsAPI: require("./api-accounts"),
   recipientsAPI: require("./api-recipients"),
+  ordersAPI: require("./api-orders"),
+  talentAPI: require("./api-talent"),
   vendorsAPI: require("./api-vendors")
 }
