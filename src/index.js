@@ -1,16 +1,10 @@
-const httpServer = require("./http");
-const systemAPI = require("./api-system");
-const bookingsAPI = require("./api-bookings");
-const accountsAPI = require("./api-accounts");
-const recipientsAPI = require("./api-recipients");
-const API = require("./api-accounts");
-const dataSources = require("./data-sources");
-
 module.exports = {
-  httpServer, 
-  dataSources, 
-  systemAPI, 
-  bookingsAPI, 
-  accountsAPI,
-  recipientsAPI
+  httpServer: require("./http"),
+  dataSources: require("./data-sources"), 
+  systemAPI: require("./api-system"),
+  customersAPI: require("./api-customers"), 
+  bookingsAPI: require("./api-bookings"), 
+  accountsAPI: require("./api-accounts"),
+  recipientsAPI: require("./api-recipients"),
+  vendorsAPI: require("./api-vendors")
 }
