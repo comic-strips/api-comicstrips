@@ -1,5 +1,5 @@
 function developmentDBInterface({generateID}) {
-  const developmentData = require("./data.json");
+  const developmentData = require("./db.json");
   const store = Object.assign({}, developmentData);
 
   function push(collectionName, data) {

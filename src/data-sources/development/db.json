@@ -17,6 +17,7 @@
       "phoneNumber": "+12128675309",
       "email": "accounts@comicstrips.nyc",
       "profileImageURL": "https://placehold.it/300x300",
+      "bookings": [],
       "rating": 0,
       "meta": {
         "entity": "accountManager"
@@ -47,6 +48,20 @@
       "firstName": "Jackie",
       "lastName": "Robinson",
       "phoneNumber": "1-800-SAFE-AUTO",
+      "meta": {
+        "entity": "recipient"
+      }
+    },
+    "-LI9UlBYdTtt8IpR70pb": {
+      "id": "-LI9UlBYdTtt8IpR70pb",
+      "bookings": [
+        "-L4bGgifm2nXUzmsOFa3"
+      ],
+      "customer_id": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+      "email": "ssanders@whitehouse.gov",
+      "firstName": "Sarah",
+      "lastName": "Huckabee Sanders",
+      "phoneNumber": "1-800-PRESS",
       "meta": {
         "entity": "recipient"
       }
@@ -143,7 +158,7 @@
       "customizations": "Make it extra special.",
       "fulfillmentDate": 123456780000,
       "location": {
-        "zip": 100001,
+        "zip": 10001,
         "buildingNo": 767,
         "city": "New York",
         "contactName": "Tim Cook",
