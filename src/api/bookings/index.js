@@ -1,6 +1,6 @@
 function bookingsAPI(instance) {
-  const {httpServer: {app}, db} = instance;
-  const bookingPipeline = require("./booking-pipeline")({db});
+  const {httpServer: {app}, db, sms, eventEmitter} = instance;
+  const bookingPipeline = require("./booking-pipeline")({db, eventEmitter});
 
   app.get("/api/v2/bookings", (request, response)=> {
     db.collection("bookings").find().then((data)=> {
@@ -19,7 +19,7 @@ function bookingsAPI(instance) {
     db.collection("bookings").push(request.body).then((id)=> {
       response.json({"status": "created", id});
       return id;
-    }).then(bookingPipeline.onProcess)
+    }).then(bookingPipeline.onInboundBooking)
     .catch(onError);
   });
 

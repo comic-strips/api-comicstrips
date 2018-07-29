@@ -1,4 +1,4 @@
-const $inject = require("../utils/$inject");
+const $inject = require("../utils/inject");
 const moduleRegistry = require("../index.js");
 
 class Sandbox extends $inject(moduleRegistry) {
