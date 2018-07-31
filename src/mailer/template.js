@@ -3,13 +3,17 @@ function emailTemplateModule($imports) {
   const templates = require("./mailer.json").templates;
 
   function getTemplate({entity, type, data}) {
-  	return ejs.renderFile(`${__dirname}${templates[type][entity].template}`, {
-  			data: data
-  		}, onRender);
+  	const promise = new Promise((resolve, reject)=> {
+      ejs.renderFile(`${__dirname}${templates[type][entity].template}`, {
+        data
+      }, onRender.bind(null, resolve));
+    });
+
+    return promise;
   };
 
-  function onRender(err, str) {
-  	return err ? onError(err) : str;
+  function onRender(resolve, err, str) {
+  	return err ? onError(err) : resolve(str);
   };
 
   function onError(error) {

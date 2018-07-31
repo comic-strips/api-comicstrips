@@ -1,4 +1,5 @@
 { "__comments": "Configuration for the mailer service.",
+  "mailProvider": "smtp.gmail.com",
   "senders": {
     "bookingConfirmation": "noreply@comicstrips.nyc",
     "bookingCreated": "noreply@comicstrips.nyc"
@@ -11,7 +12,7 @@
         "subject": "ComicStrips NYC: New Order"
       }
     },
-    "bookingCreated": {
+    "inbound_bookreq_acknowledged": {
       "customer": {
         "template": "/templates/bookingCreated/customer.ejs",
         "sender": "noreply@comicstrips.nyc",

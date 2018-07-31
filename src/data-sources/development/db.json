@@ -84,6 +84,21 @@
         "entity": "customer",
         "dev": true
       }
+    },
+    "-LI9Rc3fs-o4k8i2GKhf": {
+      "id": "-LI9Rc3fs-o4k8i2GKhf",
+      "firstName": "Mike",
+      "lastName": "Pompeo",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "bookings": [],
+      "surveyTaken": true,
+      "survey_id": "l0k9j8h7g6f5d4s3a2z1",
+      "billing_id": "1q2w3e4r5t6y7u8i9o0p",
+      "birthdate": 9876543210,
+      "meta": {
+        "entity": "customer",
+        "dev": true
+      }
     }
   },
   "talent": {

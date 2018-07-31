@@ -8,7 +8,7 @@ function bookingPipelineModule($imports) {
     .then(onUpdateBookingRefNo)
     .then(onUpdateBookingAcctManager)
     .then(({booking, acctMgr})=> {
-      eventEmitter.emit("inbound_bookreq_acknowledged", {booking, acctMgr});
+      eventEmitter.emit("inbound_bookreq_acknowledged", booking);
       return booking;
     })
     .catch(onError);
@@ -35,7 +35,7 @@ function bookingPipelineModule($imports) {
       return db.collection("account-managers").update(booking.accountManager_id, {
         bookings: Array.from(currentBookings) 
       })
-      .then((updatedBooking)=> { return {booking: updatedBooking, acctMgr}})
+      .then((updatedBooking)=> { return {booking, acctMgr}})
     });
   }
 

@@ -1,41 +1,47 @@
 {
-  "talent_id": "NOT-ASSIGNED",
-  "customer_id": "-LI9Rc3fs-o4k8i2GKhf",
-  "recipient_id": "-L4bGgjZzBCwkrHUYB2G",
-  "accountManager_id": "NOT-ASSIGNED",
-  "customerEmail": "ptwp3gesvyjtgczz@ethereal.email",
-  "status": "PENDING",
-  "paymentStatus": "HELD",
-  "createdDate": 1519431954421,
-  "offer_id": "NOT-ASSIGNED",
-  "customizations": "Please sing 'Love Me Tender.'",
-  "fulfillmentDate": 123456790000,
-  "location": {
-    "zip": 37188,
-    "buildingNo": 1600,
-    "city": "New York",
-    "contactName": "Mike Pompeo",
-    "contactPhone": "+12128675309",
-    "name": "The White House",
-    "state": "Washington, D.C.",
-    "street": "Pennsylvania Avenue"
-  },
-  "products": [
-    {
-      "quantity": 1,
-      "sku": "sku_CNJk4bGfg2Nntu"
+  "booking": {
+    "talent_id": "NOT-ASSIGNED",
+    "customer_id": "-LI9Rc3fs-o4k8i2GKhf",
+    "recipient_id": "-L4bGgjZzBCwkrHUYB2G",
+    "accountManager_id": "NOT-ASSIGNED",
+    "customerEmail": "ptwp3gesvyjtgczz@ethereal.email",
+    "status": "PENDING",
+    "paymentStatus": "HELD",
+    "createdDate": 1519431954421,
+    "offer_id": "NOT-ASSIGNED",
+    "customizations": "Please sing 'Love Me Tender.'",
+    "fulfillmentDate": 123456790000,
+    "location": {
+      "zip": 37188,
+      "buildingNo": 1600,
+      "city": "New York",
+      "contactName": "Mike Pompeo",
+      "contactPhone": "+12128675309",
+      "name": "The White House",
+      "state": "Washington, D.C.",
+      "street": "Pennsylvania Avenue"
     },
-    {
-      "quantity": 1,
-      "sku": "sku_CNQ0mN6lBly9TS"
+    "meta": {
+      "entity": "customer",
+      "dev": true
     },
-    {
-      "quantity": 2,
-      "sku": "sku_CNJr7tQdsr3xVv"
-    },
-    {
-      "quantity": 1,
-      "sku": "sku_CNJqRPYwKhbvUT"
-    }
-  ]
+    "products": [
+      {
+        "quantity": 1,
+        "sku": "sku_CNJk4bGfg2Nntu"
+      },
+      {
+        "quantity": 1,
+        "sku": "sku_CNQ0mN6lBly9TS"
+      },
+      {
+        "quantity": 2,
+        "sku": "sku_CNJr7tQdsr3xVv"
+      },
+      {
+        "quantity": 1,
+        "sku": "sku_CNJqRPYwKhbvUT"
+      }
+    ]
+  }
 }

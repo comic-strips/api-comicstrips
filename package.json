@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/comic-strips/api-comicstrips#readme",
   "dependencies": {
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
     "mailgun-js": "^0.20.0",
+    "nodemailer": "^4.6.7",
     "stripe": "^6.3.0",
     "twilio": "^3.18.0"
   },
