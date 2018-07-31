@@ -17,19 +17,21 @@ function mailService(instance) {
 
   function sendMessage(type, data, addresseeList) {
     addresseeList.forEach((addressee)=> {
-      templateModule.getTemplate({
+      const messageMetadata = {
+        from: templateMap[type][addressee.meta.entity].sender,
+        to: addressee.email,
+        subject: templateMap[type][addressee.meta.entity].subject
+      };
+
+      templateModule.getHTMLTemplate({
         entity: addressee.meta.entity,
         data: [data, addressee],
         type
-      }).then((html)=> {
-        const messageConfig = {
-          from: templateMap[type][addressee.meta.entity].sender,
-          to: addressee.email,
-          subject: templateMap[type][addressee.meta.entity].subject,
-          html
-        };
-
-        transporter.sendMail(messageConfig, onSend);
+      })
+      .then(onHTML.bind(null, messageMetadata))
+      .then((message)=> {
+         console.info("Sending email...");
+        //transporter.sendMail(message, onSend)
       })
     });
   }
@@ -41,8 +43,8 @@ function mailService(instance) {
     });
   }
 
-  function onHTML(html) {
-
+  function onHTML(messageMetadata, html) {
+    return Object.assign(messageMetadata, {html});
   }
 
   function onError(error) {

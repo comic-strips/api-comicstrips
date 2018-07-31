@@ -1,5 +1,6 @@
 function talentAPI(instance) {
-  const {httpServer: {app}, db} = instance;
+  const {httpServer: {app}, db, eventEmitter} = instance;
+  const talentPipeline = require("./talent-pipeline")({db, eventEmitter}); 
 
   app.get("/api/v2/talent", (request, response)=> {
     db.collection("talent").find().then((data)=> {

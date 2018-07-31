@@ -2,7 +2,7 @@ function emailTemplateModule($imports) {
   const ejs = require("ejs");
   const templates = require("./mailer.json").templates;
 
-  function getTemplate({entity, type, data}) {
+  function getHTMLTemplate({entity, type, data}) {
   	const promise = new Promise((resolve, reject)=> {
       ejs.renderFile(`${__dirname}${templates[type][entity].template}`, {
         data
@@ -25,7 +25,7 @@ function emailTemplateModule($imports) {
 		};
 	};
 
-  return {getTemplate};
+  return {getHTMLTemplate};
 };
 
 module.exports = emailTemplateModule;

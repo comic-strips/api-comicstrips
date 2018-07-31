@@ -1,11 +1,14 @@
 function smsService(instance) {
-  /*const twilio = require("twilio");
-  const config = require("./sms.json");
-  const templateMap = config.templates;
-  const accountSID = process.env.TWILIO_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const twilioNumber = process.env.TWILIO_NUMBER;
-  const client = new twilio(accountSID, authToken);*/
+  const {db, eventEmitter} = instance;
+  const ejs = require("ejs");
+  const templateModule = require("./template.js")();
+ 
+  eventEmitter.on("outbound_talent_request", onTalentRequest);
+
+  function onTalentRequest({talentList, booking}) {
+    console.log("Sending outbound talent request");
+    talentList.forEach(templateModule.sendMessage.bind(null, "bookingCreated", booking))
+  }
 
   function send() {
 
