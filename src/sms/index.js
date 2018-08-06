@@ -10,7 +10,7 @@ function smsService(instance) {
   }
 
   function send() {
-
+    console.log("CLI: sending outbound_talent_request...");
   }
   
 

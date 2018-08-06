@@ -9,6 +9,7 @@ module.exports = {
   bookingsAPI: require("./api/bookings"), 
   accountsAPI: require("./api/accounts"),
   recipientsAPI: require("./api/recipients"),
+  offersAPI: require("./api/offers"),
   ordersAPI: require("./api/orders"),
   skusAPI: require("./api/skus"),
   talentAPI: require("./api/talent"),

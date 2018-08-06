@@ -19,7 +19,10 @@ function developmentDBInterface({generateID}) {
     return Promise.resolve();
   }
 
-  function find(collectionName) {
+  function find(collectionName, filterFn) {
+    if (filterFn) {
+      return Promise.resolve(Object.values(store[collectionName]).filter(filterFn));
+    }
     return Promise.resolve(Object.values(store[collectionName]));
   }
 
