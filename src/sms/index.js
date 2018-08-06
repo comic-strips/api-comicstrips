@@ -6,7 +6,6 @@ function smsService(instance) {
   eventEmitter.on("outbound_talent_request", onTalentRequest);
 
   function onTalentRequest({talentList, booking}) {
-    console.log("Sending outbound talent request");
     talentList.forEach(templateModule.sendMessage.bind(null, "bookingCreated", booking))
   }
 
