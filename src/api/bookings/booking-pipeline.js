@@ -41,7 +41,7 @@ function bookingPipelineModule($imports) {
 
   function onUpdateBookingRefNo(booking) {
     return db.collection("bookings").update(booking.id, {
-      "offer_id": generateRefNo() 
+      "offer_id": process.env.NODE_ENV === "development" ? generateRefNo(60174) : generateRefNo() 
     }).then(updatedBooking=> updatedBooking);
   }
 
@@ -62,6 +62,7 @@ function bookingPipelineModule($imports) {
   function onUpdateBookingStatus() {
     
   }
+
 
   function onError(e) {
     console.error(e);

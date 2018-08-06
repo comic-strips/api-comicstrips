@@ -4,7 +4,7 @@ function offerAPI(instance) {
 
   app.post("/api/v2/offers", (request, response)=> {
     const {From, Body} = request.body;
-    const offerId = Body.split(" ")[1];
+    const offerId = parseInt(Body.split(" ")[1]);
 
     offerPipeline.onInboundOfferReply({offerId, talentPhone: From});
     response.json({});
