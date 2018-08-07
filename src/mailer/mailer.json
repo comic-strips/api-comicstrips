@@ -5,9 +5,9 @@
     "bookingCreated": "noreply@comicstrips.nyc"
   },
   "templates": {
-    "vendorOrderCreated": {
+    "vendor-order-created": {
       "vendor": {
-        "template": "/templates/vendorOrderCreated/vendor.ejs",
+        "template": "/templates/vendor-order-created/vendor.ejs",
         "sender": "vendors@comicstrips.nyc",
         "subject": "ComicStrips NYC: New Order"
       }

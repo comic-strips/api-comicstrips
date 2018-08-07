@@ -14,6 +14,8 @@ function mailService(instance) {
   });
 
   eventEmitter.on("inbound_bookreq_acknowledged", onBookRequest);
+  eventEmitter.on("booking_confirmed", onBookingConfirmed);
+  eventEmitter.on("outbound_booking_confirmation", onOutboundBookingConfo);
 
   function sendMessage(type, data, addresseeList) {
     addresseeList.forEach((addressee)=> {
@@ -30,10 +32,23 @@ function mailService(instance) {
       })
       .then(onHTML.bind(null, messageMetadata))
       .then((message)=> {
-         console.info("Sending email...");
+        console.info(`Sending mail to: ${addressee.email}`);
+        //console.log({message});
         //transporter.sendMail(message, onSend)
       })
     });
+  }
+
+  function onBookingConfirmed(data) {
+    console.log("Booking confirmed...");
+    const {vendorList, booking, skuList} = data;
+    vendorList.forEach((vendor)=> {
+      sendMessage("vendor-order-created", {skuList, booking, vendor}, [vendor]);
+    })
+  }
+
+  function onOutboundBookingConfo(data) {
+    console.log("Sending outbound booking confirmation...");
   }
 
   function onBookRequest(booking) {
