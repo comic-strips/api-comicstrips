@@ -3,10 +3,50 @@
     "sku_CNJk4bGfg2Nntu": {
       "id": "sku_CNJk4bGfg2Nntu",
       "vendor_id": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+      "price": 125,
+      "description": "Shirtless Gram",
       "attributes": [
         "STANDARD",
         "CUPID"
       ]
+    },
+    "sku_CNJps9fs6hyUBN": {
+      "id": "sku_CNJps9fs6hyUBN",
+      "vendor_id": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+      "price": 999,
+      "description": "Shirtless Gram Gilded",
+      "attributes": [
+        "GILDED",
+        "CUPID"
+      ]
+    },
+    "sku_CNJqRPYwKhbvUT": {
+      "id": "sku_CNJqRPYwKhbvUT",
+      "vendor_id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "price": 5,
+      "description": "Buttermilk Bakeshop Cupcake",
+      "attributes": ["VANILLA"]
+    },
+    "sku_CNJr7tQdsr3xVv": {
+      "id": "sku_CNJr7tQdsr3xVv",
+      "vendor_id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "price": 10,
+      "description": "Buttermilk Bakeshop Cupcake",
+      "attributes": ["GILDED"]
+    },
+    "sku_CNJrdT5EB4ZFNA": {
+      "id": "sku_CNJrdT5EB4ZFNA",
+      "vendor_id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "price": 5,
+      "description": "Buttermilk Bakeshop Cupcake",
+      "attributes": ["CHOC"]
+    },
+    "sku_CNQ0mN6lBly9TS": {
+      "id": "sku_CNQ0mN6lBly9TS",
+      "vendor_id": "HkRgukvXxJSeIN64nEgqf6u3wCN2",
+      "price": 190,
+      "description": "ABC Wines Dom Perignon",
+      "attributes": ["STANDARD"]
     }
   },
   "account-managers": {
@@ -28,9 +68,34 @@
     "3WDebwKtgmSA25CrYRtkA6FMIxD2": {
       "id": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
       "businessName": "ComicStrips NYC",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
       "products": [
         "sku_CNJk4bGfg2Nntu",
         "sku_CNJps9fs6hyUBN"
+      ],
+      "meta": {
+        "entity": "vendor"
+      }
+    },
+    "HkRgukvXxJSeIN64nEgqf6u3wCN2": {
+      "id": "HkRgukvXxJSeIN64nEgqf6u3wCN2",
+      "businessName": "ABC Wines",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "products": [
+        "sku_CNQ0mN6lBly9TS"
+      ],
+      "meta": {
+        "entity": "vendor"
+      }
+    },
+    "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2": {
+      "id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "businessName": "Buttermilk Bakeshop",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "products": [
+        "sku_CNJr7tQdsr3xVv",
+        "sku_CNJrdT5EB4ZFNA",
+        "sku_CNJqRPYwKhbvUT"
       ],
       "meta": {
         "entity": "vendor"

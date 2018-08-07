@@ -63,7 +63,6 @@ function bookingPipelineModule($imports) {
     
   }
 
-
   function onError(e) {
     console.error(e);
   }

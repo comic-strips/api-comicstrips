@@ -6,7 +6,9 @@ function offerPipelineModule($imports) {
     .then(findBookingByOfferId)
     .then(updateBookingStatus)
     .then(updateTalentBookings)
-    .then((data)=> console.log(data));
+    .then((data)=> {
+      eventEmitter.emit("booking_confirmed", data);
+    });
   }
 
   function findAvailableTalent(offerId, talentPhone) {

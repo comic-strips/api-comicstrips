@@ -4,6 +4,7 @@ module.exports = {
   eventEmitter: require("./event-emitter"),
   sms: require("./sms"), 
   mail: require("./mailer"),
+  payments: require("./payments"),
   systemAPI: require("./api/system"),
   customersAPI: require("./api/customers"), 
   bookingsAPI: require("./api/bookings"), 
