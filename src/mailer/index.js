@@ -34,7 +34,7 @@ function mailService(instance) {
       .then((message)=> {
         console.info(`Sending ${type} email to: ${addressee.email}`);
         //console.log({message});
-        transporter.sendMail(message, onSend);
+        //transporter.sendMail(message, onSend);
       })
     });
   }

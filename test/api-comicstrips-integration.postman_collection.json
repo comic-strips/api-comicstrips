@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "cd77e408-ca2f-4e33-af65-3f871eedbe3c",
+		"name": "api-comicstrips:integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v2:Integration",
+			"description": "Integration test suite for v2 of the ComicStrips backend.",
+			"item": [
+				{
+					"name": "Create a Booking:Integration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b8e6a95-9dac-4c06-9a50-ce38399bea3d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200. A new booking is created.\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Id of new booking is returned.\", function () {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.status).to.eql(\"created\");",
+									"    pm.environment.set(\"created_booking_id\", response.id);",
+									"});",
+									"",
+									"postman.setNextRequest(\"Validate Account Manager assignment:Integration\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"talent_id\": \"NOT-ASSIGNED\",\n  \"customer_id\": \"-LI9Rc3fs-o4k8i2GKhf\",\n  \"recipient_id\": \"-L4bGgjZzBCwkrHUYB2G\",\n  \"accountManager_id\": \"NOT-ASSIGNED\",\n  \"customerEmail\": \"ptwp3gesvyjtgczz@ethereal.email\",\n  \"status\": \"PENDING\",\n  \"paymentStatus\": \"HELD\",\n  \"createdDate\": 1519431954421,\n  \"offer_id\": \"NOT-ASSIGNED\",\n  \"customizations\": \"Please sing 'Love Me Tender.'\",\n  \"fulfillmentDate\": 123456790000,\n  \"location\": {\n    \"zip\": 100001,\n    \"buildingNo\": 1600,\n    \"city\": \"New York\",\n    \"contactName\": \"Mike Pompeo\",\n    \"contactPhone\": \"+12128675309\",\n    \"name\": \"The White House\",\n    \"state\": \"Washington, D.C.\",\n    \"street\": \"Pennsylvania Avenue\"\n  },\n  \"products\": [\n    {\n      \"quantity\": 1,\n      \"sku\": \"sku_CNJk4bGfg2Nntu\"\n    },\n    {\n      \"quantity\": 1,\n      \"sku\": \"sku_CNQ0mN6lBly9TS\"\n    },\n    {\n      \"quantity\": 2,\n      \"sku\": \"sku_CNJr7tQdsr3xVv\"\n    },\n    {\n      \"quantity\": 1,\n      \"sku\": \"sku_CNJqRPYwKhbvUT\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v2/bookings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"bookings"
+							]
+						},
+						"description": "Create a booking.\t"
+					},
+					"response": [
+						{
+							"id": "3a633e12-8446-49ea-921d-65a91ababf40",
+							"name": "Create a Booking:Integration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"talent_id\": \"NOT-ASSIGNED\",\n  \"customer_id\": \"-LI9Rc3fs-o4k8i2GKhf\",\n  \"recipient_id\": \"-L4bGgjZzBCwkrHUYB2G\",\n  \"accountManager_id\": \"NOT-ASSIGNED\",\n  \"customerEmail\": \"ptwp3gesvyjtgczz@ethereal.email\",\n  \"status\": \"PENDING\",\n  \"paymentStatus\": \"HELD\",\n  \"createdDate\": 1519431954421,\n  \"offer_id\": \"NOT-ASSIGNED\",\n  \"customizations\": \"Please sing 'Love Me Tender.'\",\n  \"fulfillmentDate\": 123456790000,\n  \"location\": {\n    \"zip\": 100001,\n    \"buildingNo\": 1600,\n    \"city\": \"New York\",\n    \"contactName\": \"Mike Pompeo\",\n    \"contactPhone\": \"+12128675309\",\n    \"name\": \"The White House\",\n    \"state\": \"Washington, D.C.\",\n    \"street\": \"Pennsylvania Avenue\"\n  },\n  \"products\": [\n    {\n      \"quantity\": 1,\n      \"sku\": \"sku_CNJk4bGfg2Nntu\"\n    },\n    {\n      \"quantity\": 1,\n      \"sku\": \"sku_CNQ0mN6lBly9TS\"\n    },\n    {\n      \"quantity\": 2,\n      \"sku\": \"sku_CNJr7tQdsr3xVv\"\n    },\n    {\n      \"quantity\": 1,\n      \"sku\": \"sku_CNJqRPYwKhbvUT\"\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "localhost:8080/api/v2/bookings",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v2",
+										"bookings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"name": "Connection",
+									"description": "Options that are desired for the connection"
+								},
+								{
+									"key": "Content-Length",
+									"value": "48",
+									"name": "Content-Length",
+									"description": "The length of the response body in octets (8-bit bytes)"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 Jul 2018 05:58:07 GMT",
+									"name": "Date",
+									"description": "The date and time that the message was sent"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"30-VV7pr5hxF21MFBwKCLezhAOvTGY\"",
+									"name": "ETag",
+									"description": "An identifier for a specific version of a resource, often a message digest"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"name": "X-Powered-By",
+									"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
+								}
+							],
+							"cookie": [],
+							"body": "{\"status\":\"created\",\"id\":\"-LI9rR2VFP9dhpfcRpF_\"}"
+						}
+					]
+				},
+				{
+					"name": "Validate Account Manager assignment:Integration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46b755d8-76e9-4e97-bc65-c60ccfb9c9c6",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200.\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Id of new booking is listed in account manager `bookings` field.\", function () {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data[0].bookings.includes(pm.environment.get(\"created_booking_id\")));",
+									"});",
+									"",
+									"postman.setNextRequest(\"Accept a booking offer:Integration\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v2/account-managers/{{account_manager_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"account-managers",
+								"{{account_manager_id}}"
+							]
+						},
+						"description": "Validate assignment of account manager to new booking."
+					},
+					"response": []
+				},
+				{
+					"name": "Accept a booking offer:Integration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79700cd6-974c-48e1-a812-e535f933d17f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200.\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"postman.setNextRequest(\"Validate talent assignment:Integration\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ToCountry\": \"US\",\n    \"ToState\": \"NY\",\n    \"SmsMessageSid\": \"e0e33b62-5f9b-4b05-96c1-1581fe5e6de7\",\n    \"NumMedia\": \"0\",\n    \"ToCity\": \"\",\n    \"FromZip\": \"10167\",\n    \"SmsSid\": \"3e036da3-9f04-4510-b97e-bd0f3a5eebce\",\n    \"FromState\": \"NY\",\n    \"SmsStatus\": \"received\",\n    \"FromCity\": \"NEW YORK\",\n    \"Body\": \"ACCEPT 60174\",\n    \"FromCountry\": \"US\",\n    \"To\": \"+12125552424\",\n    \"ToZip\": \"\",\n    \"NumSegments\": \"1\",\n    \"MessageSid\": \"a7fab1ca-40ef-40fb-9d66-8696581af048\",\n    \"AccountSid\": \"879ce4f7-9a03-40ff-8d0a-29963b23d07e\",\n    \"From\": \"+12129207825\",\n    \"ApiVersion\": \"2010-04-01\"\n  }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/v2/offers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"offers"
+							]
+						},
+						"description": "Updates a pending booking with the `talent_id` of the talent with the corresponding phone number in the `from` field in the request body."
+					},
+					"response": []
+				},
+				{
+					"name": "Validate talent assignment:Integration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "84e044db-2f82-4f24-980e-813cc7c6d153",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200.\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"`talent_id field of booking is populated with an id.\", function () {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data[0].talent_id !== \"NOT-ASSIGNED\");",
+									"    pm.environment.set(\"assigned_talent_id\", response.data[0].talent_id);",
+									"});",
+									"",
+									"postman.setNextRequest(\"Validate Booking assignment:Integration\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v2/bookings/{{created_booking_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"bookings",
+								"{{created_booking_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Booking assignment:Integration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac0748bf-10ed-4254-bfed-aedfa64ee501",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200.\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"`bookings` field of talent record includes created booking.\", function () {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data[0].bookings.includes(pm.environment.get(\"created_booking_id\")));",
+									"});",
+									"",
+									"postman.setNextRequest(\"Validate Booking confirmation:Integration\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v2/talent/{{assigned_talent_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"talent",
+								"{{assigned_talent_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Booking confirmation:Integration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6676fdf-5a2e-4a04-9374-7ef8ac5cc646",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200.\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"`status` field of booking is `CONFIRMED`.\", function () {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data[0].status === \"CONFIRMED\");",
+									"});",
+									"",
+									"pm.test(\"`paymentStatus` field of booking is `CHARGED`.\", function () {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data[0].paymentStatus === \"CHARGED\");",
+									"});",
+									"",
+									"postman.setNextRequest(null);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/api/v2/bookings/{{created_booking_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"bookings",
+								"{{created_booking_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aba48d51-52c3-4d67-9ded-c26e864a6391",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "64f1f4e9-401f-435b-96a6-ae844f6cf7a1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

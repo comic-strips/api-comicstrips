@@ -21,8 +21,11 @@ function paymentPipelineModule($imports) {
         email: data.booking.customerEmail
       };
 
-      onOrder(resolve, data, null, {id: "1q2w3e4r5t6y7u8i9o0"});
-      //stripe.orders.create(options, onOrder.bind(null, resolve, data));
+      if (process.env.NODE_ENV === "development") {
+        onOrder(resolve, data, null, {id: "1q2w3e4r5t6y7u8i9o0"});
+      } else {
+        stripe.orders.create(options, onOrder.bind(null, resolve, data));
+      }
     });
     return promise;
   }
@@ -34,12 +37,20 @@ function paymentPipelineModule($imports) {
     })
     .then((booking)=> {
       console.log("Creating charge...");
-      /*stripe.charges.create({
-        amount: data.order.amount,
-        currency: "usd",
-        description: "Example charge",
-        source: data.booking.paymentToken,
-      });*/
+      if (process.env.NODE_ENV !== "development") {
+         stripe.charges.create({
+          amount: data.order.amount,
+          currency: "usd",
+          description: "Example charge",
+          source: data.booking.paymentToken,
+        }, (err, charge)=> {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        });
+      }
+     
       return Object.assign(data, {booking});
     })
     .catch(onError);
