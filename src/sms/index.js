@@ -3,14 +3,14 @@ function smsService(instance) {
   const ejs = require("ejs");
   const templateModule = require("./template.js")();
  
-  eventEmitter.on("outbound_talent_request", onTalentRequest);
+  eventEmitter.on("outbound-talent-request", onTalentRequest);
 
   function onTalentRequest({talentList, booking}) {
-    talentList.forEach(templateModule.sendMessage.bind(null, "bookingCreated", booking))
+    talentList.forEach(templateModule.sendMessage.bind(null, "booking-created", booking))
   }
 
   function send() {
-    console.log("CLI: sending outbound_talent_request...");
+    console.log("CLI: sending outbound-talent-request...");
   }
   
 

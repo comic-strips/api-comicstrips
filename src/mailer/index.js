@@ -13,9 +13,9 @@ function mailService(instance) {
     }
   });
 
-  eventEmitter.on("inbound_bookreq_acknowledged", onBookRequest);
-  eventEmitter.on("booking_confirmed", onBookingConfirmed);
-  eventEmitter.on("outbound_booking_confirmation", onOutboundBookingConfo);
+  eventEmitter.on("inbound-bookreq-acknowledged", onBookRequest);
+  eventEmitter.on("booking-confirmed", onBookingConfirmed);
+  eventEmitter.on("outbound-booking-confirmation", onOutboundBookingConfo);
 
   function sendMessage(type, data, addresseeList) {
     addresseeList.forEach((addressee)=> {
@@ -32,7 +32,7 @@ function mailService(instance) {
       })
       .then(onHTML.bind(null, messageMetadata))
       .then((message)=> {
-        console.info(`Sending mail to: ${addressee.email}`);
+        console.info(`Sending ${type} email to: ${addressee.email}`);
         //console.log({message});
         //transporter.sendMail(message, onSend)
       })
@@ -54,7 +54,7 @@ function mailService(instance) {
   function onBookRequest(booking) {
     db.collection("customers").findById(booking.customer_id)
     .then((customer)=> {
-      sendMessage("inbound_bookreq_acknowledged", booking, customer);
+      sendMessage("inbound-bookreq-acknowledged", booking, customer);
     });
   }
 

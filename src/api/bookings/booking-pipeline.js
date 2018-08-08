@@ -8,7 +8,7 @@ function bookingPipelineModule($imports) {
     .then(onUpdateBookingRefNo)
     .then(onUpdateBookingAcctManager)
     .then(({booking, acctMgr})=> {
-      eventEmitter.emit("inbound_bookreq_acknowledged", booking);
+      eventEmitter.emit("inbound-bookreq-acknowledged", booking);
       return booking;
     })
     .catch(onError);

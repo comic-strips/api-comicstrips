@@ -1,8 +1,8 @@
 { "__comments": "Configuration for the sms service.",
   "templates": {
-    "bookingCreated": {
+    "booking-created": {
       "talent": {
-        "template": "/templates/bookingCreated/talent.ejs"
+        "template": "/templates/booking-created/talent.ejs"
       }
     }
   }

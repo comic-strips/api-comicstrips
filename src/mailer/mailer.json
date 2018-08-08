@@ -12,26 +12,26 @@
         "subject": "ComicStrips NYC: New Order"
       }
     },
-    "inbound_bookreq_acknowledged": {
+    "inbound-bookreq-acknowledged": {
       "customer": {
-        "template": "/templates/bookingCreated/customer.ejs",
+        "template": "/templates/booking-created/customer.ejs",
         "sender": "noreply@comicstrips.nyc",
         "subject": "Booking Request Received."
       }
     },
-    "bookingConfirmed": {
+    "booking-confirmed": {
       "account-manager": {
-        "template": "/templates/bookingConfirmed/account-manager.ejs",
+        "template": "/templates/booking-confirmed/account-manager.ejs",
         "sender": "bookings@comicstrips.nyc",
         "subject": "New Booking Confirmed"
       },
       "customer": {
-        "template": "/templates/bookingConfirmed/customer.ejs",
+        "template": "/templates/booking-confirmed/customer.ejs",
         "sender": "bookings@comicstrips.nyc",
         "subject": "Booking Confirmed. Everything's All Set!"
       },
       "talent": { 
-        "template": "/templates/bookingConfirmed/talent.ejs",
+        "template": "/templates/booking-confirmed/talent.ejs",
         "sender": "bookings@comicstrips.nyc",
         "subject": "Booking Confirmed. Event Details Enclosed."
       }

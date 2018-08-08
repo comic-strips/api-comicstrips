@@ -7,7 +7,7 @@ function offerPipelineModule($imports) {
     .then(updateBookingStatus)
     .then(updateTalentBookings)
     .then((data)=> {
-      eventEmitter.emit("booking_offer_accepted", data);
+      eventEmitter.emit("booking-offer-accepted", data);
     });
   }
 
