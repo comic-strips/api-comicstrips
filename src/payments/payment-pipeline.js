@@ -7,7 +7,8 @@ function paymentPipelineModule($imports) {
     return createOrder(bookingData)
     .then(createCharge)
     .then(buildSkuList)
-    .then(getVendorsList);
+    .then(getVendorsList)
+    .catch(onError);
   }
 
   function createOrder(data) {
@@ -40,7 +41,8 @@ function paymentPipelineModule($imports) {
         source: data.booking.paymentToken,
       });*/
       return Object.assign(data, {booking});
-    });
+    })
+    .catch(onError);
   }
 
   function onOrder(resolveFn, data, error, order) {

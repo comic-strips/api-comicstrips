@@ -59,10 +59,6 @@ function bookingPipelineModule($imports) {
     return talent;
   } 
 
-  function onUpdateBookingStatus() {
-    
-  }
-
   function onError(e) {
     console.error(e);
   }

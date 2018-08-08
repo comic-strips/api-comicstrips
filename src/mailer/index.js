@@ -34,7 +34,7 @@ function mailService(instance) {
       .then((message)=> {
         console.info(`Sending ${type} email to: ${addressee.email}`);
         //console.log({message});
-        //transporter.sendMail(message, onSend)
+        transporter.sendMail(message, onSend);
       })
     });
   }
@@ -44,18 +44,25 @@ function mailService(instance) {
     const {vendorList, booking, skuList} = data;
     vendorList.forEach((vendor)=> {
       sendMessage("vendor-order-created", {skuList, booking, vendor}, [vendor]);
-    })
+    });
   }
 
   function onOutboundBookingConfo(data) {
     console.log("Sending outbound booking confirmation...");
+    const {talent, booking} = data;
+
+    db.collection("customers").findById(booking.customer_id)
+    .then(([customer])=> {
+      sendMessage("booking-confirmed", {booking}, [customer, talent]);
+    });
   }
 
   function onBookRequest(booking) {
     db.collection("customers").findById(booking.customer_id)
     .then((customer)=> {
       sendMessage("inbound-bookreq-acknowledged", booking, customer);
-    });
+    })
+    .catch(onError);
   }
 
   function onHTML(messageMetadata, html) {

@@ -5,12 +5,12 @@ function paymentService(instance) {
   eventEmitter.on("booking-offer-accepted", onBookingOfferAccepted);
 
   function onBookingOfferAccepted(bookingData) {
-    console.log("Processing payment...");
     paymentPipeline.processConfirmedBooking(bookingData)
     .then((data)=> { 
       eventEmitter.emit("booking-confirmed", data);
       eventEmitter.emit("outbound-booking-confirmation", data);
-    });
+    })
+    .catch(onError);
   }
 
   function onError(error) {

@@ -1,5 +1,3 @@
-<h1>This is happening, CUSTOMER! <%=data.id%></h1>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -289,7 +287,7 @@ table[class=hide], img[class=hide], td[class=hide] {
                     <td align="left" style="padding:0px 40px 40px 40px"><p style="color:#5b5f65; font-size:28px; text-align:left; font-family: Verdana, Geneva, sans-serif">We're on!</p>
                       <p style="color:#5b5f65; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif">Hey <%=data[1].firstName%>, your booking request has been confirmed! 
                         <br /> 
-                        <br /> The id for this booking is: <a href="#"><strong><%=data[0].id%></strong></a> <br /> </p>
+                        <br /> The id for this booking is: <a href="#"><strong><%=data[0].booking.id%></strong></a> <br /> </p>
                       <p style="color:#5b5f65; font-size:16px; text-align:left; font-family: Verdana, Geneva, sans-serif">
                         A member of our accounts team will be reaching out to you shortly with some additional details about your booking and to answer any questions you may have. Your account manager is your point of contact through the entire process so don't hesitate to reach out.
                       </p>
