@@ -1,6 +1,8 @@
 function paymentService(instance) {
   const {db, eventEmitter} = instance;
-  const paymentPipeline = require("./payment-pipeline.js")({db, eventEmitter});
+  const paymentProcessor = require("./payment-processor")({db});
+  const vendorOrderPipeline = require("./vendor-order-pipeline.js")({db});
+  const paymentPipeline = require("./payment-pipeline.js")({db, eventEmitter, paymentProcessor, vendorOrderPipeline});
 
   eventEmitter.on("booking-offer-accepted", onBookingOfferAccepted);
 
