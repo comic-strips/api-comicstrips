@@ -23,7 +23,6 @@ function offerPipelineModule($imports) {
 
   function updateBookingStatus(data) {
     return db.collection("bookings").update(data.booking.id, {
-      status: "CONFIRMED",
       talent_id: data.talent.id
     }).then((booking)=> Object.assign(data, {booking}));
   }
