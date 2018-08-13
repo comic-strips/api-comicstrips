@@ -12,7 +12,7 @@ function httpServer(instance) {
     server.listen(process.env.PORT || 8080);
 
     console.log("Express server listening on port %d in %s mode",
-    server.address().port, app.settings.env);
+    server.address().port, process.env.NODE_ENV || "production");
   }
 
   instance.httpServer = {start, app};

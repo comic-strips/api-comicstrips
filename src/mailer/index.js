@@ -16,6 +16,7 @@ function mailService(instance) {
   eventEmitter.on("inbound-bookreq-acknowledged", onBookRequest);
   eventEmitter.on("booking-confirmed", onBookingConfirmed);
   eventEmitter.on("outbound-booking-confirmation", onOutboundBookingConfo);
+  eventEmitter.on("found-payment-error", onPaymentError);
 
   function sendMessage(type, data, addresseeList) {
     addresseeList.forEach((addressee)=> {
@@ -54,7 +55,7 @@ function mailService(instance) {
     db.collection("customers").findById(booking.customer_id)
     .then(([customer])=> {
       sendMessage("booking-confirmed", {booking}, [customer, talent]);
-    });
+    }).catch(onError);
   }
 
   function onBookRequest(booking) {
@@ -63,6 +64,15 @@ function mailService(instance) {
       sendMessage("inbound-bookreq-acknowledged", booking, customer);
     })
     .catch(onError);
+  }
+
+  function onPaymentError(bookingData) {
+    const {booking, ...errorData} = bookingData;
+
+    db.collection("customers").findById(booking.customer_id)
+    .then(([customer])=> {
+      sendMessage("payment-error", {booking}, [customer]);
+    }).catch(onError);
   }
 
   function onHTML(messageMetadata, html) {

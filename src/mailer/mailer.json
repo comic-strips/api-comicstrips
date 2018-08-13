@@ -35,6 +35,13 @@
         "sender": "bookings@comicstrips.nyc",
         "subject": "Booking Confirmed. Event Details Enclosed."
       }
+    },
+    "payment-error": {
+      "customer": {
+        "template": "/templates/payment-error/customer.ejs",
+        "sender": "bookings@comicstrips.nyc",
+        "subject": "Whoops! There was an issue processing your payment."
+      }
     }
   }
 }

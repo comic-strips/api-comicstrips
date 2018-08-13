@@ -12,15 +12,8 @@ function paymentPipelineModule($imports) {
     .catch(onError);
   }
 
-  function onError(error, data) {
-    if (error) {
-      console.error(error);
-      return {
-        code: "payment:error",
-        msg: error.message,
-        stack: error.stack.split("\n")
-      };
-    }
+  function onError(error) {
+   throw error;
   }
 
   return {processConfirmedBooking};

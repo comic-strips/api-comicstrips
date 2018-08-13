@@ -11,19 +11,21 @@ function vendorOrderPipelineModule($imports) {
     const skuList = data.booking.products.map((product)=> {
       return db.collection("skus").findById(product.sku)
       .then(([sku])=> Object.assign(sku, {quantity: product.quantity}));
-    });
-    return Promise.all(skuList).then(list=> Object.assign(data, {skuList: list}));
+    }).catch(onError);
+
+    return Promise.all(skuList).then(list=> Object.assign(data, {skuList: list})).catch(onError)
   }
 
   function getVendorsList(data) {
     const vendorList = data.skuList.map((sku)=> {
       return db.collection("vendors").findById(sku.vendor_id)
       .then(([vendor])=> vendor)
-    });
+    }).catch(onError);
 
     return Promise.all(vendorList)
     .then(listToMap)
     .then((vList)=> Object.assign(data, {vendorList: Object.values(vList), skuList: data.skuList}))
+    .catch(onError);
   };
 
   function listToMap(vList) {
@@ -34,7 +36,7 @@ function vendorOrderPipelineModule($imports) {
   }
 
   function onError(error) {
-    console.error(error);
+    throw error;
   }
 
   return {createVendorOrder}

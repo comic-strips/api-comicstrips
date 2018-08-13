@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "debug": "node index.js development",
+    "debug": "NODE_ENV=development node index.js",
     "test:integration": "./node_modules/.bin/npm-run-all -p -r debug test",
     "test": "./node_modules/.bin/wait-on http://localhost:8080/status && ./node_modules/.bin/newman run ./test/api-comicstrips-integration.postman_collection.json -e ./test/api-comicstrips.postman_environment.json"
 

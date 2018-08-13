@@ -1,5 +1,5 @@
 function paymentProcessor($imports) {
-  const {db} = $imports;
+  const {db, eventEmitter} = $imports;
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY_TEST);
 
   function createOrder(data) {
@@ -12,12 +12,12 @@ function paymentProcessor($imports) {
         email: data.booking.customerEmail
       };
 
-      if (process.env.NODE_ENV === "development") {
+     /* if (process.env.NODE_ENV === "development") {
         onOrder(resolve, data, null, {id: "1q2w3e4r5t6y7u8i9o0"});
-      } else {
-        stripe.orders.create(options, onOrder.bind(null, resolve, data));
-      }
-    });
+      } else {*/
+        stripe.orders.create(options, onOrder.bind(null, resolve, reject, data));
+      /*}*/
+    }).catch(onError);
 
     return promise;
   }
@@ -32,27 +32,51 @@ function paymentProcessor($imports) {
     .catch(onError);
   }
 
-  function onOrder(resolveFn, data, error, order) {
+  function onOrder(resolve, reject, data, error, order) {
     if (error) {
-      onError(error);
+      console.error(data, error);
+      return
     } 
-    resolveFn(Object.assign(data, {order}));
+    resolve(Object.assign(data, {order}));
   }
 
   function onCharge(data, booking) {
-    console.log("Creating charge...");
-    stripe.charges.create({
-      amount: data.order.amount,
-      currency: "usd",
-      description: "Example charge",
-      source: data.booking.paymentToken,
-    }, onError);
-    return booking;
+    const promise = new Promise((resolve, reject)=> {
+      console.log("Creating charge...");
+      stripe.charges.create({
+        amount: data.order.amount,
+        currency: "usd",
+        description: "Example charge",
+        //source: data.booking.paymentToken,
+      }, onChargeResponse.bind(null, resolve, reject, booking));
+      return booking;
+    }).catch(onError);
+
+    return promise;
+  }
+
+  function onChargeResponse(resolve, reject, booking, error) {
+    if (error) {
+      const errorData = {
+        booking,
+        event: "payment-error",
+        booking_id: booking.id, 
+        code: error.code,
+        type: error.rawType,
+        msg: error.message,
+        stack: error.stack.split("\n")
+      };
+
+      eventEmitter.emit("found-payment-error", errorData);
+      return reject(errorData);
+    }
+    resolve(booking);
   }
 
   function onError(error) {
-    console.error(error);
-  };
+    const {booking, ...errorData} = error;
+    throw errorData;
+  }
 
   return {createOrder, createCharge}
 }

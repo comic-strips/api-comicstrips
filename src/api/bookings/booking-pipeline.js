@@ -1,6 +1,8 @@
 function bookingPipelineModule($imports) {
-  const generateRefNo = require("./ref-number.js")
+  const generateRefNo = require("./ref-number.js");
   const {db, eventEmitter} = $imports;
+  const statusMonitor = require("./status-monitor.js")({db});
+
 
   function onInboundBooking(bookingId) {
     db.collection("account-managers").find()
@@ -9,6 +11,7 @@ function bookingPipelineModule($imports) {
     .then(onUpdateBookingAcctManager)
     .then(({booking, acctMgr})=> {
       eventEmitter.emit("inbound-bookreq-acknowledged", booking);
+      statusMonitor.watch(watchBooking.bind(null, booking.id), 10000);
       return booking;
     })
     .catch(onError);
@@ -45,19 +48,14 @@ function bookingPipelineModule($imports) {
     }).then(updatedBooking=> updatedBooking);
   }
 
-  function onNotifyTalent(booking) {
-    return db.collection("talent").find().then((talentList)=> {
-      talentList.filter(onAvailable).forEach((talent)=> {
-        sms.send(talent, booking.refNo);
-      });
-      return booking;
-    });
+  function watchBooking(bookingId) {
+    db.collection("bookings").findById(bookingId)
+    .then(([booking])=> {
+      if (booking.status === "PENDING") {
+        eventEmitter.emit("found-stale-booking", booking);
+      }
+    })
   }
-
-  function onAvailable(talent) {
-    //TODO: Build talent selection alogrithm
-    return talent;
-  } 
 
   function onError(e) {
     console.error(e);
