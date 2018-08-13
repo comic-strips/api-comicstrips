@@ -11,7 +11,7 @@ function vendorOrderPipelineModule($imports) {
     const skuList = data.booking.products.map((product)=> {
       return db.collection("skus").findById(product.sku)
       .then(([sku])=> Object.assign(sku, {quantity: product.quantity}));
-    }).catch(onError);
+    });
 
     return Promise.all(skuList).then(list=> Object.assign(data, {skuList: list})).catch(onError)
   }
@@ -20,7 +20,7 @@ function vendorOrderPipelineModule($imports) {
     const vendorList = data.skuList.map((sku)=> {
       return db.collection("vendors").findById(sku.vendor_id)
       .then(([vendor])=> vendor)
-    }).catch(onError);
+    });
 
     return Promise.all(vendorList)
     .then(listToMap)

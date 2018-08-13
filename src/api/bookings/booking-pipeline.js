@@ -3,6 +3,7 @@ function bookingPipelineModule($imports) {
   const {db, eventEmitter} = $imports;
   const statusMonitor = require("./status-monitor.js")({db});
 
+  eventEmitter.on("booking-confirmed", onBookingConfirmed);
 
   function onInboundBooking(bookingId) {
     db.collection("account-managers").find()
@@ -46,6 +47,11 @@ function bookingPipelineModule($imports) {
     return db.collection("bookings").update(booking.id, {
       "offer_id": process.env.NODE_ENV === "development" ? generateRefNo(60174) : generateRefNo() 
     }).then(updatedBooking=> updatedBooking);
+  }
+
+  function onBookingConfirmed({booking}) {
+    db.collection("bookings").update(booking.id, {paymentStatus: "CHARGED"})
+    .catch(onError);
   }
 
   function watchBooking(bookingId) {

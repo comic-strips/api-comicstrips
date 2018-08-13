@@ -35,7 +35,7 @@ function mailService(instance) {
       .then((message)=> {
         console.info(`Sending ${type} email to: ${addressee.email}`);
         //console.log({message});
-        //transporter.sendMail(message, onSend);
+        transporter.sendMail(message, onSend);
       })
     });
   }
@@ -71,7 +71,11 @@ function mailService(instance) {
 
     db.collection("customers").findById(booking.customer_id)
     .then(([customer])=> {
+      try {
       sendMessage("payment-error", {booking}, [customer]);
+    } catch(e) {
+      console.log(e);
+    }
     }).catch(onError);
   }
 

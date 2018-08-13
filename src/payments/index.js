@@ -10,9 +10,8 @@ function paymentService(instance) {
   function onBookingOfferAccepted(bookingData) {
     paymentPipeline.processConfirmedBooking(bookingData)
     .then((data)=> { 
-      console.log({data});
-      //eventEmitter.emit("booking-confirmed", data);
-      //eventEmitter.emit("outbound-booking-confirmation", data);
+      eventEmitter.emit("booking-confirmed", data);
+      eventEmitter.emit("outbound-booking-confirmation", data);
     })
     .catch(onError);
   }

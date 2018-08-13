@@ -5,7 +5,8 @@ function paymentErrorModule($imports) {
 
   function onPaymentError(errorData) {
     const {booking, ...errorPayload} = errorData; 
-    db.collection("issues").push(errorPayload);
+    console.error(errorPayload);
+    db.collection("issues").push(errorPayload).catch((e)=> console.error("push error:", e));
   }
 
 }

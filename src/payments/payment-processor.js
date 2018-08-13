@@ -15,24 +15,23 @@ function paymentProcessor($imports) {
      /* if (process.env.NODE_ENV === "development") {
         onOrder(resolve, data, null, {id: "1q2w3e4r5t6y7u8i9o0"});
       } else {*/
-        stripe.orders.create(options, onOrder.bind(null, resolve, reject, data));
+        stripe.orders.create(options, onOrder.bind(null, resolve, data));
       /*}*/
-    }).catch(onError);
+    });
 
     return promise;
   }
 
   function createCharge(data) {
     return db.collection("bookings").update(data.booking.id, {
-      "payment_id": data.order.id,
-      "paymentStatus": "CHARGED"
+      "payment_id": data.order.id
     })
     .then(onCharge.bind(null, data))
     .then((booking)=> Object.assign(data, {booking}))
     .catch(onError);
   }
 
-  function onOrder(resolve, reject, data, error, order) {
+  function onOrder(resolve, data, error, order) {
     if (error) {
       console.error(data, error);
       return
@@ -48,14 +47,14 @@ function paymentProcessor($imports) {
         currency: "usd",
         description: "Example charge",
         //source: data.booking.paymentToken,
-      }, onChargeResponse.bind(null, resolve, reject, booking));
+      }, onChargeResponse.bind(null, resolve, booking));
       return booking;
     }).catch(onError);
 
     return promise;
   }
 
-  function onChargeResponse(resolve, reject, booking, error) {
+  function onChargeResponse(resolve, booking, error) {
     if (error) {
       const errorData = {
         booking,
@@ -68,7 +67,7 @@ function paymentProcessor($imports) {
       };
 
       eventEmitter.emit("found-payment-error", errorData);
-      return reject(errorData);
+      return 
     }
     resolve(booking);
   }
