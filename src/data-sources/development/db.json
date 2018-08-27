@@ -1,0 +1,377 @@
+{
+  "skus":{ 
+    "sku_CNJk4bGfg2Nntu": {
+      "id": "sku_CNJk4bGfg2Nntu",
+      "vendor_id": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+      "price": 125,
+      "description": "Shirtless Gram",
+      "attributes": [
+        "STANDARD",
+        "CUPID"
+      ]
+    },
+    "sku_CNJps9fs6hyUBN": {
+      "id": "sku_CNJps9fs6hyUBN",
+      "vendor_id": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+      "price": 999,
+      "description": "Shirtless Gram Gilded",
+      "attributes": [
+        "GILDED",
+        "CUPID"
+      ]
+    },
+    "sku_CNJqRPYwKhbvUT": {
+      "id": "sku_CNJqRPYwKhbvUT",
+      "vendor_id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "price": 5,
+      "description": "Buttermilk Bakeshop Cupcake",
+      "attributes": ["VANILLA"]
+    },
+    "sku_CNJr7tQdsr3xVv": {
+      "id": "sku_CNJr7tQdsr3xVv",
+      "vendor_id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "price": 10,
+      "description": "Buttermilk Bakeshop Cupcake",
+      "attributes": ["GILDED"]
+    },
+    "sku_CNJrdT5EB4ZFNA": {
+      "id": "sku_CNJrdT5EB4ZFNA",
+      "vendor_id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "price": 5,
+      "description": "Buttermilk Bakeshop Cupcake",
+      "attributes": ["CHOC"]
+    },
+    "sku_CNQ0mN6lBly9TS": {
+      "id": "sku_CNQ0mN6lBly9TS",
+      "vendor_id": "HkRgukvXxJSeIN64nEgqf6u3wCN2",
+      "price": 190,
+      "description": "ABC Wines Dom Perignon",
+      "attributes": ["STANDARD"]
+    }
+  },
+  "account-managers": {
+    "3WDebwKtgmSA25CrYRtkA6FMIxD2": {
+      "id": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+      "firstName": "AccountManagerBot",
+      "lastName": " ",
+      "phoneNumber": "+12128675309",
+      "email": "accounts@comicstrips.nyc",
+      "profileImageURL": "https://placehold.it/300x300",
+      "bookings": [],
+      "rating": 0,
+      "meta": {
+        "entity": "accountManager"
+      }
+    }
+  },
+  "vendors": {
+    "3WDebwKtgmSA25CrYRtkA6FMIxD2": {
+      "id": "3WDebwKtgmSA25CrYRtkA6FMIxD2",
+      "businessName": "ComicStrips NYC",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "products": [
+        "sku_CNJk4bGfg2Nntu",
+        "sku_CNJps9fs6hyUBN"
+      ],
+      "meta": {
+        "entity": "vendor"
+      }
+    },
+    "HkRgukvXxJSeIN64nEgqf6u3wCN2": {
+      "id": "HkRgukvXxJSeIN64nEgqf6u3wCN2",
+      "businessName": "ABC Wines",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "products": [
+        "sku_CNQ0mN6lBly9TS"
+      ],
+      "meta": {
+        "entity": "vendor"
+      }
+    },
+    "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2": {
+      "id": "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+      "businessName": "Buttermilk Bakeshop",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "products": [
+        "sku_CNJr7tQdsr3xVv",
+        "sku_CNJrdT5EB4ZFNA",
+        "sku_CNJqRPYwKhbvUT"
+      ],
+      "meta": {
+        "entity": "vendor"
+      }
+    }
+  },
+  "recipients": {
+    "-L4bGgjZzBCwkrHUYB2G": {
+      "id": "-L4bGgjZzBCwkrHUYB2G",
+      "bookings": [
+        "-L4bGgifm2nXUzmsOFa3"
+      ],
+      "customer_id": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+      "email": "jackie@dodgers.la",
+      "firstName": "Jackie",
+      "lastName": "Robinson",
+      "meta": {
+        "entity": "recipient"
+      }
+    },
+    "-LI9UlBYdTtt8IpR70pb": {
+      "id": "-LI9UlBYdTtt8IpR70pb",
+      "bookings": [
+        "-L4bGgifm2nXUzmsOFa3"
+      ],
+      "customer_id": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+      "email": "ssanders@whitehouse.gov",
+      "firstName": "Sarah",
+      "lastName": "Huckabee Sanders",
+      "phoneNumber": "1-800-PRESS",
+      "meta": {
+        "entity": "recipient"
+      }
+    }
+  },
+  "customers": {
+    "E8sFGm7u9tSNTGD9e25DWhtDAmx1": {
+      "id": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+      "firstName": "Madeline",
+      "lastName": "Albright",
+      "email": "devtest@comicstrips.nyc",
+      "bookings": [
+        "-L64BvBx8K07ixu1G5Xi"
+      ],
+      "surveyTaken": true,
+      "survey_id": "l0k9j8h7g6f5d4s3a2z1",
+      "billing_id": "1q2w3e4r5t6y7u8i9o0p",
+      "birthdate": 9876543210,
+      "meta": {
+        "entity": "customer",
+        "dev": true
+      }
+    },
+    "-LI9Rc3fs-o4k8i2GKhf": {
+      "id": "-LI9Rc3fs-o4k8i2GKhf",
+      "firstName": "Mike",
+      "lastName": "Pompeo",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "bookings": [],
+      "surveyTaken": true,
+      "survey_id": "l0k9j8h7g6f5d4s3a2z1",
+      "billing_id": "1q2w3e4r5t6y7u8i9o0p",
+      "birthdate": 9876543210,
+      "meta": {
+        "entity": "customer",
+        "dev": true
+      }
+    }
+  },
+  "talent": {
+    "xaBUn5pe82TbXuBt3oxDDEHxK0O2": {
+      "id": "xaBUn5pe82TbXuBt3oxDDEHxK0O2",
+      "firstName": "Tony",
+      "lastName": "Stark",
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "phoneNumber": "+12129207825",
+      "address": "1 Stark Tower",
+      "zip": 10001,
+      "profileImageURL": "https://placehold.it/300x300",
+      "rating": 0,
+      "prefferedNotificationTypes": [
+        "text",
+        "email"
+      ],
+      "measurements": {
+        "height": 6.1,
+        "weight": 200,
+        "chest": "40R",
+        "neck": 18.5,
+        "waist": 34,
+        "inseam": 34,
+        "shoeSize": 11,
+        "shoulders": 12,
+        "shirtSize": "M",
+        "underwearSize": "M",
+        "hairColor": "BROWN",
+        "eyeColor": "BLUE"
+      },
+      "bookings": [
+        "-L64BvBx8K07ixu1G5Xi"
+      ],
+      "payment_id": "2q4w6e8r0t",
+      "paymentMethod": "ACH",
+      "birthdate": 9876543210,
+      "waiverSigned": true,
+      "contractSigned": true,
+      "availability": [
+        {
+          "from": "2pm",
+          "to": "8pm"
+        },
+        {
+          "from": "11am",
+          "to": "6pm"
+        },
+        {
+          "from": "1pm",
+          "to": "5pm"
+        }
+      ],
+      "onCall": true,
+      "meta": {
+        "entity": "talent"
+      }
+    }
+  },
+  "bookings": {
+    "-L4bGgifm2nXUzmsOFa3": {
+      "id": "-L4bGgifm2nXUzmsOFa3",  
+      "talent_id": "NOT-ASSIGNED",
+      "customer_id": "E8sFGm7u9tSNTGD9e25DWhtDAmx1",
+      "recipient_id": "-L4bGgjZzBCwkrHUYB2G",
+      "accountManager_id": "NOT-ASSIGNED",
+      "customerEmail": "ptwp3gesvyjtgczz@ethereal.email",
+      "status": "PENDING",
+      "paymentStatus": "HELD",
+      "createdDate": 1519431954421,
+      "offer_id": "60174",
+      "customizations": "Make it extra special.",
+      "fulfillmentDate": 123456780000,
+      "location": {
+        "zip": 10001,
+        "buildingNo": 767,
+        "city": "New York",
+        "contactName": "Tim Cook",
+        "contactPhone": "+12128675309",
+        "name": "Apple Store",
+        "state": "NY",
+        "street": "Fifth Avenue"
+      },
+      "products": [
+        {
+          "quantity": 1,
+          "sku": "sku_CNJk4bGfg2Nntu"
+        },
+        {
+          "quantity": 1,
+          "sku": "sku_CNQ0mN6lBly9TS"
+        },
+        {
+          "quantity": 2,
+          "sku": "sku_CNJr7tQdsr3xVv"
+        },
+        {
+          "quantity": 1,
+          "sku": "sku_CNJqRPYwKhbvUT"
+        }
+      ],
+      "vendors": [
+        "sKh7Xq6p7WV9nDBhuQPXjaoeX4v2",
+        "HkRgukvXxJSeIN64nEgqf6u3wCN2",
+        "3WDebwKtgmSA25CrYRtkA6FMIxD2"
+      ]
+    }
+  },
+  "orders": {
+    "or_1CEKkKKDX2nGbbftROFLDqsK": {
+      "id": "or_1CEKkKKDX2nGbbftROFLDqsK",
+      "object": "order",
+      "amount": 37015,
+      "amount_returned": null,
+      "application": null,
+      "application_fee": null,
+      "charge": null,
+      "created": 1523121756,
+      "currency": "usd",
+      "customer": null,
+      "email": "ptwp3gesvyjtgczz@ethereal.email",
+      "items": [
+        {
+          "object": "order_item",
+          "amount": 12500,
+          "currency": "usd",
+          "description": "Shirtless Gram",
+          "parent": "sku_CNJk4bGfg2Nntu",
+          "quantity": 1,
+          "type": "sku"
+        },
+        {
+          "object": "order_item",
+          "amount": 19000,
+          "currency": "usd",
+          "description": "ABC Wines Dom Perignon",
+          "parent": "sku_CNQ0mN6lBly9TS",
+          "quantity": 1,
+          "type": "sku"
+        },
+        {
+          "object": "order_item",
+          "amount": 2000,
+          "currency": "usd",
+          "description": "Buttermilk Bakeshop Cupcake",
+          "parent": "sku_CNJr7tQdsr3xVv",
+          "quantity": 2,
+          "type": "sku"
+        },
+        {
+          "object": "order_item",
+          "amount": 500,
+          "currency": "usd",
+          "description": "Buttermilk Bakeshop Cupcake",
+          "parent": "sku_CNJqRPYwKhbvUT",
+          "quantity": 1,
+          "type": "sku"
+        },
+        {
+          "object": "order_item",
+          "amount": 3015,
+          "currency": "usd",
+          "description": "NY STATE SALES TAX (8.875%)",
+          "parent": null,
+          "quantity": null,
+          "type": "tax"
+        },
+        {
+          "object": "order_item",
+          "amount": 0,
+          "currency": "usd",
+          "description": "Free shipping",
+          "parent": "ship_free-shipping",
+          "quantity": null,
+          "type": "shipping"
+        }
+      ],
+      "livemode": false,
+      "metadata": {
+      },
+      "returns": {
+        "object": "list",
+        "data": [
+
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/order_returns?order=or_1CEKkKKDX2nGbbftROFLDqsK"
+      },
+      "selected_shipping_method": "ship_free-shipping",
+      "shipping": null,
+      "shipping_methods": [
+        {
+          "id": "ship_free-shipping",
+          "amount": 0,
+          "currency": "usd",
+          "delivery_estimate": null,
+          "description": "Free shipping"
+        }
+      ],
+      "status": "created",
+      "status_transitions": {
+        "canceled": null,
+        "fulfiled": null,
+        "paid": null,
+        "returned": null
+      },
+      "updated": 1523121757
+    }
+  },
+  "issues":{}
+}

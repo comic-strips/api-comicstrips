@@ -1,2 +1,5 @@
+server/datasources.json
+src/data-sources/development/sample-offer-reply.json
 node_modules/**
+.DS_Store
 .env
