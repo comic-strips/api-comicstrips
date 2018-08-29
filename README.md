@@ -4,13 +4,13 @@ Principal backend for Comicstrips NYC.
 
 ### Architecture & Design
 
-The Comicstrips backend is an event-driven architecture. This backend is built on Node.js and uses streams of Promises to manage the asynchronicity of dozens of events firing in real time.
+The Comic Strips backend is an event-driven architecture. This backend is built on Node.js and uses streams of Promises to manage the asynchronicity of dozens of events firing in real time.
 
-Publishing of and subscription to events is facilitated by Node's native `EventEmitter`. The Comicstrips backend augements the native `EventEmitter` such that emitted events can return Promises with data and use a native Promise's `then` for improved management of async data. 
+Publishing of and subscription to events is facilitated by Node's native `EventEmitter`. 
 
 All application modules export a function which wraps that module's business logic and takes an `$imports` argument that can be used to import module dependencies at runtime. 
 
-The Comicstrips backend runs in a Docker container. The deploy target is Heroku's container infrastructure.
+The Comic Strips backend runs in a Docker container. The deploy target is Heroku's container infrastructure.
 
 
 ### Development
@@ -26,22 +26,31 @@ Start the docker container with the customized shell script.
 Inside the docker container do an: `$ npm install`.
 
 Once dependencies are installed do: `npm run debug` start the Express server with `nodemon` watching for file changes in .js files.
+
+### Testing
+
+Run API integration tests.
+
+1. `$ npm run test:integration` 
+2. WAIT! It will take a few seconds to spin up the Express server before the test suite runs.
+3. View the test report in the command line.
  
 ### Documentation
 Detailed documentaion of API endpoints and example requests and responses is outlined [here](https://documenter.getpostman.com/view/347225/api-comicstrips/RVftjX3E
 ).
 
-#### Sequences of Events
+#### Events 
 
-Below is an overview of the throughline of events published as result of a request to a given API endpoint.
+##### Event Manifest
 
-* `[POST] /api/v1/booking/create`
-  * db/booking:createBooking
-  * db/talent:bookingCreated
-  * sms:onBookingCreated 
-  
-*  `[POST] /api/v1/booking-offer`
-    * mailer:bookingConfirmed
-    * db/mailer:onBookingConfirmed
-    * mailer:bookingCreated
-  
+Below is a list of applications events along with the modules that produce these events, the modules that listen for these events.
+
+| Event         | Producer      | Consumer(s)  |
+| ------------- |:-------------:| :-----:|
+| inbound-bookreq-acknowledged  | booking-pipline | mailer, talent-pipeline |
+| outbound-talent-request| talent-pipeline | sms |
+| booking-offer-accepted | offer-pipeline | payments |
+| booking-confirmed | payments | mailer |
+| outbound-booking-confirmation | payments | mailer
+| found-payment-error | payments | mailer |
+
